@@ -2,3 +2,6 @@
 	path = src/shared/qbs
 	url = https://git.gitorious.org/qt-labs/qbs.git
 	ignore = dirty
+[submodule "share/qtcreator/cmake-board-types/arduino-cmake"]
+	path = share/qtcreator/cmake-board-types/arduino-cmake
+	url = git://github.com/queezythegreat/arduino-cmake.git
