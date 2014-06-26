@@ -934,7 +934,7 @@ void ImportDependencies::checkConsistency() const
     while (j.hasNext()) {
         j.next();
         foreach (const QString &s, j.value()) {
-            bool found = false;
+            bool found = false; Q_UNUSED(found);
             foreach (const Export &e, m_coreImports.value(s).possibleExports)
                 if (e.exportName == j.key())
                     found = true;

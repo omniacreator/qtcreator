@@ -24,23 +24,9 @@ isEmpty(vcproj) {
 }
 
 DATA_DIRS = \
-    welcomescreen \
-    examplebrowser \
-    snippets \
-    templates \
-    designer \
-    schemes \
     styles \
-    rss \
-    debugger \
-    qmldesigner \
-    qmlicons \
-    qml \
-    qml-type-descriptions \
-    generic-highlighter \
-    glsl \
-    cplusplus
-macx: DATA_DIRS += scripts
+    generic-highlighter
+# macx: DATA_DIRS += scripts
 
 for(data_dir, DATA_DIRS) {
     files = $$files($$PWD/$$data_dir/*, true)
@@ -69,16 +55,16 @@ OTHER_FILES += $$FILES
         INSTALLS += $$data_dir
     }
 } else {
-   # do version magic for app bundles
-   dumpinfo.input = qml/qmldump/Info.plist.in
-   dumpinfo.output = $$IDE_DATA_PATH/qml/qmldump/Info.plist
-   QMAKE_SUBSTITUTES += dumpinfo
-   puppetinfo.input = qml/qmlpuppet/qmlpuppet/Info.plist.in
-   puppetinfo.output = $$IDE_DATA_PATH/qml/qmlpuppet/qmlpuppet/Info.plist
-   QMAKE_SUBSTITUES += puppetinfo
-   puppet2info.input = qml/qmlpuppet/qml2puppet/Info.plist.in
-   puppet2info.output = $$IDE_DATA_PATH/qml/qmlpuppet/qml2puppet/Info.plist
-   QMAKE_SUBSTITUES += puppetinfo
+#    # do version magic for app bundles
+#    dumpinfo.input = qml/qmldump/Info.plist.in
+#    dumpinfo.output = $$IDE_DATA_PATH/qml/qmldump/Info.plist
+#    QMAKE_SUBSTITUTES += dumpinfo
+#    puppetinfo.input = qml/qmlpuppet/qmlpuppet/Info.plist.in
+#    puppetinfo.output = $$IDE_DATA_PATH/qml/qmlpuppet/qmlpuppet/Info.plist
+#    QMAKE_SUBSTITUES += puppetinfo
+#    puppet2info.input = qml/qmlpuppet/qml2puppet/Info.plist.in
+#    puppet2info.output = $$IDE_DATA_PATH/qml/qmlpuppet/qml2puppet/Info.plist
+#    QMAKE_SUBSTITUES += puppetinfo
 }
 
 SRCRESOURCEDIR = $$IDE_SOURCE_TREE/src/share/qtcreator/
@@ -93,37 +79,37 @@ defineReplace(stripSrcResourceDir) {
     return($$out)
 }
 
-# files that are to be unconditionally "deployed" to the build dir from src/share to share
-DATA_DIRS = \
-    externaltools
-DATA_FILES_SRC = \
-    externaltools/lrelease.xml \
-    externaltools/lupdate.xml \
-    externaltools/sort.xml \
-    externaltools/qmlviewer.xml \
-    externaltools/qmlscene.xml
-unix {
-    macx:DATA_FILES_SRC += externaltools/vi_mac.xml
-    else:DATA_FILES_SRC += externaltools/vi.xml
-} else {
-    DATA_FILES_SRC += externaltools/notepad_win.xml
-}
-for(file, DATA_FILES_SRC):DATA_FILES += $${SRCRESOURCEDIR}$$file
-OTHER_FILES += $$DATA_FILES
-unconditionalCopy2build.input = DATA_FILES
-unconditionalCopy2build.output = $$IDE_DATA_PATH/${QMAKE_FUNC_FILE_IN_stripSrcResourceDir}
-isEmpty(vcproj):unconditionalCopy2build.variable_out = PRE_TARGETDEPS
-win32:unconditionalCopy2build.commands = $$QMAKE_COPY \"${QMAKE_FILE_IN}\" \"${QMAKE_FILE_OUT}\"
-unix:unconditionalCopy2build.commands = $$QMAKE_COPY ${QMAKE_FILE_IN} ${QMAKE_FILE_OUT}
-unconditionalCopy2build.name = COPY ${QMAKE_FILE_IN}
-unconditionalCopy2build.CONFIG += no_link
-QMAKE_EXTRA_COMPILERS += unconditionalCopy2build
+# # files that are to be unconditionally "deployed" to the build dir from src/share to share
+# DATA_DIRS = \
+#     externaltools
+# DATA_FILES_SRC = \
+#     externaltools/lrelease.xml \
+#     externaltools/lupdate.xml \
+#     externaltools/sort.xml \
+#     externaltools/qmlviewer.xml \
+#     externaltools/qmlscene.xml
+# unix {
+#     macx:DATA_FILES_SRC += externaltools/vi_mac.xml
+#     else:DATA_FILES_SRC += externaltools/vi.xml
+# } else {
+#     DATA_FILES_SRC += externaltools/notepad_win.xml
+# }
+# for(file, DATA_FILES_SRC):DATA_FILES += $${SRCRESOURCEDIR}$$file
+# OTHER_FILES += $$DATA_FILES
+# unconditionalCopy2build.input = DATA_FILES
+# unconditionalCopy2build.output = $$IDE_DATA_PATH/${QMAKE_FUNC_FILE_IN_stripSrcResourceDir}
+# isEmpty(vcproj):unconditionalCopy2build.variable_out = PRE_TARGETDEPS
+# win32:unconditionalCopy2build.commands = $$QMAKE_COPY \"${QMAKE_FILE_IN}\" \"${QMAKE_FILE_OUT}\"
+# unix:unconditionalCopy2build.commands = $$QMAKE_COPY ${QMAKE_FILE_IN} ${QMAKE_FILE_OUT}
+# unconditionalCopy2build.name = COPY ${QMAKE_FILE_IN}
+# unconditionalCopy2build.CONFIG += no_link
+# QMAKE_EXTRA_COMPILERS += unconditionalCopy2build
 
-!macx {
-    for(data_dir, DATA_DIRS) {
-        eval($${data_dir}.files = $$IDE_DATA_PATH/$$data_dir)
-        eval($${data_dir}.path = $$QTC_PREFIX/share/qtcreator)
-        eval($${data_dir}.CONFIG += no_check_exist)
-        INSTALLS += $$data_dir
-    }
-}
+# !macx {
+#     for(data_dir, DATA_DIRS) {
+#         eval($${data_dir}.files = $$IDE_DATA_PATH/$$data_dir)
+#         eval($${data_dir}.path = $$QTC_PREFIX/share/qtcreator)
+#         eval($${data_dir}.CONFIG += no_check_exist)
+#         INSTALLS += $$data_dir
+#     }
+# }

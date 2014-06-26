@@ -125,7 +125,7 @@ isEmpty(IDE_BUILD_TREE) {
 }
 IDE_APP_PATH = $$IDE_BUILD_TREE/bin
 macx {
-    IDE_APP_TARGET   = "Qt Creator"
+    IDE_APP_TARGET   = "Omnia Creator" # IDE_APP_TARGET   = "Qt Creator"
     IDE_LIBRARY_PATH = $$IDE_APP_PATH/$${IDE_APP_TARGET}.app/Contents/PlugIns
     IDE_PLUGIN_PATH  = $$IDE_LIBRARY_PATH
     IDE_LIBEXEC_PATH = $$IDE_APP_PATH/$${IDE_APP_TARGET}.app/Contents/Resources
@@ -141,7 +141,7 @@ macx {
     }
 } else {
     contains(TEMPLATE, vc.*):vcproj = 1
-    IDE_APP_TARGET   = qtcreator
+    IDE_APP_TARGET   = omniacreator # IDE_APP_TARGET   = qtcreator
     IDE_LIBRARY_PATH = $$IDE_BUILD_TREE/$$IDE_LIBRARY_BASENAME/qtcreator
     IDE_PLUGIN_PATH  = $$IDE_LIBRARY_PATH/plugins
     IDE_LIBEXEC_PATH = $$IDE_APP_PATH # FIXME
@@ -187,7 +187,7 @@ unix {
     UI_DIR = $${OUT_PWD}/.uic
 }
 
-win32-msvc* { 
+win32-msvc* {
     #Don't warn about sprintf, fopen etc being 'unsafe'
     DEFINES += _CRT_SECURE_NO_WARNINGS
     # Speed up startup time when debugging with cdb

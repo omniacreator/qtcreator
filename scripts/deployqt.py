@@ -71,11 +71,11 @@ def is_debug(fpath):
     # bootstrap exception
     if coredebug.search(fpath):
         return True
-    output = subprocess.check_output(['dumpbin', '/imports', fpath])
+    output = subprocess.check_output(['objdump', '-x', fpath]) # output = subprocess.check_output(['dumpbin', '/imports', fpath])
     return coredebug.search(output)
 
 def is_debug_build(install_dir):
-    return is_debug(os.path.join(install_dir, 'bin', 'qtcreator.exe'))
+    return is_debug(os.path.join(install_dir, 'bin', *glob.glob('*creator.exe'))) # return is_debug(os.path.join(install_dir, 'bin', 'qtcreator.exe'))
 
 def op_failed(details = None):
     if details != None:
@@ -281,7 +281,7 @@ def main():
     QT_INSTALL_QML = readQmakeVar(qmake_bin, 'QT_INSTALL_QML')
     QT_INSTALL_TRANSLATIONS = readQmakeVar(qmake_bin, 'QT_INSTALL_TRANSLATIONS')
 
-    plugins = ['accessible', 'codecs', 'designer', 'iconengines', 'imageformats', 'platformthemes', 'platforminputcontexts', 'platforms', 'printsupport', 'sqldrivers']
+    plugins = os.listdir(QT_INSTALL_PLUGINS) # plugins = ['accessible', 'codecs', 'designer', 'iconengines', 'imageformats', 'platformthemes', 'platforminputcontexts', 'platforms', 'printsupport', 'sqldrivers']
     imports = ['Qt', 'QtWebKit']
 
     if sys.platform.startswith('win'):

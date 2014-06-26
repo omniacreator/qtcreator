@@ -1918,7 +1918,7 @@ void EditorManager::vcsOpenCurrentEditor()
 
 void EditorManager::updateWindowTitle()
 {
-    QString windowTitle = tr("Qt Creator");
+    QString windowTitle = QApplication::applicationName(); // QString windowTitle = tr("Qt Creator");
     const QString dashSep = QLatin1String(" - ");
     QString vcsTopic;
     IDocument *document = currentDocument();

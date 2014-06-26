@@ -154,7 +154,7 @@ MainWindow::MainWindow() :
 
     Utils::HistoryCompleter::setSettings(PluginManager::settings());
 
-    setWindowTitle(tr("Qt Creator"));
+    setWindowTitle(tr("Omnia Creator")); // setWindowTitle(tr("Qt Creator"));
     if (!Utils::HostOsInfo::isMacHost())
         QApplication::setWindowIcon(QIcon(QLatin1String(Constants::ICON_QTLOGO_128)));
     QCoreApplication::setApplicationName(QLatin1String("QtCreator"));

@@ -37,7 +37,7 @@
 #include <QProcess>
 
 #ifdef Q_OS_WIN
-#define _WIN32_WINNT 0x0502
+#define _WIN32_WINNT 0x502
 #include <windows.h>
 #ifndef PROCESS_SUSPEND_RESUME
 #define PROCESS_SUSPEND_RESUME 0x0800
@@ -170,9 +170,9 @@ GDB 32bit | Api             | Api             | N/A             | Win32         
         }
         bool creatorIs64Bit = Utils::is64BitWindowsBinary(qApp->applicationFilePath());
         if (!is64BitSystem
-                || si == NoSpecialInterrupt
-                || si == Win64Interrupt && creatorIs64Bit
-                || si == Win32Interrupt && !creatorIs64Bit) {
+                || (si == NoSpecialInterrupt)
+                || ((si == Win64Interrupt) && creatorIs64Bit)
+                || ((si == Win32Interrupt) && (!creatorIs64Bit))) {
             if (!DebugBreakProcess(inferior)) {
                 appendMsgCannotInterrupt(pid, tr("DebugBreakProcess failed:")
                                           + QLatin1Char(' ') + Utils::winErrorMessage(GetLastError()));
