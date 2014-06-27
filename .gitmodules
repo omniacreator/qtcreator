@@ -5,9 +5,3 @@
 [submodule "src/plugins/omniacreator"]
 	path = src/plugins/omniacreator
 	url = https://github.com/omniacreator/omniacreator-plugin.git
-[submodule "share/qtcreator/cmake-board-modules/arduino-cmake"]
-	path = share/qtcreator/cmake-board-modules/arduino-cmake
-	url = git://github.com/queezythegreat/arduino-cmake.git
-[submodule "share/qtcreator/cmake-board-modules/propeller-cmake"]
-	path = share/qtcreator/cmake-board-modules/propeller-cmake
-	url = https://github.com/omniacreator/propeller-cmake.git
