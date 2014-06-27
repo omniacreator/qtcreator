@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "language.dtd">
+
+<language name="PBasic" section="Sources" extensions="*.bs1;*.bs2;*.bse;*.bsx;*.bsp;*.bpe;*.bpx;" mimetype="text/pbasic" version="1.00" kateversion="2.4" casesensitive="0" priority="9" author="Kwabena W. Agyeman" license="MIT" hidden="false">
+  <highlighting>
+    <contexts>
+      <context attribute="Regular" lineEndContext="#stay" name="Regular"/>
+    </contexts>
+    <itemDatas>
+      <itemData name="Regular" defStyleNum="dsNormal" color="#000000" bold="0" spellChecking="true"/>
+    </itemDatas>
+  </highlighting>
+  <general>
+    <comments>
+      <comment name="singleLine" start="&apos;"/>
+    </comments>
+    <keywords casesensitive="0"/>
+  </general>
+</language>

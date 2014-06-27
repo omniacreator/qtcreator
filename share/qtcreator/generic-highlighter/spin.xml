@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "language.dtd">
+
+<language name="Spin" section="Sources" extensions="*.spin" mimetype="text/spin" version="1.00" kateversion="2.4" casesensitive="0" priority="9" author="Kwabena W. Agyeman" license="MIT" hidden="false">
+  <highlighting>
+    <list name="BLOCKS_CONstant">
+      <item> con </item>
+    </list>
+    <list name="BLOCKS_VARiable">
+      <item> var </item>
+    </list>
+    <list name="BLOCKS_OBJect">
+      <item> obj </item>
+    </list>
+    <list name="BLOCKS_PUBlic">
+      <item> pub </item>
+    </list>
+    <list name="BLOCKS_PRIvate">
+      <item> pri </item>
+    </list>
+    <list name="BLOCKS_DATa">
+      <item> dat </item>
+    </list>
+    <list name="SPIN_Commands">
+      <item> abort </item>
+      <item> bytefill </item>
+      <item> bytemove </item>
+      <item> chipver </item>
+      <item> clkfreq </item>
+      <item> clkmode </item>
+      <item> clkset </item>
+      <item> cogid </item>
+      <item> coginit </item>
+      <item> cognew </item>
+      <item> cogstop </item>
+      <item> lockclr </item>
+      <item> locknew </item>
+      <item> lockret </item>
+      <item> lockset </item>
+      <item> longfill </item>
+      <item> longmove </item>
+      <item> lookdown </item>
+      <item> lookdownz </item>
+      <item> lookup </item>
+      <item> lookupz </item>
+      <item> quit </item>
+      <item> reboot </item>
+      <item> return </item>
+      <item> strcomp </item>
+      <item> strsize </item>
+      <item> waitcnt </item>
+      <item> waitpeq </item>
+      <item> waitpne </item>
+      <item> waitvid </item>
+      <item> wordfill </item>
+      <item> wordmove </item>
+    </list>
+    <list name="SPIN_Conditionals">
+      <item> case </item>
+      <item> other </item>
+      <item> if </item>
+      <item> ifnot </item>
+      <item> elseif </item>
+      <item> elseifnot </item>
+      <item> else </item>
+      <item> next </item>
+      <item> repeat </item>
+      <item> from </item>
+      <item> to </item>
+      <item> step </item>
+      <item> until </item>
+      <item> while </item>
+    </list>
+    <list name="SPIN_Variables">
+      <item> result </item>
+      <item> spr </item>
+    </list>
+    <list name="ASSEMBLY_Instructions">
+      <item> abs </item>
+      <item> absneg </item>
+      <item> add </item>
+      <item> addabs </item>
+      <item> adds </item>
+      <item> addsx </item>
+      <item> addx </item>
+      <item> and </item>
+      <item> andn </item>
+      <item> call </item>
+      <item> clkset </item>
+      <item> cmp </item>
+      <item> cmps </item>
+      <item> cmpsub </item>
+      <item> cmpsx </item>
+      <item> cmpx </item>
+      <item> cogid </item>
+      <item> coginit </item>
+      <item> cogstop </item>
+      <item> djnz </item>
+      <item> hubop </item>
+      <item> jmp </item>
+      <item> jmpret </item>
+      <item> lockclr </item>
+      <item> locknew </item>
+      <item> lockret </item>
+      <item> lockset </item>
+      <item> max </item>
+      <item> maxs </item>
+      <item> min </item>
+      <item> mins </item>
+      <item> mov </item>
+      <item> movd </item>
+      <item> movi </item>
+      <item> movs </item>
+      <item> muxc </item>
+      <item> muxnc </item>
+      <item> muxnz </item>
+      <item> muxz </item>
+      <item> neg </item>
+      <item> negc </item>
+      <item> negnc </item>
+      <item> negnz </item>
+      <item> negz </item>
+      <item> nop </item>
+      <item> or </item>
+      <item> rcl </item>
+      <item> rcr </item>
+      <item> rdbyte </item>
+      <item> rdlong </item>
+      <item> rdword </item>
+      <item> ret </item>
+      <item> rev </item>
+      <item> rol </item>
+      <item> ror </item>
+      <item> sar </item>
+      <item> shl </item>
+      <item> shr </item>
+      <item> sub </item>
+      <item> subabs </item>
+      <item> subs </item>
+      <item> subsx </item>
+      <item> subx </item>
+      <item> sumc </item>
+      <item> sumnc </item>
+      <item> sumnz </item>
+      <item> sumz </item>
+      <item> test </item>
+      <item> testn </item>
+      <item> tjnz </item>
+      <item> tjz </item>
+      <item> waitcnt </item>
+      <item> waitpeq </item>
+      <item> waitpne </item>
+      <item> waitvid </item>
+      <item> wrbyte </item>
+      <item> wrlong </item>
+      <item> wrword </item>
+      <item> xor </item>
+    </list>
+    <list name="ASSEMBLY_Conditionals">
+      <item> if_always </item>
+      <item> if_never </item>
+      <item> if_e </item>
+      <item> if_ne </item>
+      <item> if_a </item>
+      <item> if_b </item>
+      <item> if_ae </item>
+      <item> if_be </item>
+      <item> if_c </item>
+      <item> if_nc </item>
+      <item> if_z </item>
+      <item> if_nz </item>
+      <item> if_c_eq_z </item>
+      <item> if_c_ne_z </item>
+      <item> if_c_and_z </item>
+      <item> if_c_and_nz </item>
+      <item> if_nc_and_z </item>
+      <item> if_nc_and_nz </item>
+      <item> if_c_or_z </item>
+      <item> if_c_or_nz </item>
+      <item> if_nc_or_z </item>
+      <item> if_nc_or_nz </item>
+      <item> if_z_eq_c </item>
+      <item> if_z_ne_c </item>
+      <item> if_z_and_c </item>
+      <item> if_z_and_nc </item>
+      <item> if_nz_and_c </item>
+      <item> if_nz_and_nc </item>
+      <item> if_z_or_c </item>
+      <item> if_z_or_nc </item>
+      <item> if_nz_or_c </item>
+      <item> if_nz_or_nc </item>
+    </list>
+    <list name="ASSEMBLY_Effects">
+      <item> wc </item>
+      <item> wz </item>
+      <item> wr </item>
+      <item> nr </item>
+    </list>
+    <list name="ASSEMBLY_Directives">
+      <item> fit </item>
+      <item> org </item>
+      <item> res </item>
+    </list>
+    <list name="Directives">
+      <item> constant </item>
+      <item> file </item>
+      <item> float </item>
+      <item> round </item>
+      <item> string </item>
+      <item> trunc </item>
+    </list>
+    <list name="CONSTANTS_Predefined">
+      <item> _clkfreq </item>
+      <item> _clkmode </item>
+      <item> _xinfreq </item>
+      <item> _free </item>
+      <item> _stack </item>
+      <item> true </item>
+      <item> false </item>
+      <item> posx </item>
+      <item> negx </item>
+      <item> pi </item>
+      <item> rcfast </item>
+      <item> rcslow </item>
+      <item> xinput </item>
+      <item> xtal1 </item>
+      <item> xtal2 </item>
+      <item> xtal3 </item>
+      <item> pll1x </item>
+      <item> pll2x </item>
+      <item> pll4x </item>
+      <item> pll8x </item>
+      <item> pll16x </item>
+    </list>
+    <list name="Operators">
+      <item> not </item>
+      <item> and </item>
+      <item> or </item>
+    </list>
+    <list name="Registers">
+      <item> par </item>
+      <item> cnt </item>
+      <item> ina </item>
+      <item> inb </item>
+      <item> outa </item>
+      <item> outb </item>
+      <item> dira </item>
+      <item> dirb </item>
+      <item> ctra </item>
+      <item> ctrb </item>
+      <item> frqa </item>
+      <item> frqb </item>
+      <item> phsa </item>
+      <item> phsb </item>
+      <item> vcfg </item>
+      <item> vscl </item>
+    </list>
+    <list name="Sizes">
+      <item> byte </item>
+      <item> word </item>
+      <item> long </item>
+    </list>
+    <contexts>
+      <context attribute="Regular" lineEndContext="#stay" name="Regular">
+        <DetectSpaces/>
+        <keyword attribute="BLOCKS_CONstant" context="BLOCKS_CONstant" String="BLOCKS_CONstant"/>
+        <keyword attribute="BLOCKS_VARiable" context="BLOCKS_VARiable" String="BLOCKS_VARiable"/>
+        <keyword attribute="BLOCKS_OBJect" context="BLOCKS_OBJect" String="BLOCKS_OBJect"/>
+        <keyword attribute="BLOCKS_PUBlic" context="BLOCKS_PUBlic" String="BLOCKS_PUBlic"/>
+        <keyword attribute="BLOCKS_PRIvate" context="BLOCKS_PRIvate" String="BLOCKS_PRIvate"/>
+        <keyword attribute="BLOCKS_DATa" context="BLOCKS_DATa" String="BLOCKS_DATa"/>
+        <keyword attribute="Directives" context="#stay" String="Directives"/>
+        <keyword attribute="CONSTANTS_Predefined" context="#stay" String="CONSTANTS_Predefined"/>
+        <Detect2Chars attribute="Operators" context="#stay" char="#" char1="&gt;"/>
+        <Detect2Chars attribute="Operators" context="#stay" char="&lt;" char1="#"/>
+        <keyword attribute="Operators" context="#stay" String="Operators"/>
+        <AnyChar attribute="Operators" context="#stay" String="!&amp;*+-/&lt;=&gt;?@^|~"/>
+        <DetectChar attribute="CONSTANTS_Numbers" context="#stay" char="$">
+          <RegExpr attribute="CONSTANTS_Numbers" context="#stay" String="[0123456789a-fA-F][0123456789a-fA-F_]*"/>
+        </DetectChar>
+        <DetectChar attribute="CONSTANTS_Numbers" context="#stay" char="%">
+          <DetectChar attribute="CONSTANTS_Numbers" context="#stay" char="%">
+            <RegExpr attribute="CONSTANTS_Numbers" context="#stay" String="[0123][0123_]*"/>
+          </DetectChar>
+          <RegExpr attribute="CONSTANTS_Numbers" context="#stay" String="[01][01_]*"/>
+        </DetectChar>
+        <RegExpr attribute="CONSTANTS_Numbers" context="#stay" String="[0123456789][0123456789_]*"/>
+        <RegExpr attribute="CONSTANTS_Numbers" context="#stay" String="[0123456789][0123456789_]*\.?[0123456789_]*"/>
+        <DetectChar attribute="COMMENTS_Code" context="COMMENTS_Code" char="&apos;" beginRegion="Comment"/>
+        <DetectChar attribute="COMMENTS_Document" context="COMMENTS_Document" char="{" beginRegion="Comment"/>
+        <DetectChar attribute="Strings" context="Strings" char="&quot;"/>
+      </context>
+      <context attribute="COMMENTS_Code" lineEndContext="#pop" name="COMMENTS_Code" endRegion="Comment"/>
+      <context attribute="COMMENTS_Document" lineEndContext="#stay" name="COMMENTS_Document">
+        <DetectChar attribute="COMMENTS_Document" context="#pop" char="}" endRegion="Comment"/>
+      </context>
+      <context attribute="Strings" lineEndContext="#stay" name="Strings">
+        <DetectChar attribute="Strings" context="#pop" char="&quot;"/>
+      </context>
+      <context attribute="Regular" lineEndContext="#stay" name="BLOCKS_CONstant">
+        <IncludeRules context="Regular"/>
+        <DetectIdentifier/>
+      </context>
+      <context attribute="Regular" lineEndContext="#stay" name="BLOCKS_VARiable">
+        <keyword attribute="Sizes" context="#stay" String="Sizes"/>
+        <IncludeRules context="Regular"/>
+        <DetectIdentifier/>
+      </context>
+      <context attribute="Regular" lineEndContext="#stay" name="BLOCKS_OBJect">
+        <IncludeRules context="Regular"/>
+        <DetectIdentifier/>
+      </context>
+      <context attribute="Regular" lineEndContext="#stay" name="BLOCKS_PUBlic">
+        <keyword attribute="SPIN_Commands" context="#stay" String="SPIN_Commands"/>
+        <keyword attribute="SPIN_Conditionals" context="#stay" String="SPIN_Conditionals"/>
+        <keyword attribute="SPIN_Variables" context="#stay" String="SPIN_Variables"/>
+        <keyword attribute="Registers" context="#stay" String="Registers"/>
+        <keyword attribute="Sizes" context="#stay" String="Sizes"/>
+        <IncludeRules context="Regular"/>
+        <DetectIdentifier/>
+      </context>
+      <context attribute="Regular" lineEndContext="#stay" name="BLOCKS_PRIvate">
+        <keyword attribute="SPIN_Commands" context="#stay" String="SPIN_Commands"/>
+        <keyword attribute="SPIN_Conditionals" context="#stay" String="SPIN_Conditionals"/>
+        <keyword attribute="SPIN_Variables" context="#stay" String="SPIN_Variables"/>
+        <keyword attribute="Registers" context="#stay" String="Registers"/>
+        <keyword attribute="Sizes" context="#stay" String="Sizes"/>
+        <IncludeRules context="Regular"/>
+        <DetectIdentifier/>
+      </context>
+      <context attribute="Regular" lineEndContext="#stay" name="BLOCKS_DATa">
+        <keyword attribute="ASSEMBLY_Instructions" context="#stay" String="ASSEMBLY_Instructions"/>
+        <keyword attribute="ASSEMBLY_Conditionals" context="#stay" String="ASSEMBLY_Conditionals"/>
+        <keyword attribute="ASSEMBLY_Effects" context="#stay" String="ASSEMBLY_Effects"/>
+        <keyword attribute="Directives" context="#stay" String="ASSEMBLY_Directives"/>
+        <keyword attribute="Registers" context="#stay" String="Registers"/>
+        <DetectChar attribute="ASSEMBLY_Literals" context="ASSEMBLY_Literals" char="#"/>
+        <keyword attribute="DATA_Alignments" context="DATA_Alignments" String="Sizes"/>
+        <IncludeRules context="Regular"/>
+        <DetectIdentifier/>
+      </context>
+      <context attribute="Regular" lineEndContext="#pop" name="ASSEMBLY_Literals">
+        <keyword attribute="ASSEMBLY_Effects" context="#stay" String="ASSEMBLY_Effects"/>
+        <IncludeRules context="Regular"/>
+        <DetectIdentifier/>
+      </context>
+      <context attribute="Regular" lineEndContext="#pop" name="DATA_Alignments">
+        <keyword attribute="DATA_Sizes" context="DATA_Sizes" String="Sizes"/>
+        <IncludeRules context="Regular"/>
+        <DetectIdentifier/>
+      </context>
+      <context attribute="Regular" lineEndContext="#pop" name="DATA_Sizes">
+        <IncludeRules context="Regular"/>
+        <DetectIdentifier/>
+      </context>
+    </contexts>
+    <itemDatas>
+      <itemData name="Regular" defStyleNum="dsNormal" color="#000000" bold="0" spellChecking="true"/>
+      <itemData name="BLOCKS_CONstant" defStyleNum="dsKeyword" color="#000000" backgroundColor="#FDF3A8" bold="1" spellChecking="false"/>
+      <itemData name="BLOCKS_VARiable"  defStyleNum="dsKeyword" color="#000000" backgroundColor="#FDD2A7" bold="1" spellChecking="false"/>
+      <itemData name="BLOCKS_OBJect" defStyleNum="dsKeyword" color="#000000" backgroundColor="#FDA7A7" bold="1" spellChecking="false"/>
+      <itemData name="BLOCKS_PUBlic" defStyleNum="dsKeyword" color="#000000" backgroundColor="#A7D2FD" bold="1" spellChecking="false"/>
+      <itemData name="BLOCKS_PRIvate" defStyleNum="dsKeyword" color="#000000" backgroundColor="#A7F3FD" bold="1" spellChecking="false"/>
+      <itemData name="BLOCKS_DATa" defStyleNum="dsKeyword" color="#000000" backgroundColor="#A7FDB3" bold="1" spellChecking="false"/>
+      <itemData name="SPIN_Commands" defStyleNum="dsKeyword" color="#000000" bold="1" spellChecking="false"/>
+      <itemData name="SPIN_Conditionals" defStyleNum="dsKeyword" color="#808080" bold="1" spellChecking="false"/>
+      <itemData name="SPIN_Variables" defStyleNum="dsKeyword" color="#000000" bold="1" spellChecking="false"/>
+      <itemData name="ASSEMBLY_Instructions" defStyleNum="dsKeyword" color="#800000" bold="1" spellChecking="false"/>
+      <itemData name="ASSEMBLY_Conditionals" defStyleNum="dsKeyword" color="#800000" bold="1" spellChecking="false"/>
+      <itemData name="ASSEMBLY_Effects" defStyleNum="dsKeyword" color="#800000" bold="1" spellChecking="false"/>
+      <itemData name="ASSEMBLY_Literals" defStyleNum="dsKeyword" color="#000080" bold="1" spellChecking="false"/>
+      <itemData name="Directives" defStyleNum="dsKeyword" color="#000000" bold="1" spellChecking="false"/>
+      <itemData name="COMMENTS_Code" defStyleNum="dsComment" color="#000080" bold="0" spellChecking="true"/>
+      <itemData name="COMMENTS_Document" defStyleNum="dsComment" color="#000080" bold="0" spellChecking="true"/>
+      <itemData name="CONSTANTS_Numbers" defStyleNum="dsKeyword" color="#008080"bold="0" spellChecking="false"/>
+      <itemData name="CONSTANTS_Predefined" defStyleNum="dsKeyword" color="#000000" bold="1" spellChecking="false"/>
+      <itemData name="Strings" defStyleNum="dsString" color="#F73333" bold="0" spellChecking="false"/>
+      <itemData name="Operators" defStyleNum="dsKeyword" color="#008000" bold="1" spellChecking="false"/>
+      <itemData name="Registers" defStyleNum="dsKeyword" color="#000000" bold="1" spellChecking="false"/>
+      <itemData name="Sizes" defStyleNum="dsDataType" color="#000000" bold="1" spellChecking="false"/>
+      <itemData name="DATA_Alignments" defStyleNum="dsDataType" color="#000080" bold="1" spellChecking="false"/>
+      <itemData name="DATA_Sizes" defStyleNum="dsDataType" color="#00FF00" bold="1" spellChecking="false"/>
+    </itemDatas>
+  </highlighting>
+  <general>
+    <comments>
+      <comment name="singleLine" start="&apos;"/>
+      <comment name="multiLine" start="{" end="}" region="Comment"/>
+    </comments>
+    <keywords casesensitive="0" additionalDeliminator="&apos;&quot;#$@`" wordWrapDeliminator="&apos;&quot;#$@`"/>
+    <folding indentationsensitive ="1"/>
+  </general>
+</language>
