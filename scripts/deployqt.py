@@ -75,7 +75,7 @@ def is_debug(fpath):
     return coredebug.search(output)
 
 def is_debug_build(install_dir):
-    return is_debug(os.path.join(install_dir, 'bin', *glob.glob('*creator.exe'))) # return is_debug(os.path.join(install_dir, 'bin', 'qtcreator.exe'))
+    return is_debug(os.path.join(install_dir, 'bin', *glob(os.path.join(install_dir, 'bin', '*creator.exe')))) # return is_debug(os.path.join(install_dir, 'bin', 'qtcreator.exe'))
 
 def op_failed(details = None):
     if details != None:

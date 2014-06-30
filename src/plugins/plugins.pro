@@ -20,8 +20,7 @@ SUBDIRS   = \
     classview \
     tasklist \
     macros \
-    todo \
-    beautifier
+    omniacreator
 
 # minQtVersion(5, 0, 0) {
 #     SUBDIRS += winrt
