@@ -17,7 +17,8 @@ HEADERS = cmakebuildinfo.h \
     cmakelocatorfilter.h \
     cmakefilecompletionassist.h \
     cmakevalidator.h \
-    cmakeparser.h
+    cmakeparser.h \
+    cmakeprojectmanager_global.h
 
 SOURCES = cmakeproject.cpp \
     cmakeprojectplugin.cpp \
@@ -36,5 +37,6 @@ SOURCES = cmakeproject.cpp \
     cmakevalidator.cpp \
     cmakeparser.cpp
 
-
 RESOURCES += cmakeproject.qrc
+
+DEFINES += CMAKEPROJECTMANAGER_LIBRARY

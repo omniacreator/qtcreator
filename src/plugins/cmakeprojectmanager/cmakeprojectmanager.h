@@ -50,6 +50,8 @@
 
 #include "cmakevalidator.h"
 
+#include "cmakeprojectmanager_global.h"
+
 QT_FORWARD_DECLARE_CLASS(QLabel)
 
 namespace Utils { class QtcProcess; }
@@ -59,7 +61,7 @@ namespace Internal {
 
 class CMakeSettingsPage;
 
-class CMakeManager : public ProjectExplorer::IProjectManager
+class CMAKEPROJECTMANAGER_EXPORT CMakeManager : public ProjectExplorer::IProjectManager
 {
     Q_OBJECT
 public:

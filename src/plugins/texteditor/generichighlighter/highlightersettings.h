@@ -35,13 +35,15 @@
 #include <QList>
 #include <QRegExp>
 
+#include "../texteditor_global.h"
+
 QT_BEGIN_NAMESPACE
 class QSettings;
 QT_END_NAMESPACE
 
 namespace TextEditor {
 
-class HighlighterSettings
+class TEXTEDITOR_EXPORT HighlighterSettings
 {
 public:
     HighlighterSettings();
