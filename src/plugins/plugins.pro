@@ -17,8 +17,6 @@ SUBDIRS   = \
     locator \
     cmakeprojectmanager \
     pythoneditor \
-    classview \
-    tasklist \
     macros \
     omniacreator
 

@@ -211,6 +211,9 @@ Core::NavigationView OutlineFactory::createWidget()
     n.widget = placeHolder;
     n.dockToolBarWidgets.append(placeHolder->filterButton());
     n.dockToolBarWidgets.append(placeHolder->toggleSyncButton());
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    placeHolder->filterButton()->hide();
+    ///////////////////////////////////////////////////////////////////////////
     return n;
 }
 

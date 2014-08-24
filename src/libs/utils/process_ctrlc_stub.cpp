@@ -69,7 +69,7 @@ int main(int argc, char **)
     uiShutDownWindowMessage = RegisterWindowMessage(L"qtcctrlcstub_shutdown");
     uiInterruptMessage = RegisterWindowMessage(L"qtcctrlcstub_interrupt");
 
-    WNDCLASSEX wcex = {0};
+    WNDCLASSEX wcex = WNDCLASSEX(); // {0};
     wcex.cbSize = sizeof(wcex);
     wcex.lpfnWndProc = WndProc;
     wcex.hInstance = GetModuleHandle(0);
@@ -172,11 +172,11 @@ DWORD WINAPI processWatcherThread(LPVOID lpParameter)
 
 bool startProcess(wchar_t *pCommandLine)
 {
-    SECURITY_ATTRIBUTES sa = {0};
+    SECURITY_ATTRIBUTES sa = SECURITY_ATTRIBUTES(); // {0};
     sa.nLength = sizeof(sa);
     sa.bInheritHandle = TRUE;
 
-    STARTUPINFO si = {0};
+    STARTUPINFO si = STARTUPINFO(); // {0};
     si.cb = sizeof(si);
 
     PROCESS_INFORMATION pi;

@@ -90,6 +90,10 @@ PluginDialog::PluginDialog(QWidget *parent)
     connect(m_errorDetailsButton, SIGNAL(clicked()), this, SLOT(openErrorDetails()));
     connect(m_closeButton, SIGNAL(clicked()), this, SLOT(closeDialog()));
     updateButtons();
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    setWindowFlags(Qt::MSWindowsFixedSizeDialogHint | Qt::WindowTitleHint |
+    Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint | Qt::Dialog);
+    ///////////////////////////////////////////////////////////////////////////
 }
 
 void PluginDialog::closeDialog()
@@ -139,6 +143,10 @@ void PluginDialog::openDetails(ExtensionSystem::PluginSpec *spec)
     connect(buttons, SIGNAL(accepted()), &dialog, SLOT(accept()));
     connect(buttons, SIGNAL(rejected()), &dialog, SLOT(reject()));
     dialog.resize(400, 500);
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    dialog.setWindowFlags(Qt::MSWindowsFixedSizeDialogHint | Qt::WindowTitleHint |
+    Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint | Qt::Dialog);
+    ///////////////////////////////////////////////////////////////////////////
     dialog.exec();
 }
 
@@ -159,6 +167,10 @@ void PluginDialog::openErrorDetails()
     connect(buttons, SIGNAL(accepted()), &dialog, SLOT(accept()));
     connect(buttons, SIGNAL(rejected()), &dialog, SLOT(reject()));
     dialog.resize(500, 300);
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    dialog.setWindowFlags(Qt::MSWindowsFixedSizeDialogHint | Qt::WindowTitleHint |
+    Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint | Qt::Dialog);
+    ///////////////////////////////////////////////////////////////////////////
     dialog.exec();
 }
 

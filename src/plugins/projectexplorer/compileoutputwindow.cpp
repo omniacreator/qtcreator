@@ -258,6 +258,14 @@ void CompileOutputWindow::registerPositionOf(const Task &task)
     if (blocknumber > MAX_LINECOUNT)
         return;
 
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    if(!blocknumber) { return; }
+    while(((--blocknumber) >= 0) && (
+    !m_outputWindow->document()->findBlockByNumber(
+    blocknumber).text().simplified().contains(task.description.simplified())));
+    if(blocknumber < 0) { blocknumber = m_outputWindow->blockCount(); }
+    if(blocknumber > MAX_LINECOUNT) { return; }
+    ///////////////////////////////////////////////////////////////////////////
     m_taskPositions.insert(task.taskId, blocknumber);
     m_outputWindow->addTask(task, blocknumber);
 }

@@ -150,7 +150,7 @@ int main()
         size = ftell(envFd);
         rewind(envFd);
         env = malloc(size);
-        if (fread(env, 1, size, envFd) != size) {
+        if (fread(env, 1, size, envFd) != (size_t) size) {
             perror("Failed to read env file");
             doExit(1);
         }

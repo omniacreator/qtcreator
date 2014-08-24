@@ -130,6 +130,10 @@ CodecSelector::CodecSelector(QWidget *parent, BaseTextDocument *doc)
     vbox->addWidget(m_dialogButtonBox);
 
     updateButtons();
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    setWindowFlags(Qt::MSWindowsFixedSizeDialogHint | Qt::WindowTitleHint |
+    Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint | Qt::Dialog);
+    ///////////////////////////////////////////////////////////////////////////
 }
 
 CodecSelector::~CodecSelector()

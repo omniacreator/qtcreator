@@ -174,7 +174,11 @@ ProjectExplorer::BuildConfiguration *CMakeBuildConfigurationFactory::create(Proj
                                                                             copy.displayName));
 
     CMakeOpenProjectWizard copw(Core::ICore::mainWindow(), project->projectManager(), CMakeOpenProjectWizard::ChangeDirectory, &copy);
-    if (copw.exec() != QDialog::Accepted)
+    // Omnia Creator Automate /////////////////////////////////////////////////
+    CMakeRunPage *page = q_check_ptr<CMakeRunPage>
+    (qobject_cast<CMakeRunPage *>(copw.page(copw.pageIds().last())));
+    if(!page->m_haveCbpFile) // if (copw.exec() != QDialog::Accepted)
+    ///////////////////////////////////////////////////////////////////////////
         return 0;
 
     CMakeBuildConfiguration *bc = new CMakeBuildConfiguration(parent);

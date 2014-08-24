@@ -75,8 +75,8 @@ CMakeManager::CMakeManager(CMakeSettingsPage *cmakeSettingsPage)
     const Core::Context projectContext(CMakeProjectManager::Constants::PROJECTCONTEXT);
 
     m_runCMakeAction = new QAction(QIcon(), tr("Run CMake"), this);
-    Core::Command *command = Core::ActionManager::registerAction(m_runCMakeAction,
-                                                                 Constants::RUNCMAKE, projectContext);
+    Core::Command *command = Core::ActionManager::registerAction(m_runCMakeAction, ///////////////////////// Omnia Creator /////////////////////////
+                                                                 Constants::RUNCMAKE, Core::Context(Core::Constants::C_GLOBAL)); // projectContext);
     command->setAttribute(Core::Command::CA_Hide);
     mbuild->addAction(command, ProjectExplorer::Constants::G_BUILD_DEPLOY);
     connect(m_runCMakeAction, SIGNAL(triggered()), this, SLOT(runCMake()));
@@ -124,7 +124,11 @@ void CMakeManager::runCMake(ProjectExplorer::Project *project)
     CMakeBuildInfo info(bc);
 
     CMakeOpenProjectWizard copw(Core::ICore::mainWindow(), this, CMakeOpenProjectWizard::WantToUpdate, &info);
-    if (copw.exec() == QDialog::Accepted)
+    // Omnia Creator Automate /////////////////////////////////////////////////
+    CMakeRunPage *page = q_check_ptr<CMakeRunPage>
+    (qobject_cast<CMakeRunPage *>(copw.page(copw.pageIds().last())));
+    if(page->m_haveCbpFile) // if (copw.exec() == QDialog::Accepted)
+    ///////////////////////////////////////////////////////////////////////////
         cmakeProject->parseCMakeLists();
 }
 
@@ -158,6 +162,16 @@ bool CMakeManager::isCMakeExecutableValid() const
 void CMakeManager::setCMakeExecutable(const QString &executable)
 {
     m_settingsPage->setCMakeExecutable(executable);
+}
+
+QString CMakeManager::ninjaExecutable() const
+{
+    return m_ninjaExecutable;
+}
+
+void CMakeManager::setNinjaExecutable(const QString &executable)
+{
+    m_ninjaExecutable = executable;
 }
 
 bool CMakeManager::hasCodeBlocksMsvcGenerator() const
@@ -198,6 +212,12 @@ void CMakeManager::createXmlFile(Utils::QtcProcess *proc, const QString &argumen
                 QString(QLatin1Char('.')) : sourceDirectory;
     QString args;
     Utils::QtcProcess::addArg(&args, srcdir);
+
+    if(!m_ninjaExecutable.isEmpty())
+    {
+        Utils::QtcProcess::addArgs(&args, QString(QLatin1String("-DCMAKE_MAKE_PROGRAM=\"%L1\"")).arg(ninjaExecutable()));
+    }
+
     Utils::QtcProcess::addArgs(&args, arguments);
     Utils::QtcProcess::addArg(&args, generator);
     proc->setCommand(cmakeExecutable(), args);

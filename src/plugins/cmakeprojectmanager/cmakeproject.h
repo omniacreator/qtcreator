@@ -30,6 +30,8 @@
 #ifndef CMAKEPROJECT_H
 #define CMAKEPROJECT_H
 
+#include "cmakeprojectmanager_global.h"
+
 #include "cmakeprojectmanager.h"
 #include "cmakeprojectnodes.h"
 #include "cmakebuildconfiguration.h"
@@ -70,7 +72,7 @@ struct CMakeBuildTarget
     void clear();
 };
 
-class CMakeProject : public ProjectExplorer::Project
+class CMAKEPROJECTMANAGER_EXPORT CMakeProject : public ProjectExplorer::Project
 {
     Q_OBJECT
     // for changeBuildDirectory

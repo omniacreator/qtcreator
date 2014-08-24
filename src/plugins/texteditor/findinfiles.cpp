@@ -177,7 +177,9 @@ void FindInFiles::writeSettings(QSettings *settings)
 void FindInFiles::readSettings(QSettings *settings)
 {
     settings->beginGroup(QLatin1String("FindInFiles"));
-    readCommonSettings(settings, QLatin1String("*.cpp,*.h"));
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    readCommonSettings(settings, QString()); // readCommonSettings(settings, QLatin1String("*.cpp,*.h"));
+    ///////////////////////////////////////////////////////////////////////////
     m_directoryStrings.setStringList(settings->value(QLatin1String("directories")).toStringList());
     m_directorySetting = Utils::FileName::fromString(
                 settings->value(QLatin1String("currentDirectory")).toString());

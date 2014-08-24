@@ -98,7 +98,9 @@ ModeManager::ModeManager(Internal::MainWindow *mainWindow,
     d->m_signalMapper = new QSignalMapper(this);
     d->m_oldCurrent = -1;
     d->m_actionBar = new Internal::FancyActionBar(modeStack);
-    d->m_modeStack->addCornerWidget(d->m_actionBar);
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    d->m_actionBar->hide(); // d->m_modeStack->addCornerWidget(d->m_actionBar);
+    ///////////////////////////////////////////////////////////////////////////
     d->m_modeSelectorVisible = true;
     d->m_modeStack->setSelectionWidgetVisible(d->m_modeSelectorVisible);
 

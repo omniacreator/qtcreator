@@ -116,13 +116,29 @@ void GccParser::stdError(const QString &line)
         if (m_regExp.cap(5).startsWith(QLatin1Char('#')))
             description = m_regExp.cap(5) + description;
 
+        // Omnia Creator Warning Supression ///////////////////////////////////
+        foreach(const QString &wno_path,
+        QString::fromUtf8(qgetenv("WNO_PATH")).split(QChar::fromLatin1(','),
+        QString::SkipEmptyParts)) { if(filename.isChildOf(
+        Utils::FileName::fromUserInput(wno_path))) { return; } }
+        ///////////////////////////////////////////////////////////////////////
+
         Task task(type, description, filename, lineno, Constants::TASK_CATEGORY_COMPILE);
         newTask(task);
         return;
     } else if (m_regExpIncluded.indexIn(lne) > -1) {
+        Utils::FileName filename = Utils::FileName::fromUserInput(m_regExpIncluded.cap(1));
+
+        // Omnia Creator Warning Supression ///////////////////////////////////
+        foreach(const QString &wno_path,
+        QString::fromUtf8(qgetenv("WNO_PATH")).split(QChar::fromLatin1(','),
+        QString::SkipEmptyParts)) { if(filename.isChildOf(
+        Utils::FileName::fromUserInput(wno_path))) { return; } }
+        ///////////////////////////////////////////////////////////////////////
+
         newTask(Task(Task::Unknown,
                      lne.trimmed() /* description */,
-                     Utils::FileName::fromUserInput(m_regExpIncluded.cap(1)) /* filename */,
+                     filename /* filename */,
                      m_regExpIncluded.cap(3).toInt() /* linenumber */,
                      Constants::TASK_CATEGORY_COMPILE));
         return;

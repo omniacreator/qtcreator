@@ -183,12 +183,14 @@ QList<GeneratorInfo> GeneratorInfo::generatorInfosFor(ProjectExplorer::Kit *k, N
     ProjectExplorer::ToolChain *tc = ProjectExplorer::ToolChainKitInformation::toolChain(k);
     if (!tc)
         return results;
-    Core::Id deviceType = ProjectExplorer::DeviceTypeKitInformation::deviceTypeId(k);
-    if (deviceType !=  ProjectExplorer::Constants::DESKTOP_DEVICE_TYPE
-            && deviceType != RemoteLinux::Constants::GenericLinuxOsType
-            && deviceType != Qnx::Constants::QNX_QNX_OS_TYPE
-            && deviceType != Qnx::Constants::QNX_BB_OS_TYPE)
-        return results;
+// Omnia Creator Code Change //////////////////////////////////////////////////
+//    Core::Id deviceType = ProjectExplorer::DeviceTypeKitInformation::deviceTypeId(k);
+//    if (deviceType !=  ProjectExplorer::Constants::DESKTOP_DEVICE_TYPE
+//            && deviceType != RemoteLinux::Constants::GenericLinuxOsType
+//            && deviceType != Qnx::Constants::QNX_QNX_OS_TYPE
+//            && deviceType != Qnx::Constants::QNX_BB_OS_TYPE)
+//        return results;
+///////////////////////////////////////////////////////////////////////////////
     ProjectExplorer::Abi targetAbi = tc->targetAbi();
     if (n != ForceNinja) {
         if (targetAbi.os() == ProjectExplorer::Abi::WindowsOS) {
@@ -235,7 +237,9 @@ CMakeOpenProjectWizard::CMakeOpenProjectWizard(QWidget *parent, CMakeManager *cm
         m_buildDirectory = m_sourceDirectory;
         addPage(new InSourceBuildPage(this));
     } else {
-        m_buildDirectory = m_sourceDirectory + QLatin1String("-build");
+        // Omnia Creator Code Change //////////////////////////////////////////
+        m_buildDirectory = QDir::cleanPath(m_sourceDirectory + QLatin1String("/../build")); // m_buildDirectory = m_sourceDirectory + QLatin1String("-build");
+        ///////////////////////////////////////////////////////////////////////
         addPage(new ShadowBuildPage(this));
     }
 
@@ -550,6 +554,37 @@ CMakeRunPage::CMakeRunPage(CMakeOpenProjectWizard *cmakeWizard, Mode mode, const
       m_buildDirectory(buildDirectory)
 {
     initWidgets();
+
+    // Omnia Creator Code Change //////////////////////////////////////////////
+
+    initializePage();
+    runCMake();
+
+    QProgressDialog dialog(Core::ICore::mainWindow(),
+    Qt::MSWindowsFixedSizeDialogHint | Qt::WindowTitleHint |
+    Qt::WindowSystemMenuHint);
+
+    dialog.setCancelButton(NULL);
+    dialog.setWindowTitle(tr("Configuring Project"));
+    dialog.setWindowModality(Qt::ApplicationModal);
+    dialog.setLabelText(tr("Running CMake..."));
+    dialog.setRange(0, 0);
+
+    connect(this, SIGNAL(completeChanged()), &dialog, SLOT(close()));
+
+    dialog.exec();
+
+    if(!m_haveCbpFile)
+    {
+        QMessageBox messageBox(QMessageBox::Critical,
+        tr("Configuration Failed"), tr("Please fix the error(s)"),
+        QMessageBox::Ok, Core::ICore::mainWindow());
+
+        messageBox.setDefaultButton(QMessageBox::Ok);
+        messageBox.setDetailedText(m_output->toPlainText());
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
 }
 
 void CMakeRunPage::initWidgets()

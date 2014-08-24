@@ -32,6 +32,8 @@
 
 #include <QToolButton>
 
+#include "core_global.h"
+
 QT_BEGIN_NAMESPACE
 class QVBoxLayout;
 QT_END_NAMESPACE
@@ -61,7 +63,7 @@ private slots:
     void actionChanged();
 };
 
-class FancyActionBar : public QWidget
+class CORE_EXPORT FancyActionBar : public QWidget
 {
     Q_OBJECT
 

@@ -67,11 +67,6 @@ if(DEFINED BEFORE_PROJECT_COMMAND AND NOT DEFINED AFTER_PROJECT_COMMAND)
     set(PROPELLER_SDK_PATH
     ${TOOLS_FOLDER}/propeller)
 
-    if(WIN32)
-        set(CMAKE_MAKE_PROGRAM
-        ${PROPELLER_SDK_PATH}/propeller-gcc/bin/make.exe)
-    endif()
-
     set(CMAKE_TOOLCHAIN_FILE
     ${CMAKE_CURRENT_LIST_DIR}/propeller-cmake/cmake/PropellerToolchain.cmake)
 

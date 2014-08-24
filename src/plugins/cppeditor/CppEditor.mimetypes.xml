@@ -4,8 +4,12 @@
         <sub-class-of type="text/plain"/>
         <comment>C Source file</comment>
         <glob pattern="*.c"/>
+        <!-- Was Missing -->
+        <glob pattern="*.i"/>
         <!-- NVIDIA CUDA files are like C -->
         <glob pattern="*.cu"/>
+        <!-- For Propeller -->
+        <glob pattern="*.cogc"/>
     </mime-type>
 
     <!-- A C Header file is virtually undistinguishable from the C++ header  -->
@@ -43,6 +47,8 @@
         <sub-class-of type="text/x-csrc"/>
         <comment>C++ source code</comment>
         <glob pattern="*.cpp"/>
+        <!-- Was Missing -->
+        <glob pattern="*.ii"/>
         <glob pattern="*.cp"/>
         <glob pattern="*.cc"/>
         <glob pattern="*.cxx"/>
@@ -55,8 +61,12 @@
         <glob pattern="*.tpp"/>
         <glob pattern="*.t++"/>
         <glob pattern="*.txx"/>
+        <!-- For Arduino -->
         <glob pattern="*.ino"/>
+        <!-- For Arduino -->
         <glob pattern="*.pde"/>
+        <!-- For Propeller -->
+        <glob pattern="*.cogcpp"/>
         <magic priority="30">
         <match value="-*- C++ -*-" type="string" offset="0:30"/>
         </magic>

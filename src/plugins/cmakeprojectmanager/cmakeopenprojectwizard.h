@@ -45,6 +45,11 @@
 #include <QLabel>
 #include <QPlainTextEdit>
 
+// Omnia Code Change //////////////////////////////////////////////////////////
+#include <QMessageBox>
+#include <QProgressDialog>
+///////////////////////////////////////////////////////////////////////////////
+
 namespace Utils {
 class FancyLineEdit;
 class PathChooser;
@@ -182,7 +187,9 @@ private:
     QComboBox *m_generatorComboBox;
     QLabel *m_descriptionLabel;
     QLabel *m_exitCodeLabel;
-    bool m_haveCbpFile;
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    public: bool m_haveCbpFile; private:
+    ///////////////////////////////////////////////////////////////////////////
     Mode m_mode;
     QString m_buildDirectory;
 };

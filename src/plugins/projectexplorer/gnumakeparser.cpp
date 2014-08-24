@@ -125,8 +125,17 @@ void GnuMakeParser::stdError(const QString &line)
         if (res.isFatal)
             ++m_fatalErrorCount;
         if (!m_suppressIssues) {
+            Utils::FileName filename = Utils::FileName::fromUserInput(m_errorInMakefile.cap(1));
+
+            // Omnia Creator Warning Supression ///////////////////////////////////
+            foreach(const QString &wno_path,
+            QString::fromUtf8(qgetenv("WNO_PATH")).split(QChar::fromLatin1(','),
+            QString::SkipEmptyParts)) { if(filename.isChildOf(
+            Utils::FileName::fromUserInput(wno_path))) { return; } }
+            ///////////////////////////////////////////////////////////////////////
+
             taskAdded(Task(res.type, res.description,
-                           Utils::FileName::fromUserInput(m_errorInMakefile.cap(1)) /* filename */,
+                           filename /* filename */,
                            m_errorInMakefile.cap(4).toInt(), /* line */
                            Core::Id(Constants::TASK_CATEGORY_BUILDSYSTEM)));
         }

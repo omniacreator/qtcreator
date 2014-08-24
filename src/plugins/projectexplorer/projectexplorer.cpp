@@ -1792,7 +1792,9 @@ void ProjectExplorerPlugin::updateExternalFileWarning()
         return;
     Utils::FileName fileName = Utils::FileName::fromString(document->filePath());
     Utils::FileName projectDir = Utils::FileName::fromString(d->m_currentProject->projectDirectory());
-    if (projectDir.isEmpty() || fileName.isChildOf(projectDir))
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    if (fileName.isChildOf(Utils::FileName::fromString(QString::fromUtf8(getenv("OC_PROJECT_FOLDER"))))) // projectDir.isEmpty() || fileName.isChildOf(projectDir)
+    ///////////////////////////////////////////////////////////////////////////
         return;
     // External file. Test if it under the same VCS
     QString topLevel;
@@ -1852,7 +1854,9 @@ void ProjectExplorerPlugin::setCurrent(Project *project, QString filePath, Node 
     }
     d->m_currentProject = project;
 
-    if (!node && EditorManager::currentDocument()) {
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    if (EditorManager::currentDocument()) { // !node && EditorManager::currentDocument()) {
+    ///////////////////////////////////////////////////////////////////////////
         connect(EditorManager::currentDocument(), SIGNAL(changed()),
                 this, SLOT(updateExternalFileWarning()), Qt::UniqueConnection);
     }
@@ -1943,9 +1947,11 @@ void ProjectExplorerPlugin::updateActions()
     d->m_rebuildSessionAction->setEnabled(buildSessionState.first);
     d->m_cleanSessionAction->setEnabled(buildSessionState.first);
 
-    d->m_buildSessionAction->setToolTip(buildSessionState.second);
-    d->m_rebuildSessionAction->setToolTip(buildSessionState.second);
-    d->m_cleanSessionAction->setToolTip(buildSessionState.second);
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    // d->m_buildSessionAction->setToolTip(buildSessionState.second);
+    // d->m_rebuildSessionAction->setToolTip(buildSessionState.second);
+    // d->m_cleanSessionAction->setToolTip(buildSessionState.second);
+    ///////////////////////////////////////////////////////////////////////////
 
     d->m_cancelBuildAction->setEnabled(BuildManager::isBuilding());
 
@@ -2566,7 +2572,9 @@ void ProjectExplorerPlugin::slotUpdateRunActions()
     Project *project = SessionManager::startupProject();
     const bool state = canRun(project, NormalRunMode);
     d->m_runAction->setEnabled(state);
-    d->m_runAction->setToolTip(cannotRunReason(project, NormalRunMode));
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    // d->m_runAction->setToolTip(cannotRunReason(project, NormalRunMode));
+    ///////////////////////////////////////////////////////////////////////////
     d->m_runWithoutDeployAction->setEnabled(state);
 }
 

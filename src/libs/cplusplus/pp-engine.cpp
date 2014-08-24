@@ -1380,6 +1380,30 @@ void Preprocessor::preprocess(const QString &fileName, const QByteArray &source,
                               bool markGeneratedTokens, bool inCondition,
                               unsigned offsetRef, unsigned lineRef)
 {
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    if(fileName.endsWith(QLatin1String("ino"), Qt::CaseInsensitive)
+    || fileName.endsWith(QLatin1String("pde"), Qt::CaseInsensitive)) {
+        const char *str1 = "ARDUINO_INCLUDE";
+        const char *str2 = "#include ";
+        if(Macro *macro = macroDefinition(ByteArrayRef(str1, strlen(str1)), strlen(str2) + 1, 0, m_env, m_client)) {
+            QByteArray array = macro->definitionText();
+
+            if((array.at(0) == '\"')
+            && (array.at(array.size() - 1) == '\"')) {
+                if (m_client) {
+                    m_client->sourceNeeded(0, QString::fromUtf8(array.mid(1, array.size() - 2)), Client::IncludeLocal);
+                }
+            }
+            else if((array.at(0) == '<')
+            && (array.at(array.size() - 1) == '>')) {
+                if (m_client) {
+                    m_client->sourceNeeded(0, QString::fromUtf8(array.mid(1, array.size() - 2)), Client::IncludeGlobal);
+                }
+            }
+        }
+    }
+    ///////////////////////////////////////////////////////////////////////////
+
     if (source.isEmpty())
         return;
 

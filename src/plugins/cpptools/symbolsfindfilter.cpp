@@ -296,9 +296,17 @@ SymbolsFindFilterConfigWidget::SymbolsFindFilterConfigWidget(SymbolsFindFilter *
 
     m_searchProjectsOnly = new QRadioButton(tr("Projects only"));
     layout->addWidget(m_searchProjectsOnly, 2, 1);
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    m_searchProjectsOnly->hide();
+    m_searchProjectsOnly->setChecked(false); setState();
+    ///////////////////////////////////////////////////////////////////////////
 
     m_searchGlobal = new QRadioButton(tr("All files"));
     layout->addWidget(m_searchGlobal, 2, 2);
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    m_searchGlobal->hide();
+    m_searchGlobal->setChecked(true); setState();
+    ///////////////////////////////////////////////////////////////////////////
 
     m_searchGroup = new QButtonGroup(this);
     m_searchGroup->addButton(m_searchProjectsOnly);

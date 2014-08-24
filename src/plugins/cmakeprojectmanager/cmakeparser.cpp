@@ -68,11 +68,29 @@ void CMakeParser::stdError(const QString &line)
         m_skippedFirstEmptyLine= false;
 
     if (m_commonError.indexIn(trimmedLine) != -1) {
-        m_lastTask = Task(Task::Error, QString(), Utils::FileName::fromUserInput(m_commonError.cap(1)),
+        Utils::FileName filename = Utils::FileName::fromUserInput(m_commonError.cap(1));
+
+        // Omnia Creator Warning Supression ///////////////////////////////////
+        foreach(const QString &wno_path,
+        QString::fromUtf8(qgetenv("WNO_PATH")).split(QChar::fromLatin1(','),
+        QString::SkipEmptyParts)) { if(filename.isChildOf(
+        Utils::FileName::fromUserInput(wno_path))) { return; } }
+        ///////////////////////////////////////////////////////////////////////
+
+        m_lastTask = Task(Task::Error, QString(), filename,
                           m_commonError.cap(2).toInt(), Constants::TASK_CATEGORY_BUILDSYSTEM);
         return;
     } else if (m_nextSubError.indexIn(trimmedLine) != -1) {
-        m_lastTask = Task(Task::Error, QString(), Utils::FileName::fromUserInput(m_nextSubError.cap(1)), -1,
+        Utils::FileName filename = Utils::FileName::fromUserInput(m_nextSubError.cap(1));
+
+        // Omnia Creator Warning Supression ///////////////////////////////////
+        foreach(const QString &wno_path,
+        QString::fromUtf8(qgetenv("WNO_PATH")).split(QChar::fromLatin1(','),
+        QString::SkipEmptyParts)) { if(filename.isChildOf(
+        Utils::FileName::fromUserInput(wno_path))) { return; } }
+        ///////////////////////////////////////////////////////////////////////
+
+        m_lastTask = Task(Task::Error, QString(), filename, -1,
                           Constants::TASK_CATEGORY_BUILDSYSTEM);
         return;
     } else if (trimmedLine.startsWith(QLatin1String("  ")) && !m_lastTask.isNull()) {

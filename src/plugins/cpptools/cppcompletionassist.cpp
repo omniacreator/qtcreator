@@ -1176,7 +1176,9 @@ void CppCompletionAssistProcessor::completeInclude(const QString &realPath,
         const QFileInfo fileInfo = i.fileInfo();
         const QString suffix = fileInfo.suffix();
         if (suffix.isEmpty() || suffixes.contains(suffix)) {
-            QString text = fileName.mid(realPath.length() + 1);
+            // Omnia Creator Code Change //////////////////////////////////////
+            QString text = fileName.mid(fileInfo.path().length() + 1); // fileName.mid(realPath.length() + 1);
+            ///////////////////////////////////////////////////////////////////
             if (fileInfo.isDir())
                 text += QLatin1Char('/');
             addCompletionItem(text, m_icons.keywordIcon());

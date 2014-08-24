@@ -37,6 +37,8 @@
 #include <coreplugin/icontext.h>
 #include <texteditor/codeassist/keywordscompletionassist.h>
 
+#include <coreplugin/coreconstants.h>
+
 #include <utils/environment.h>
 #include <utils/pathchooser.h>
 
@@ -75,6 +77,10 @@ public:
 
     void setCMakeExecutable(const QString &executable);
 
+    QString ninjaExecutable() const;
+
+    void setNinjaExecutable(const QString &executable);
+
     void createXmlFile(Utils::QtcProcess *process,
                        const QString &arguments,
                        const QString &sourceDirectory,
@@ -99,6 +105,8 @@ private:
     QAction *m_runCMakeAction;
     QAction *m_runCMakeActionContextMenu;
     ProjectExplorer::Project *m_contextProject;
+
+    QString m_ninjaExecutable;
 };
 
 class CMakeSettingsPage : public Core::IOptionsPage

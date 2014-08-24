@@ -68,6 +68,10 @@ PluginDialog::PluginDialog(ExtensionSystem::PluginManager *manager)
                 this, SLOT(openDetails(ExtensionSystem::PluginSpec*)));
     connect(m_detailsButton, SIGNAL(clicked()), this, SLOT(openDetails()));
     connect(m_errorDetailsButton, SIGNAL(clicked()), this, SLOT(openErrorDetails()));
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    setWindowFlags(Qt::MSWindowsFixedSizeDialogHint | Qt::WindowTitleHint |
+    Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint | Qt::Dialog);
+    ///////////////////////////////////////////////////////////////////////////
 }
 
 void PluginDialog::updateButtons()

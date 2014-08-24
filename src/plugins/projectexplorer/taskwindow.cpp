@@ -299,6 +299,9 @@ TaskWindow::TaskWindow() : d(new TaskWindowPrivate)
             this, SLOT(showTask(uint)));
     connect(hub, SIGNAL(openTask(uint)),
             this, SLOT(openTask(uint)));
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    d->m_categoriesButton->hide();
+    ///////////////////////////////////////////////////////////////////////////
 }
 
 TaskWindow::~TaskWindow()

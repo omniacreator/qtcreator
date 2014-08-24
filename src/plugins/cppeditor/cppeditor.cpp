@@ -672,7 +672,9 @@ void CPPEditorWidget::createToolBar(CPPEditor *editor)
     connect(cmd, SIGNAL(keySequenceChanged()), this, SLOT(updatePreprocessorButtonTooltip()));
     updatePreprocessorButtonTooltip();
     connect(m_preprocessorButton, SIGNAL(clicked()), this, SLOT(showPreProcessorWidget()));
-    editor->insertExtraToolBarWidget(TextEditor::BaseTextEditor::Left, m_preprocessorButton);
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    m_preprocessorButton->hide(); // editor->insertExtraToolBarWidget(TextEditor::BaseTextEditor::Left, m_preprocessorButton);
+    ///////////////////////////////////////////////////////////////////////////
     editor->insertExtraToolBarWidget(TextEditor::BaseTextEditor::Left, m_outlineCombo);
 }
 

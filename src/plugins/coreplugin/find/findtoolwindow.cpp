@@ -120,6 +120,10 @@ void FindToolWindow::updateButtonStates()
     m_ui.searchButton->setEnabled(enabled);
     m_ui.replaceButton->setEnabled(m_currentFilter
                                    && m_currentFilter->isReplaceSupported() && enabled);
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    m_ui.replaceButton->setVisible(m_currentFilter
+                                   && m_currentFilter->isReplaceSupported());
+    ///////////////////////////////////////////////////////////////////////////
     if (m_configWidget)
         m_configWidget->setEnabled(filterEnabled);
 

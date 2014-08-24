@@ -10,6 +10,10 @@
         <glob pattern="*.obj"/>
         <glob pattern="*.out"/>
         <glob pattern="*.so"/>
+        <!-- For Propeller -->
+        <glob pattern="*.binary"/>
+        <!-- For Propeller -->
+        <glob pattern="*.eeprom"/>
         <!-- Magic for ELF binaries -->
         <magic priority="99">
             <match type="byte" offset="0" value="\0x7f\0x45\0x4c\0x46"/>

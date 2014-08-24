@@ -363,6 +363,10 @@ void BuildManager::addToOutputWindow(const QString &string, BuildStep::OutputFor
     stringToWrite += string;
     if (newLineSetting == BuildStep::DoAppendNewline)
         stringToWrite += QLatin1Char('\n');
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    stringToWrite = stringToWrite.simplified();
+    if(!stringToWrite.isEmpty()) { stringToWrite += QLatin1Char('\n'); }
+    ///////////////////////////////////////////////////////////////////////////
     d->m_outputWindow->appendText(stringToWrite, format);
 }
 

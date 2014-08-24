@@ -391,7 +391,9 @@ FancyTabWidget::FancyTabWidget(QWidget *parent)
     layout->addWidget(new FancyColorButton(this));
     selectionLayout->addWidget(bar);
 
-    selectionLayout->addWidget(m_tabBar, 1);
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    m_tabBar->hide(); // selectionLayout->addWidget(m_tabBar, 1);
+    ///////////////////////////////////////////////////////////////////////////
     m_selectionWidget->setLayout(selectionLayout);
     m_selectionWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
 

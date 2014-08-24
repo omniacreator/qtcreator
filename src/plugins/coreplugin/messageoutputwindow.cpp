@@ -87,7 +87,9 @@ void MessageOutputWindow::append(const QString &text)
 
 int MessageOutputWindow::priorityInStatusBar() const
 {
-    return -1;
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    return 10; // return -1;
+    ///////////////////////////////////////////////////////////////////////////
 }
 
 bool MessageOutputWindow::canNext() const

@@ -64,7 +64,11 @@ void LdParser::stdError(const QString &line)
     QString lne = rightTrimmed(line);
     if (lne.startsWith(QLatin1String("TeamBuilder "))
             || lne.startsWith(QLatin1String("distcc["))
-            || lne.contains(QLatin1String("ar: creating "))) {
+            || lne.contains(QLatin1String("ar: creating "))
+            // Omnia Creator Arduino support //////////////////////////////////
+            || lne.startsWith(QLatin1String("avrdude"))
+            // Omnia Creator Propeller support ////////////////////////////////
+            || lne.startsWith(QLatin1String("propeller-load"))) {
         IOutputParser::stdError(line);
         return;
     }
@@ -113,6 +117,13 @@ void LdParser::stdError(const QString &line)
             type = Task::Warning;
             description = description.mid(9);
         }
+        // Omnia Creator Warning Supression ///////////////////////////////////
+        foreach(const QString &wno_path,
+        QString::fromUtf8(qgetenv("WNO_PATH")).split(QChar::fromLatin1(','),
+        QString::SkipEmptyParts)) { if(filename.isChildOf(
+        Utils::FileName::fromUserInput(wno_path))) { return; } }
+        ///////////////////////////////////////////////////////////////////////
+
         Task task(type, description, filename, lineno, Constants::TASK_CATEGORY_COMPILE);
         emit addTask(task);
         return;

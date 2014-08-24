@@ -339,6 +339,10 @@ void SearchResultWindow::visibilityChanged(bool visible)
 */
 QWidget *SearchResultWindow::outputWidget(QWidget *)
 {
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    d->m_expandCollapseButton->setEnabled(false);
+    handleExpandCollapseToolButton(d->m_expandCollapseAction->isChecked());
+    ///////////////////////////////////////////////////////////////////////////
     return d->m_widget;
 }
 
@@ -495,14 +499,26 @@ void SearchResultWindow::openNewSearchPanel()
 */
 void SearchResultWindow::handleExpandCollapseToolButton(bool checked)
 {
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    if (checked) {
+        d->m_expandCollapseAction->setText(tr("Collapse All"));
+    } else {
+        d->m_expandCollapseAction->setText(tr("Expand All"));
+    }
+    ///////////////////////////////////////////////////////////////////////////
+
     if (!d->isSearchVisible())
         return;
     d->m_searchResultWidgets.at(d->visibleSearchIndex())->setAutoExpandResults(checked);
     if (checked) {
-        d->m_expandCollapseAction->setText(tr("Collapse All"));
+        // Omnia Creator Code Change //////////////////////////////////////////
+        // d->m_expandCollapseAction->setText(tr("Collapse All"));
+        ///////////////////////////////////////////////////////////////////////
         d->m_searchResultWidgets.at(d->visibleSearchIndex())->expandAll();
     } else {
-        d->m_expandCollapseAction->setText(tr("Expand All"));
+        // Omnia Creator Code Change //////////////////////////////////////////
+        // d->m_expandCollapseAction->setText(tr("Expand All"));
+        ///////////////////////////////////////////////////////////////////////
         d->m_searchResultWidgets.at(d->visibleSearchIndex())->collapseAll();
     }
 }

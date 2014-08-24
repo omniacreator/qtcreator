@@ -36,6 +36,8 @@
 #include <QTimer>
 #include <QPropertyAnimation>
 
+#include "core_global.h"
+
 QT_BEGIN_NAMESPACE
 class QPainter;
 class QStackedLayout;
@@ -138,7 +140,7 @@ private:
 
 };
 
-class FancyTabWidget : public QWidget
+class CORE_EXPORT FancyTabWidget : public QWidget
 {
     Q_OBJECT
 

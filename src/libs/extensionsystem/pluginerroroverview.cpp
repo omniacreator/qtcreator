@@ -57,6 +57,10 @@ PluginErrorOverview::PluginErrorOverview(QWidget *parent) :
 
     if (m_ui->pluginList->count() > 0)
         m_ui->pluginList->setCurrentRow(0);
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    setWindowFlags(Qt::MSWindowsFixedSizeDialogHint | Qt::WindowTitleHint |
+    Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint | Qt::Dialog);
+    ///////////////////////////////////////////////////////////////////////////
 }
 
 PluginErrorOverview::~PluginErrorOverview()

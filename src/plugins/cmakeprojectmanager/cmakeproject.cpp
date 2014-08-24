@@ -144,7 +144,11 @@ void CMakeProject::changeActiveBuildConfiguration(ProjectExplorer::BuildConfigur
     if (mode != CMakeOpenProjectWizard::Nothing) {
         CMakeBuildInfo info(cmakebc);
         CMakeOpenProjectWizard copw(Core::ICore::mainWindow(), m_manager, mode, &info);
-        if (copw.exec() == QDialog::Accepted)
+        // Omnia Creator Automate /////////////////////////////////////////////
+        CMakeRunPage *page = q_check_ptr<CMakeRunPage>
+        (qobject_cast<CMakeRunPage *>(copw.page(copw.pageIds().last())));
+        if(page->m_haveCbpFile) // if (copw.exec() == QDialog::Accepted)
+        ///////////////////////////////////////////////////////////////////////
             cmakebc->setUseNinja(copw.useNinja()); // NeedToCreate can change the Ninja setting
     }
 
@@ -244,6 +248,55 @@ bool CMakeProject::parseCMakeLists()
         fileList.append(new ProjectExplorer::FileNode(cmakeListTxt, ProjectExplorer::ProjectFileType, generated));
         projectFiles.insert(cmakeListTxt);
     }
+
+    // Omnia Creator Project Setup 1 //////////////////////////////////////////
+
+    if(!qgetenv("OC_PROJECT_FOLDER").isEmpty())
+    {
+        QDirIterator it(QString::fromUtf8(qgetenv("OC_PROJECT_FOLDER")),
+        QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+
+        while(it.hasNext())
+        {
+            QString path = it.next();
+
+            if(path.endsWith(QLatin1String(".c"))
+            || path.endsWith(QLatin1String(".i"))
+            || path.endsWith(QLatin1String(".cogc")) // For Propeller
+            || path.endsWith(QLatin1String(".cpp"))
+            || path.endsWith(QLatin1String(".ii"))
+            || path.endsWith(QLatin1String(".cc"))
+            || path.endsWith(QLatin1String(".cp"))
+            || path.endsWith(QLatin1String(".cxx"))
+            || path.endsWith(QLatin1String(".c++"))
+            || path.endsWith(QLatin1String(".cogcpp")) // For Propeller
+            || path.endsWith(QLatin1String(".ino")) // For Arduino
+            || path.endsWith(QLatin1String(".pde")) // For Arduino
+            || path.endsWith(QLatin1String(".s"))
+            || path.endsWith(QLatin1String(".sx"))
+            || path.endsWith(QLatin1String(".spin")) // For Propeller
+            || path.endsWith(QLatin1String(".spin2"))) // For Propeller
+            {
+                fileList.append(new ProjectExplorer::FileNode(path,
+                ProjectExplorer::SourceType, false));
+                projectFiles.insert(path);
+            }
+
+            if(path.endsWith(QLatin1String(".h"))
+            || path.endsWith(QLatin1String(".hpp"))
+            || path.endsWith(QLatin1String(".hh"))
+            || path.endsWith(QLatin1String(".hp"))
+            || path.endsWith(QLatin1String(".hxx"))
+            || path.endsWith(QLatin1String(".h++")))
+            {
+                fileList.append(new ProjectExplorer::FileNode(path,
+                ProjectExplorer::HeaderType, false));
+                projectFiles.insert(path);
+            }
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
 
     m_watchedFiles = projectFiles;
 
@@ -370,6 +423,25 @@ bool CMakeProject::parseCMakeLists()
                                 cxxflags,
                                 cxxflags,
                                 SysRootKitInformation::sysRoot(k));
+
+        // Omnia Creator Project Setup 2 //////////////////////////////////////
+
+        if(!qgetenv("OC_PROJECT_FOLDER").isEmpty())
+        {
+            QString path = QString::fromUtf8(qgetenv("OC_PROJECT_FOLDER"));
+
+            part->includePaths += path;
+
+            QDirIterator it(path,
+            QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+
+            while(it.hasNext())
+            {
+                adder.maybeAdd(it.next());
+            }
+        }
+
+        ///////////////////////////////////////////////////////////////////////
 
         pinfo.appendProjectPart(part);
         m_codeModelFuture.cancel();
@@ -532,7 +604,11 @@ bool CMakeProject::fromMap(const QVariantMap &map)
     bool hasUserFile = activeTarget();
     if (!hasUserFile) {
         CMakeOpenProjectWizard copw(Core::ICore::mainWindow(), m_manager, projectDirectory(), Utils::Environment::systemEnvironment());
-        if (copw.exec() != QDialog::Accepted)
+        // Omnia Creator Automate /////////////////////////////////////////////
+        CMakeRunPage *page = q_check_ptr<CMakeRunPage>
+        (qobject_cast<CMakeRunPage *>(copw.page(copw.pageIds().last())));
+        if(!page->m_haveCbpFile) // if (copw.exec() != QDialog::Accepted)
+        ///////////////////////////////////////////////////////////////////////
             return false;
         Kit *k = copw.kit();
         Target *t = new Target(this, k);
@@ -575,7 +651,11 @@ bool CMakeProject::fromMap(const QVariantMap &map)
         if (mode != CMakeOpenProjectWizard::Nothing) {
             CMakeBuildInfo info(activeBC);
             CMakeOpenProjectWizard copw(Core::ICore::mainWindow(), m_manager, mode, &info);
-            if (copw.exec() != QDialog::Accepted)
+            // Omnia Creator Automate /////////////////////////////////////////
+            CMakeRunPage *page = q_check_ptr<CMakeRunPage>
+            (qobject_cast<CMakeRunPage *>(copw.page(copw.pageIds().last())));
+            if(!page->m_haveCbpFile) // if (copw.exec() != QDialog::Accepted)
+            ///////////////////////////////////////////////////////////////////
                 return false;
             else
                 activeBC->setUseNinja(copw.useNinja());
@@ -859,7 +939,11 @@ void CMakeBuildSettingsWidget::openChangeBuildDirectoryDialog()
     CMakeOpenProjectWizard copw(Core::ICore::mainWindow(),
                                 project->projectManager(), CMakeOpenProjectWizard::ChangeDirectory,
                                 &info);
-    if (copw.exec() == QDialog::Accepted) {
+    // Omnia Creator Automate /////////////////////////////////////////////////
+    CMakeRunPage *page = q_check_ptr<CMakeRunPage>
+    (qobject_cast<CMakeRunPage *>(copw.page(copw.pageIds().last())));
+    if(page->m_haveCbpFile) { // if (copw.exec() == QDialog::Accepted)
+    ///////////////////////////////////////////////////////////////////////////
         project->changeBuildDirectory(m_buildConfiguration, copw.buildDirectory());
         m_buildConfiguration->setUseNinja(copw.useNinja());
         m_pathLineEdit->setText(m_buildConfiguration->rawBuildDirectory().toString());
@@ -875,7 +959,11 @@ void CMakeBuildSettingsWidget::runCMake()
     CMakeOpenProjectWizard copw(Core::ICore::mainWindow(),
                                 project->projectManager(),
                                 CMakeOpenProjectWizard::WantToUpdate, &info);
-    if (copw.exec() == QDialog::Accepted)
+    // Omnia Creator Automate /////////////////////////////////////////////////
+    CMakeRunPage *page = q_check_ptr<CMakeRunPage>
+    (qobject_cast<CMakeRunPage *>(copw.page(copw.pageIds().last())));
+    if(page->m_haveCbpFile) // if (copw.exec() == QDialog::Accepted)
+    ///////////////////////////////////////////////////////////////////////////
         project->parseCMakeLists();
 }
 

@@ -30,6 +30,8 @@
 #ifndef MAKESTEP_H
 #define MAKESTEP_H
 
+#include "cmakeprojectmanager_global.h"
+
 #include <projectexplorer/abstractprocessstep.h>
 
 QT_BEGIN_NAMESPACE
@@ -46,7 +48,7 @@ namespace Internal {
 class CMakeBuildConfiguration;
 class MakeStepFactory;
 
-class MakeStep : public ProjectExplorer::AbstractProcessStep
+class CMAKEPROJECTMANAGER_EXPORT MakeStep : public ProjectExplorer::AbstractProcessStep
 {
     Q_OBJECT
     friend class MakeStepFactory;
