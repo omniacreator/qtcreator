@@ -137,8 +137,10 @@ bool CppToolsPlugin::initialize(const QStringList &arguments, QString *error)
     addAutoReleasedObject(new CppClassesFilter(locatorData));
     addAutoReleasedObject(new CppFunctionsFilter(locatorData));
     addAutoReleasedObject(new CppCurrentDocumentFilter(modelManager));
-    addAutoReleasedObject(new CppFileSettingsPage(m_fileSettings));
-    addAutoReleasedObject(new CppCodeModelSettingsPage(m_codeModelSettings));
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    // addAutoReleasedObject(new CppFileSettingsPage(m_fileSettings));
+    // addAutoReleasedObject(new CppCodeModelSettingsPage(m_codeModelSettings));
+    ///////////////////////////////////////////////////////////////////////////
     addAutoReleasedObject(new SymbolsFindFilter(modelManager));
     addAutoReleasedObject(new CppCodeStyleSettingsPage);
 

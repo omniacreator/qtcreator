@@ -452,7 +452,10 @@ void FontSettingsPage::copyColorScheme()
     dialog->setWindowTitle(tr("Copy Color Scheme"));
     dialog->setLabelText(tr("Color scheme name:"));
     dialog->setTextValue(tr("%1 (copy)").arg(d_ptr->m_value.colorScheme().displayName()));
-
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    dialog->setWindowFlags(Qt::MSWindowsFixedSizeDialogHint | Qt::WindowTitleHint |
+                           Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint);
+    ///////////////////////////////////////////////////////////////////////////
     connect(dialog, SIGNAL(textValueSelected(QString)), this, SLOT(copyColorScheme(QString)));
     dialog->open();
 }

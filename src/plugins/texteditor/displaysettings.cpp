@@ -59,7 +59,9 @@ DisplaySettings::DisplaySettings() :
     m_animateMatchingParentheses(true),
     m_highlightMatchingParentheses(true),
     m_markTextChanges(true),
-    m_autoFoldFirstComment(true),
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    m_autoFoldFirstComment(false), // m_autoFoldFirstComment(true),
+    ///////////////////////////////////////////////////////////////////////////
     m_centerCursorOnScroll(false),
     m_openLinksInNextSplit(false),
     m_forceOpenLinksInNextSplit(false),

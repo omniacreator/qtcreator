@@ -3216,7 +3216,13 @@ public:
                                                                   "Enter function name"),
                                       QLineEdit::Normal,
                                       QString(),
-                                      &ok);
+                                      &ok,
+                                      // Omnia Creator Code Change ////////////
+                                      Qt::MSWindowsFixedSizeDialogHint |
+                                      Qt::WindowTitleHint |
+                                      Qt::WindowSystemMenuHint |
+                                      Qt::WindowCloseButtonHint);
+                                      /////////////////////////////////////////
         name = name.trimmed();
         if (!ok || name.isEmpty())
             return QString();

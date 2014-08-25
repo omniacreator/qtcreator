@@ -428,6 +428,9 @@ Core::NavigationView FolderNavigationWidgetFactory::createWidget()
     filterMenu->addAction(fnw->m_filterHiddenFilesAction);
     filter->setMenu(filterMenu);
     n.dockToolBarWidgets << filter << fnw->m_toggleSync;
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    filter->setVisible(false);
+    ///////////////////////////////////////////////////////////////////////////
     return n;
 }
 

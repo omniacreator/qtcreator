@@ -148,6 +148,10 @@ bool FileSystemFilter::openConfigDialog(QWidget *parent, bool &needsRefresh)
     ui.hiddenFilesFlag->setChecked(m_includeHidden);
     ui.limitCheck->setChecked(!isIncludedByDefault());
     ui.shortcutEdit->setText(shortcutString());
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    dialog.setWindowFlags(Qt::MSWindowsFixedSizeDialogHint | Qt::WindowTitleHint |
+                          Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint);
+    ///////////////////////////////////////////////////////////////////////////
 
     if (dialog.exec() == QDialog::Accepted) {
         m_includeHidden = ui.hiddenFilesFlag->isChecked();

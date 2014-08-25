@@ -129,7 +129,9 @@ QWidget *BehaviorSettingsPage::widget()
         d->m_page->behaviorWidget->setCodeStyle(d->m_pageCodeStyle);
 
         TabSettingsWidget *tabSettingsWidget = d->m_page->behaviorWidget->tabSettingsWidget();
-        tabSettingsWidget->setCodingStyleWarningVisible(true);
+        // Omnia Creator Code Change //////////////////////////////////////////
+        // tabSettingsWidget->setCodingStyleWarningVisible(true);
+        ///////////////////////////////////////////////////////////////////////
         connect(tabSettingsWidget, SIGNAL(codingStyleLinkClicked(TextEditor::TabSettingsWidget::CodingStyleLink)),
                 this, SLOT(openCodingStylePreferences(TextEditor::TabSettingsWidget::CodingStyleLink)));
 

@@ -50,7 +50,9 @@ BehaviorSettings::BehaviorSettings() :
     m_scrollWheelZooming(true),
     m_constrainHoverTooltips(false),
     m_camelCaseNavigation(true),
-    m_keyboardTooltips(false)
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    m_keyboardTooltips(true) // m_keyboardTooltips(false)
+    ///////////////////////////////////////////////////////////////////////////
 {
 }
 

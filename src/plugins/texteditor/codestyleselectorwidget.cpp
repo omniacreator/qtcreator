@@ -126,6 +126,10 @@ CodeStyleDialog::CodeStyleDialog(ICodeStylePreferencesFactory *factory,
     connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(slotDisplayNameChanged()));
     connect(m_buttons, SIGNAL(accepted()), this, SLOT(accept()));
     connect(m_buttons, SIGNAL(rejected()), this, SLOT(reject()));
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    setWindowFlags(/* Qt::MSWindowsFixedSizeDialogHint | */ Qt::WindowTitleHint |
+    Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint | Qt::Dialog);
+    ///////////////////////////////////////////////////////////////////////////
 }
 
 ICodeStylePreferences *CodeStyleDialog::codeStyle() const
@@ -275,7 +279,13 @@ void CodeStyleSelectorWidget::slotCopyClicked()
                                                   tr("Code style name:"),
                                                   QLineEdit::Normal,
                                                   tr("%1 (Copy)").arg(currentPreferences->displayName()),
-                                                  &ok);
+                                                  &ok,
+                                                  // Omnia Creator Code Change
+                                                  Qt::MSWindowsFixedSizeDialogHint |
+                                                  Qt::WindowTitleHint |
+                                                  Qt::WindowSystemMenuHint |
+                                                  Qt::WindowCloseButtonHint);
+                                                  /////////////////////////////
     if (!ok)
         return;
     ICodeStylePreferences *copy = codeStylePool->cloneCodeStyle(currentPreferences);

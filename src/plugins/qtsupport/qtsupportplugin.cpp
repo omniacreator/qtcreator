@@ -103,11 +103,13 @@ bool QtSupportPlugin::initialize(const QStringList &arguments, QString *errorMes
 
 void QtSupportPlugin::extensionsInitialized()
 {
-    VariableManager::registerVariable(kHostBins,
-        tr("Full path to the host bin directory of the current project's Qt version."));
-    VariableManager::registerVariable(kInstallBins,
-        tr("Full path to the target bin directory of the current project's Qt version."
-           " You probably want %1 instead.").arg(QString::fromLatin1(kHostBins)));
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    // VariableManager::registerVariable(kHostBins,
+    //     tr("Full path to the host bin directory of the current project's Qt version."));
+    // VariableManager::registerVariable(kInstallBins,
+    //     tr("Full path to the target bin directory of the current project's Qt version."
+    //        " You probably want %1 instead.").arg(QString::fromLatin1(kHostBins)));
+    ///////////////////////////////////////////////////////////////////////////
     connect(VariableManager::instance(), SIGNAL(variableUpdateRequested(QByteArray)),
             this, SLOT(updateVariable(QByteArray)));
 }

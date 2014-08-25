@@ -42,10 +42,12 @@ DirectoryFilter::DirectoryFilter(Id id)
     setIncludedByDefault(true);
     setDisplayName(tr("Generic Directory Filter"));
 
-    m_filters.append(QLatin1String("*.h"));
-    m_filters.append(QLatin1String("*.cpp"));
-    m_filters.append(QLatin1String("*.ui"));
-    m_filters.append(QLatin1String("*.qrc"));
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    // m_filters.append(QLatin1String("*.h"));
+    // m_filters.append(QLatin1String("*.cpp"));
+    // m_filters.append(QLatin1String("*.ui"));
+    // m_filters.append(QLatin1String("*.qrc"));
+    ///////////////////////////////////////////////////////////////////////////
 }
 
 QByteArray DirectoryFilter::saveState() const
@@ -109,6 +111,10 @@ bool DirectoryFilter::openConfigDialog(QWidget *parent, bool &needsRefresh)
     m_ui.shortcutEdit->setText(shortcutString());
     m_ui.defaultFlag->setChecked(!isIncludedByDefault());
     updateOptionButtons();
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    dialog.setWindowFlags(Qt::MSWindowsFixedSizeDialogHint | Qt::WindowTitleHint |
+                          Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint);
+    ///////////////////////////////////////////////////////////////////////////
     if (dialog.exec() == QDialog::Accepted) {
         QMutexLocker locker(&m_lock);
         bool directoriesChanged = false;

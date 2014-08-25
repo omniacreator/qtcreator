@@ -1495,6 +1495,13 @@ void BinEditorWidget::contextMenuEvent(QContextMenuEvent *event)
     contextMenu->addAction(copyAsciiAction);
     contextMenu->addAction(copyHexAction);
     contextMenu->addAction(addWatchpointAction);
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    jumpToBeAddressHereAction->setVisible(false);
+    jumpToBeAddressNewWindowAction->setVisible(false);
+    jumpToLeAddressHereAction->setVisible(false);
+    jumpToLeAddressNewWindowAction->setVisible(false);
+    addWatchpointAction->setVisible(false);
+    ///////////////////////////////////////////////////////////////////////////
 
     addWatchpointAction->setEnabled(byteCount > 0 && byteCount <= 32);
 
