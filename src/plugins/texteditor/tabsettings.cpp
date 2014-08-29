@@ -48,9 +48,7 @@ namespace TextEditor {
 
 TabSettings::TabSettings() :
     m_tabPolicy(SpacesOnlyTabPolicy),
-    // Omnia Creator Code Change //////////////////////////////////////////////
-    m_tabSize(4), // m_tabSize(8),
-    ///////////////////////////////////////////////////////////////////////////
+    m_tabSize(8),
     m_indentSize(4),
     m_continuationAlignBehavior(ContinuationAlignWithSpaces)
 {
