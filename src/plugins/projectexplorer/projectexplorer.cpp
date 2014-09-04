@@ -956,30 +956,34 @@ bool ProjectExplorerPlugin::initialize(const QStringList &arguments, QString *er
         d->m_projectExplorerSettings.environmentId = QUuid::createUuid();
 
     connect(d->m_sessionManagerAction, SIGNAL(triggered()), this, SLOT(showSessionManager()));
-    connect(d->m_newAction, SIGNAL(triggered()), this, SLOT(newProject()));
-    connect(d->m_loadAction, SIGNAL(triggered()), this, SLOT(loadAction()));
-    connect(d->m_buildProjectOnlyAction, SIGNAL(triggered()), this, SLOT(buildProjectOnly()));
-    connect(d->m_buildAction, SIGNAL(triggered()), this, SLOT(buildProject()));
-    connect(d->m_buildActionContextMenu, SIGNAL(triggered()), this, SLOT(buildProjectContextMenu()));
-    connect(d->m_buildSessionAction, SIGNAL(triggered()), this, SLOT(buildSession()));
-    connect(d->m_rebuildProjectOnlyAction, SIGNAL(triggered()), this, SLOT(rebuildProjectOnly()));
-    connect(d->m_rebuildAction, SIGNAL(triggered()), this, SLOT(rebuildProject()));
-    connect(d->m_rebuildActionContextMenu, SIGNAL(triggered()), this, SLOT(rebuildProjectContextMenu()));
-    connect(d->m_rebuildSessionAction, SIGNAL(triggered()), this, SLOT(rebuildSession()));
-    connect(d->m_deployProjectOnlyAction, SIGNAL(triggered()), this, SLOT(deployProjectOnly()));
-    connect(d->m_deployAction, SIGNAL(triggered()), this, SLOT(deployProject()));
-    connect(d->m_deployActionContextMenu, SIGNAL(triggered()), this, SLOT(deployProjectContextMenu()));
-    connect(d->m_deploySessionAction, SIGNAL(triggered()), this, SLOT(deploySession()));
-    connect(d->m_cleanProjectOnlyAction, SIGNAL(triggered()), this, SLOT(cleanProjectOnly()));
-    connect(d->m_cleanAction, SIGNAL(triggered()), this, SLOT(cleanProject()));
-    connect(d->m_cleanActionContextMenu, SIGNAL(triggered()), this, SLOT(cleanProjectContextMenu()));
-    connect(d->m_cleanSessionAction, SIGNAL(triggered()), this, SLOT(cleanSession()));
-    connect(d->m_runAction, SIGNAL(triggered()), this, SLOT(runProject()));
-    connect(d->m_runActionContextMenu, SIGNAL(triggered()), this, SLOT(runProjectContextMenu()));
-    connect(d->m_runWithoutDeployAction, SIGNAL(triggered()), this, SLOT(runProjectWithoutDeploy()));
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    // connect(d->m_newAction, SIGNAL(triggered()), this, SLOT(newProject()));
+    // connect(d->m_loadAction, SIGNAL(triggered()), this, SLOT(loadAction()));
+    // connect(d->m_buildProjectOnlyAction, SIGNAL(triggered()), this, SLOT(buildProjectOnly()));
+    // connect(d->m_buildAction, SIGNAL(triggered()), this, SLOT(buildProject()));
+    // connect(d->m_buildActionContextMenu, SIGNAL(triggered()), this, SLOT(buildProjectContextMenu()));
+    // connect(d->m_buildSessionAction, SIGNAL(triggered()), this, SLOT(buildSession()));
+    // connect(d->m_rebuildProjectOnlyAction, SIGNAL(triggered()), this, SLOT(rebuildProjectOnly()));
+    // connect(d->m_rebuildAction, SIGNAL(triggered()), this, SLOT(rebuildProject()));
+    // connect(d->m_rebuildActionContextMenu, SIGNAL(triggered()), this, SLOT(rebuildProjectContextMenu()));
+    // connect(d->m_rebuildSessionAction, SIGNAL(triggered()), this, SLOT(rebuildSession()));
+    // connect(d->m_deployProjectOnlyAction, SIGNAL(triggered()), this, SLOT(deployProjectOnly()));
+    // connect(d->m_deployAction, SIGNAL(triggered()), this, SLOT(deployProject()));
+    // connect(d->m_deployActionContextMenu, SIGNAL(triggered()), this, SLOT(deployProjectContextMenu()));
+    // connect(d->m_deploySessionAction, SIGNAL(triggered()), this, SLOT(deploySession()));
+    // connect(d->m_cleanProjectOnlyAction, SIGNAL(triggered()), this, SLOT(cleanProjectOnly()));
+    // connect(d->m_cleanAction, SIGNAL(triggered()), this, SLOT(cleanProject()));
+    // connect(d->m_cleanActionContextMenu, SIGNAL(triggered()), this, SLOT(cleanProjectContextMenu()));
+    // connect(d->m_cleanSessionAction, SIGNAL(triggered()), this, SLOT(cleanSession()));
+    // connect(d->m_runAction, SIGNAL(triggered()), this, SLOT(runProject()));
+    // connect(d->m_runActionContextMenu, SIGNAL(triggered()), this, SLOT(runProjectContextMenu()));
+    // connect(d->m_runWithoutDeployAction, SIGNAL(triggered()), this, SLOT(runProjectWithoutDeploy()));
+    ///////////////////////////////////////////////////////////////////////////
     connect(d->m_cancelBuildAction, SIGNAL(triggered()), this, SLOT(cancelBuild()));
-    connect(d->m_unloadAction, SIGNAL(triggered()), this, SLOT(unloadProject()));
-    connect(d->m_closeAllProjects, SIGNAL(triggered()), this, SLOT(closeAllProjects()));
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    // connect(d->m_unloadAction, SIGNAL(triggered()), this, SLOT(unloadProject()));
+    // connect(d->m_closeAllProjects, SIGNAL(triggered()), this, SLOT(closeAllProjects()));
+    ///////////////////////////////////////////////////////////////////////////
     connect(d->m_addNewFileAction, SIGNAL(triggered()), this, SLOT(addNewFile()));
     connect(d->m_addExistingFilesAction, SIGNAL(triggered()), this, SLOT(addExistingFiles()));
     connect(d->m_addExistingDirectoryAction, SIGNAL(triggered()), this, SLOT(addExistingDirectory()));

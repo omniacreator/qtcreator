@@ -159,7 +159,9 @@ private slots:
     void buildProjectContextMenu();
     void buildSession();
     void rebuildProjectOnly();
-    void rebuildProject();
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    public slots: void rebuildProject(); private slots:
+    ///////////////////////////////////////////////////////////////////////////
     void rebuildProjectContextMenu();
     void rebuildSession();
     void deployProjectOnly();
@@ -167,7 +169,9 @@ private slots:
     void deployProjectContextMenu();
     void deploySession();
     void cleanProjectOnly();
-    void cleanProject();
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    public slots: void cleanProject(); private slots:
+    ///////////////////////////////////////////////////////////////////////////
     void cleanProjectContextMenu();
     void cleanSession();
     void cancelBuild();

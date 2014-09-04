@@ -545,7 +545,9 @@ void MainWindow::registerDefaultActions()
     cmd = ActionManager::registerAction(m_newAction, Constants::NEW, globalContext);
     cmd->setDefaultKeySequence(QKeySequence::New);
     mfile->addAction(cmd, Constants::G_FILE_NEW);
-    connect(m_newAction, SIGNAL(triggered()), this, SLOT(newFile()));
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    // connect(m_newAction, SIGNAL(triggered()), this, SLOT(newFile()));
+    ///////////////////////////////////////////////////////////////////////////
 
     // Open Action
     icon = QIcon::fromTheme(QLatin1String("document-open"), QIcon(QLatin1String(Constants::ICON_OPENFILE)));
@@ -553,7 +555,9 @@ void MainWindow::registerDefaultActions()
     cmd = ActionManager::registerAction(m_openAction, Constants::OPEN, globalContext);
     cmd->setDefaultKeySequence(QKeySequence::Open);
     mfile->addAction(cmd, Constants::G_FILE_OPEN);
-    connect(m_openAction, SIGNAL(triggered()), this, SLOT(openFile()));
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    // connect(m_openAction, SIGNAL(triggered()), this, SLOT(openFile()));
+    ///////////////////////////////////////////////////////////////////////////
 
     // Open With Action
     m_openWithAction = new QAction(tr("Open File &With..."), this);
