@@ -74,6 +74,7 @@ foreach(LIBRARY_PATH ${LIBRARY_PATHS})
 
         include_directories("${LIBRARY_PATH}")
         link_directories("${LIBRARY_PATH}")
+
         file(GLOB LIBRARYS RELATIVE "${LIBRARY_PATH}" "${LIBRARY_PATH}/*")
 
         foreach(LIBRARY ${LIBRARYS})
@@ -96,8 +97,115 @@ endforeach()
 
 # Include Directories ##########################################################
 
-list(APPEND INCLUDE_PATHS "${ARDUINO_SDK_PATH}/hardware/arduino/cores")
-list(APPEND INCLUDE_PATHS "${ARDUINO_SDK_PATH}/hardware/arduino/variants")
+if("${BOARD_ID}" STREQUAL "uno")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/arduino"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/standard")
+elseif("${BOARD_ID}" STREQUAL "atmega328")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/arduino"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/standard")
+elseif("${BOARD_ID}" STREQUAL "diecimila")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/arduino"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/standard")
+elseif("${BOARD_ID}" STREQUAL "nano328")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/arduino"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/eightanaloginputs")
+elseif("${BOARD_ID}" STREQUAL "nano")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/arduino"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/eightanaloginputs")
+elseif("${BOARD_ID}" STREQUAL "mega2560")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/arduino"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/mega")
+elseif("${BOARD_ID}" STREQUAL "mega")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/arduino"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/mega")
+elseif("${BOARD_ID}" STREQUAL "leonardo")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/arduino"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/leonardo")
+elseif("${BOARD_ID}" STREQUAL "esplora")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/arduino"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/leonardo")
+elseif("${BOARD_ID}" STREQUAL "micro")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/arduino"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/micro")
+elseif("${BOARD_ID}" STREQUAL "mini328")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/arduino"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/eightanaloginputs")
+elseif("${BOARD_ID}" STREQUAL "mini")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/arduino"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/eightanaloginputs")
+elseif("${BOARD_ID}" STREQUAL "ethernet")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/arduino"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/standard")
+elseif("${BOARD_ID}" STREQUAL "fio")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/arduino"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/eightanaloginputs")
+elseif("${BOARD_ID}" STREQUAL "bt328")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/arduino"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/eightanaloginputs")
+elseif("${BOARD_ID}" STREQUAL "bt")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/arduino"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/eightanaloginputs")
+elseif("${BOARD_ID}" STREQUAL "LilyPadUSB")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/arduino"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/leonardo")
+elseif("${BOARD_ID}" STREQUAL "lilypad328")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/arduino"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/standard")
+elseif("${BOARD_ID}" STREQUAL "lilypad")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/arduino"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/standard")
+elseif("${BOARD_ID}" STREQUAL "pro5v328")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/arduino"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/standard")
+elseif("${BOARD_ID}" STREQUAL "pro5v")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/arduino"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/standard")
+elseif("${BOARD_ID}" STREQUAL "pro328")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/arduino"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/standard")
+elseif("${BOARD_ID}" STREQUAL "pro")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/arduino"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/standard")
+elseif("${BOARD_ID}" STREQUAL "atmega168")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/arduino"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/standard")
+elseif("${BOARD_ID}" STREQUAL "atmega8")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/arduino"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/standard")
+elseif("${BOARD_ID}" STREQUAL "robotControl")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/robot"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/robot_control")
+elseif("${BOARD_ID}" STREQUAL "robotMotor")
+    list(APPEND INCLUDE_PATHS
+    "${ARDUINO_SDK_PATH}/hardware/arduino/cores/robot"
+    "${ARDUINO_SDK_PATH}/hardware/arduino/variants/robot_motor")
+endif()
 
 foreach(INCLUDE_PATH ${INCLUDE_PATHS})
     if(IS_DIRECTORY "${INCLUDE_PATH}")
@@ -107,13 +215,7 @@ foreach(INCLUDE_PATH ${INCLUDE_PATHS})
 
         foreach(INCLUDE_SUB_PATH ${INCLUDE_SUB_PATHS})
             if(IS_DIRECTORY "${INCLUDE_SUB_PATH}")
-
                 include_directories("${INCLUDE_SUB_PATH}")
-
-                if(IS_DIRECTORY "${INCLUDE_SUB_PATH}/avr-libc")
-                    include_directories("${INCLUDE_SUB_PATH}/avr-libc")
-                endif()
-
             endif()
         endforeach()
 
