@@ -577,11 +577,35 @@ CMakeRunPage::CMakeRunPage(CMakeOpenProjectWizard *cmakeWizard, Mode mode, const
     if(!m_haveCbpFile)
     {
         QMessageBox messageBox(QMessageBox::Critical,
-        tr("Configuration Failed"), tr("Please fix the error(s)"),
+        tr("Configuration Failed"), tr("Please fix the error(s):"),
         QMessageBox::Ok, Core::ICore::mainWindow());
 
         messageBox.setDefaultButton(QMessageBox::Ok);
-        messageBox.setDetailedText(m_output->toPlainText());
+        messageBox.setDetailedText(m_output->toPlainText().trimmed());
+
+        QRegularExpression re(QLatin1String("CMake Error at(.*?)Call Stack"));
+        re.setPatternOptions(QRegularExpression::DotMatchesEverythingOption);
+
+        QRegularExpressionMatchIterator i =
+        re.globalMatch(messageBox.detailedText());
+
+        QString text;
+
+        while(i.hasNext())
+        {
+            text.append(i.next().captured(1).trimmed()+QLatin1String("\n\n"));
+        }
+
+        text.chop(2);
+
+        messageBox.setInformativeText(text);
+
+        QSpacerItem *spacer =
+        new QSpacerItem(640, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        QGridLayout *layout = static_cast<QGridLayout *>(messageBox.layout());
+        layout->addItem(spacer,layout->rowCount(),0,1,layout->columnCount());
+
+        messageBox.exec();
     }
 
     ///////////////////////////////////////////////////////////////////////////

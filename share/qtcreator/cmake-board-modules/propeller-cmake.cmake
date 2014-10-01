@@ -15,6 +15,10 @@
 
 cmake_minimum_required(VERSION 2.8)
 
+message(FATAL_ERROR "Propeller Chip support is not fully operational yet...")
+
+return()
+
 # Test Args ####################################################################
 
 if(NOT DEFINED IDE_FOLDER)
