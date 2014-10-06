@@ -218,6 +218,28 @@ void CMakeManager::createXmlFile(Utils::QtcProcess *proc, const QString &argumen
         Utils::QtcProcess::addArgs(&args, QString(QLatin1String("-DCMAKE_MAKE_PROGRAM=\"%L1\"")).arg(ninjaExecutable()));
     }
 
+    // Omnia Creator Path Hint ////////////////////////////////////////////////
+
+    // This needs to be redone later...
+    Utils::QtcProcess::addArgs(&args,
+    QString(QLatin1String("-DARDUINO_SDK_PATH=\"%L1\"")).
+    arg(QDir::fromNativeSeparators(QDir::cleanPath(
+    QApplication::applicationDirPath() +
+    QLatin1String("/../../../tools/arduino")))));
+
+    ///////////////////////////////////////////////////////////////////////////
+
+    // Omnia Creator Path Hint ////////////////////////////////////////////////
+
+    // This needs to be redone later...
+    Utils::QtcProcess::addArgs(&args,
+    QString(QLatin1String("-DPROPELLER_SDK_PATH=\"%L1\"")).
+    arg(QDir::fromNativeSeparators(QDir::cleanPath(
+    QApplication::applicationDirPath() +
+    QLatin1String("/../../../tools/propeller")))));
+
+    ///////////////////////////////////////////////////////////////////////////
+
     Utils::QtcProcess::addArgs(&args, arguments);
     Utils::QtcProcess::addArg(&args, generator);
     proc->setCommand(cmakeExecutable(), args);
