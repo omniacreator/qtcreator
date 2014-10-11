@@ -1,6 +1,6 @@
 ################################################################################
 # @file
-# Propeller Professional Development Board CMM Board File
+# Propeller DNA CMM Board File
 #
 # @version @n 1.0
 # @date @n 5/24/2014
@@ -16,7 +16,7 @@
 cmake_minimum_required(VERSION "2.8")
 cmake_policy(VERSION "2.8")
 
-set(BOARD_ID "eeprom")
+set(BOARD_ID "dna")
 
 set(MEMORY_MODEL "cmm")
 
