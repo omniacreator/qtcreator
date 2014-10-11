@@ -211,12 +211,6 @@ void CMakeManager::createXmlFile(Utils::QtcProcess *proc, const QString &argumen
     const QString srcdir = buildDirectory.exists(QLatin1String("CMakeCache.txt")) ?
                 QString(QLatin1Char('.')) : sourceDirectory;
     QString args;
-    Utils::QtcProcess::addArg(&args, srcdir);
-
-    if(!m_ninjaExecutable.isEmpty())
-    {
-        Utils::QtcProcess::addArgs(&args, QString(QLatin1String("-DCMAKE_MAKE_PROGRAM=\"%L1\"")).arg(ninjaExecutable()));
-    }
 
     // Omnia Creator Path Hint ////////////////////////////////////////////////
 
@@ -240,6 +234,12 @@ void CMakeManager::createXmlFile(Utils::QtcProcess *proc, const QString &argumen
 
     ///////////////////////////////////////////////////////////////////////////
 
+    if(!m_ninjaExecutable.isEmpty())
+    {
+        Utils::QtcProcess::addArgs(&args, QString(QLatin1String("-DCMAKE_MAKE_PROGRAM=\"%L1\"")).arg(ninjaExecutable()));
+    }
+
+    Utils::QtcProcess::addArg(&args, srcdir);
     Utils::QtcProcess::addArgs(&args, arguments);
     Utils::QtcProcess::addArg(&args, generator);
     proc->setCommand(cmakeExecutable(), args);
