@@ -75,8 +75,10 @@ CMakeManager::CMakeManager(CMakeSettingsPage *cmakeSettingsPage)
     const Core::Context projectContext(CMakeProjectManager::Constants::PROJECTCONTEXT);
 
     m_runCMakeAction = new QAction(QIcon(), tr("Run CMake"), this);
-    Core::Command *command = Core::ActionManager::registerAction(m_runCMakeAction, ///////////////////////// Omnia Creator /////////////////////////
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    Core::Command *command = Core::ActionManager::registerAction(m_runCMakeAction,
                                                                  Constants::RUNCMAKE, Core::Context(Core::Constants::C_GLOBAL)); // projectContext);
+    ///////////////////////////////////////////////////////////////////////////
     command->setAttribute(Core::Command::CA_Hide);
     mbuild->addAction(command, ProjectExplorer::Constants::G_BUILD_DEPLOY);
     connect(m_runCMakeAction, SIGNAL(triggered()), this, SLOT(runCMake()));
@@ -124,7 +126,7 @@ void CMakeManager::runCMake(ProjectExplorer::Project *project)
     CMakeBuildInfo info(bc);
 
     CMakeOpenProjectWizard copw(Core::ICore::mainWindow(), this, CMakeOpenProjectWizard::WantToUpdate, &info);
-    // Omnia Creator Automate /////////////////////////////////////////////////
+    // Omnia Creator Code Change //////////////////////////////////////////////
     CMakeRunPage *page = q_check_ptr<CMakeRunPage>
     (qobject_cast<CMakeRunPage *>(copw.page(copw.pageIds().last())));
     if(page->m_haveCbpFile) // if (copw.exec() == QDialog::Accepted)
@@ -164,15 +166,19 @@ void CMakeManager::setCMakeExecutable(const QString &executable)
     m_settingsPage->setCMakeExecutable(executable);
 }
 
+// Omnia Creator Code Change //////////////////////////////////////////////////
 QString CMakeManager::ninjaExecutable() const
 {
     return m_ninjaExecutable;
 }
+///////////////////////////////////////////////////////////////////////////////
 
+// Omnia Creator Code Change //////////////////////////////////////////////////
 void CMakeManager::setNinjaExecutable(const QString &executable)
 {
     m_ninjaExecutable = executable;
 }
+///////////////////////////////////////////////////////////////////////////////
 
 bool CMakeManager::hasCodeBlocksMsvcGenerator() const
 {
@@ -211,34 +217,14 @@ void CMakeManager::createXmlFile(Utils::QtcProcess *proc, const QString &argumen
     const QString srcdir = buildDirectory.exists(QLatin1String("CMakeCache.txt")) ?
                 QString(QLatin1Char('.')) : sourceDirectory;
     QString args;
-
-    // Omnia Creator Path Hint ////////////////////////////////////////////////
-
-    // This needs to be redone later...
-    Utils::QtcProcess::addArgs(&args,
-    QString(QLatin1String("-DARDUINO_SDK_PATH=\"%L1\"")).
-    arg(QDir::fromNativeSeparators(QDir::cleanPath(
-    QApplication::applicationDirPath() +
-    QLatin1String("/../../../tools/arduino")))));
-
-    ///////////////////////////////////////////////////////////////////////////
-
-    // Omnia Creator Path Hint ////////////////////////////////////////////////
-
-    // This needs to be redone later...
-    Utils::QtcProcess::addArgs(&args,
-    QString(QLatin1String("-DPROPELLER_SDK_PATH=\"%L1\"")).
-    arg(QDir::fromNativeSeparators(QDir::cleanPath(
-    QApplication::applicationDirPath() +
-    QLatin1String("/../../../tools/propeller")))));
-
-    ///////////////////////////////////////////////////////////////////////////
-
-    if(!m_ninjaExecutable.isEmpty())
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    if(!ninjaExecutable().isEmpty())
     {
-        Utils::QtcProcess::addArgs(&args, QString(QLatin1String("-DCMAKE_MAKE_PROGRAM=\"%L1\"")).arg(ninjaExecutable()));
+        Utils::QtcProcess::addArgs(&args,
+        QString(QLatin1String("-DCMAKE_MAKE_PROGRAM=\"%L1\"")).
+        arg(ninjaExecutable()));
     }
-
+    ///////////////////////////////////////////////////////////////////////////
     Utils::QtcProcess::addArg(&args, srcdir);
     Utils::QtcProcess::addArgs(&args, arguments);
     Utils::QtcProcess::addArg(&args, generator);

@@ -30,7 +30,9 @@
 #ifndef CMAKEPROJECT_H
 #define CMAKEPROJECT_H
 
+// Omnia Creator Code Change //////////////////////////////////////////////////
 #include "cmakeprojectmanager_global.h"
+///////////////////////////////////////////////////////////////////////////////
 
 #include "cmakeprojectmanager.h"
 #include "cmakeprojectnodes.h"
@@ -72,7 +74,9 @@ struct CMakeBuildTarget
     void clear();
 };
 
-class CMAKEPROJECTMANAGER_EXPORT CMakeProject : public ProjectExplorer::Project
+// Omnia Creator Code Change //////////////////////////////////////////////////
+class CMAKEPROJECTMANAGER_EXPORT CMakeProject : public ProjectExplorer::Project // class CMakeProject : public ProjectExplorer::Project
+///////////////////////////////////////////////////////////////////////////////
 {
     Q_OBJECT
     // for changeBuildDirectory

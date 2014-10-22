@@ -30,6 +30,10 @@
 #ifndef CMAKEPROJECTMANAGER_H
 #define CMAKEPROJECTMANAGER_H
 
+// Omnia Creator Code Change //////////////////////////////////////////////////
+#include "cmakeprojectmanager_global.h"
+///////////////////////////////////////////////////////////////////////////////
+
 #include <projectexplorer/iprojectmanager.h>
 #include <coreplugin/dialogs/ioptionspage.h>
 #include <projectexplorer/project.h>
@@ -37,7 +41,9 @@
 #include <coreplugin/icontext.h>
 #include <texteditor/codeassist/keywordscompletionassist.h>
 
+// Omnia Creator Code Change //////////////////////////////////////////////////
 #include <coreplugin/coreconstants.h>
+///////////////////////////////////////////////////////////////////////////////
 
 #include <utils/environment.h>
 #include <utils/pathchooser.h>
@@ -52,8 +58,6 @@
 
 #include "cmakevalidator.h"
 
-#include "cmakeprojectmanager_global.h"
-
 QT_FORWARD_DECLARE_CLASS(QLabel)
 
 namespace Utils { class QtcProcess; }
@@ -63,7 +67,9 @@ namespace Internal {
 
 class CMakeSettingsPage;
 
-class CMAKEPROJECTMANAGER_EXPORT CMakeManager : public ProjectExplorer::IProjectManager
+// Omnia Creator Code Change //////////////////////////////////////////////////
+class CMAKEPROJECTMANAGER_EXPORT CMakeManager : public ProjectExplorer::IProjectManager // class CMakeManager : public ProjectExplorer::IProjectManager
+///////////////////////////////////////////////////////////////////////////////
 {
     Q_OBJECT
 public:
@@ -77,9 +83,13 @@ public:
 
     void setCMakeExecutable(const QString &executable);
 
+    // Omnia Creator Code Change //////////////////////////////////////////////
     QString ninjaExecutable() const;
+    ///////////////////////////////////////////////////////////////////////////
 
+    // Omnia Creator Code Change //////////////////////////////////////////////
     void setNinjaExecutable(const QString &executable);
+    ///////////////////////////////////////////////////////////////////////////
 
     void createXmlFile(Utils::QtcProcess *process,
                        const QString &arguments,
@@ -106,7 +116,9 @@ private:
     QAction *m_runCMakeActionContextMenu;
     ProjectExplorer::Project *m_contextProject;
 
+    // Omnia Creator Code Change //////////////////////////////////////////////
     QString m_ninjaExecutable;
+    ///////////////////////////////////////////////////////////////////////////
 };
 
 class CMakeSettingsPage : public Core::IOptionsPage

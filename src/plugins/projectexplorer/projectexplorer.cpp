@@ -1799,7 +1799,15 @@ void ProjectExplorerPlugin::updateExternalFileWarning()
     Utils::FileName fileName = Utils::FileName::fromString(document->filePath());
     Utils::FileName projectDir = Utils::FileName::fromString(d->m_currentProject->projectDirectory());
     // Omnia Creator Code Change //////////////////////////////////////////////
-    if (fileName.isChildOf(Utils::FileName::fromString(QString::fromUtf8(getenv("OC_PROJECT_FOLDER"))))) // projectDir.isEmpty() || fileName.isChildOf(projectDir)
+
+    QString path = QString::fromUtf8(qgetenv("OC_PROJECT_FPATH"));
+
+    if(QFileInfo(path).isFile())
+    {
+        path = QFileInfo(path).canonicalPath();
+    }
+
+    if (Utils::FileName::fromString(path).isEmpty() || fileName.isChildOf(Utils::FileName::fromString(path))) // (projectDir.isEmpty() || fileName.isChildOf(projectDir))
     ///////////////////////////////////////////////////////////////////////////
         return;
     // External file. Test if it under the same VCS

@@ -9,3 +9,7 @@ QTC_PLUGIN_DEPENDS += \
     cpptools \
     texteditor \
     qtsupport
+# Omnia Creator Code Change ###################################################
+# QTC_PLUGIN_RECOMMENDS += \
+#     designer
+###############################################################################

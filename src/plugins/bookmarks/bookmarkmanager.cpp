@@ -724,7 +724,7 @@ void BookmarkManager::editNote()
     bool inputOk = false;
     QString noteText = QInputDialog::getText(0, tr("Edit Note"),
                                              tr("Note text:"), QLineEdit::Normal,
-                                             b->note(), &inputOk,
+                                             b->note(), &inputOk, // );
                                              // Omnia Creator Code Change /////
                                              Qt::MSWindowsFixedSizeDialogHint |
                                              Qt::WindowTitleHint |

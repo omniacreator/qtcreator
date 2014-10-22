@@ -144,7 +144,7 @@ void CMakeProject::changeActiveBuildConfiguration(ProjectExplorer::BuildConfigur
     if (mode != CMakeOpenProjectWizard::Nothing) {
         CMakeBuildInfo info(cmakebc);
         CMakeOpenProjectWizard copw(Core::ICore::mainWindow(), m_manager, mode, &info);
-        // Omnia Creator Automate /////////////////////////////////////////////
+        // Omnia Creator Code Change //////////////////////////////////////////
         CMakeRunPage *page = q_check_ptr<CMakeRunPage>
         (qobject_cast<CMakeRunPage *>(copw.page(copw.pageIds().last())));
         if(page->m_haveCbpFile) // if (copw.exec() == QDialog::Accepted)
@@ -249,49 +249,66 @@ bool CMakeProject::parseCMakeLists()
         projectFiles.insert(cmakeListTxt);
     }
 
-    // Omnia Creator Project Setup 1 //////////////////////////////////////////
+    // Omnia Creator Code Change //////////////////////////////////////////////
 
-    if(!qgetenv("OC_PROJECT_FOLDER").isEmpty())
+    if(!qgetenv("OC_PROJECT_FPATH").isEmpty())
     {
-        QDirIterator it(QString::fromUtf8(qgetenv("OC_PROJECT_FOLDER")),
-        QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+        QString path = QString::fromUtf8(qgetenv("OC_PROJECT_FPATH"));
 
-        while(it.hasNext())
+        if(QFileInfo(path).isDir())
         {
-            QString path = it.next();
+            QDirIterator it(path,
+            QDir::Files | QDir::NoDotAndDotDot,
+            QDirIterator::Subdirectories);
 
-            if(path.endsWith(QLatin1String(".c"))
-            || path.endsWith(QLatin1String(".i"))
-            || path.endsWith(QLatin1String(".cogc")) // For Propeller
-            || path.endsWith(QLatin1String(".cpp"))
-            || path.endsWith(QLatin1String(".ii"))
-            || path.endsWith(QLatin1String(".cc"))
-            || path.endsWith(QLatin1String(".cp"))
-            || path.endsWith(QLatin1String(".cxx"))
-            || path.endsWith(QLatin1String(".c++"))
-            || path.endsWith(QLatin1String(".cogcpp")) // For Propeller
-            || path.endsWith(QLatin1String(".ino")) // For Arduino
-            || path.endsWith(QLatin1String(".pde")) // For Arduino
-            || path.endsWith(QLatin1String(".s"))
-            || path.endsWith(QLatin1String(".sx"))
-            || path.endsWith(QLatin1String(".spin")) // For Propeller
-            || path.endsWith(QLatin1String(".spin2"))) // For Propeller
+            while(it.hasNext())
             {
-                fileList.append(new ProjectExplorer::FileNode(path,
-                ProjectExplorer::SourceType, false));
-                projectFiles.insert(path);
-            }
+                QString temp = it.next();
 
-            if(path.endsWith(QLatin1String(".h"))
-            || path.endsWith(QLatin1String(".hpp"))
-            || path.endsWith(QLatin1String(".hh"))
-            || path.endsWith(QLatin1String(".hp"))
-            || path.endsWith(QLatin1String(".hxx"))
-            || path.endsWith(QLatin1String(".h++")))
-            {
-                fileList.append(new ProjectExplorer::FileNode(path,
-                ProjectExplorer::HeaderType, false));
-                projectFiles.insert(path);
+                ProjectExplorer::FileType ft =
+                ProjectExplorer::UnknownFileType;
+
+                if(temp.endsWith(QLatin1String(".c"))
+                || temp.endsWith(QLatin1String(".i"))
+                || temp.endsWith(QLatin1String(".cogc")) // For Propeller
+                || temp.endsWith(QLatin1String(".cpp"))
+                || temp.endsWith(QLatin1String(".ii"))
+                || temp.endsWith(QLatin1String(".cc"))
+                || temp.endsWith(QLatin1String(".cp"))
+                || temp.endsWith(QLatin1String(".cxx"))
+                || temp.endsWith(QLatin1String(".c++"))
+                || temp.endsWith(QLatin1String(".cogcpp")) // For Propeller
+                || temp.endsWith(QLatin1String(".ino")) // For Arduino
+                || temp.endsWith(QLatin1String(".pde")) // For Arduino
+                || temp.endsWith(QLatin1String(".s"))
+                || temp.endsWith(QLatin1String(".sx"))
+                || temp.endsWith(QLatin1String(".spin")) // For Propeller
+                || temp.endsWith(QLatin1String(".spin2"))) // For Propeller
+                {
+                    ft = ProjectExplorer::SourceType;
+                }
+                else if(temp.endsWith(QLatin1String(".h"))
+                || temp.endsWith(QLatin1String(".hpp"))
+                || temp.endsWith(QLatin1String(".hh"))
+                || temp.endsWith(QLatin1String(".hp"))
+                || temp.endsWith(QLatin1String(".hxx"))
+                || temp.endsWith(QLatin1String(".h++")))
+                {
+                    ft = ProjectExplorer::HeaderType;
+                }
+                else if((temp == QLatin1String("CMakeLists.txt"))
+                || temp.endsWith(QLatin1String(".cmake"))
+                || (temp == QLatin1String("keywords.txt")) // For Arduino
+                || temp.endsWith(QLatin1String(".side")) // For Propeller
+                || temp.endsWith(QLatin1String(".doxyfile"))
+                || temp.endsWith(QLatin1String(".txt")))
+                {
+                    ft = ProjectExplorer::ProjectFileType;
+                }
+
+                fileList.append(new ProjectExplorer::FileNode(temp,ft,false));
+
+                projectFiles.insert(temp);
             }
         }
     }
@@ -424,20 +441,33 @@ bool CMakeProject::parseCMakeLists()
                                 cxxflags,
                                 SysRootKitInformation::sysRoot(k));
 
-        // Omnia Creator Project Setup 2 //////////////////////////////////////
+        // Omnia Creator Code Change //////////////////////////////////////////
 
-        if(!qgetenv("OC_PROJECT_FOLDER").isEmpty())
+        if(!qgetenv("OC_PROJECT_FPATH").isEmpty())
         {
-            QString path = QString::fromUtf8(qgetenv("OC_PROJECT_FOLDER"));
+            QString path = QString::fromUtf8(qgetenv("OC_PROJECT_FPATH"));
 
-            part->includePaths += path;
-
-            QDirIterator it(path,
-            QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
-
-            while(it.hasNext())
+            if(QFileInfo(path).isDir())
             {
-                adder.maybeAdd(it.next());
+                part->includePaths += path;
+
+                QDirIterator it(path,
+                QDir::AllDirs | QDir::Files | QDir::NoDotAndDotDot,
+                QDirIterator::Subdirectories);
+
+                while(it.hasNext())
+                {
+                    QString temp = it.next();
+
+                    if(QFileInfo(temp).isDir())
+                    {
+                        part->includePaths += temp;
+                    }
+                    else
+                    {
+                        adder.maybeAdd(temp);
+                    }
+                }
             }
         }
 
@@ -604,7 +634,7 @@ bool CMakeProject::fromMap(const QVariantMap &map)
     bool hasUserFile = activeTarget();
     if (!hasUserFile) {
         CMakeOpenProjectWizard copw(Core::ICore::mainWindow(), m_manager, projectDirectory(), Utils::Environment::systemEnvironment());
-        // Omnia Creator Automate /////////////////////////////////////////////
+        // Omnia Creator Code Change //////////////////////////////////////////
         CMakeRunPage *page = q_check_ptr<CMakeRunPage>
         (qobject_cast<CMakeRunPage *>(copw.page(copw.pageIds().last())));
         if(!page->m_haveCbpFile) // if (copw.exec() != QDialog::Accepted)
@@ -651,7 +681,7 @@ bool CMakeProject::fromMap(const QVariantMap &map)
         if (mode != CMakeOpenProjectWizard::Nothing) {
             CMakeBuildInfo info(activeBC);
             CMakeOpenProjectWizard copw(Core::ICore::mainWindow(), m_manager, mode, &info);
-            // Omnia Creator Automate /////////////////////////////////////////
+            // Omnia Creator Code Change //////////////////////////////////////
             CMakeRunPage *page = q_check_ptr<CMakeRunPage>
             (qobject_cast<CMakeRunPage *>(copw.page(copw.pageIds().last())));
             if(!page->m_haveCbpFile) // if (copw.exec() != QDialog::Accepted)
@@ -939,10 +969,10 @@ void CMakeBuildSettingsWidget::openChangeBuildDirectoryDialog()
     CMakeOpenProjectWizard copw(Core::ICore::mainWindow(),
                                 project->projectManager(), CMakeOpenProjectWizard::ChangeDirectory,
                                 &info);
-    // Omnia Creator Automate /////////////////////////////////////////////////
+    // Omnia Creator Code Change //////////////////////////////////////////////
     CMakeRunPage *page = q_check_ptr<CMakeRunPage>
     (qobject_cast<CMakeRunPage *>(copw.page(copw.pageIds().last())));
-    if(page->m_haveCbpFile) { // if (copw.exec() == QDialog::Accepted)
+    if(page->m_haveCbpFile) { // if (copw.exec() == QDialog::Accepted) {
     ///////////////////////////////////////////////////////////////////////////
         project->changeBuildDirectory(m_buildConfiguration, copw.buildDirectory());
         m_buildConfiguration->setUseNinja(copw.useNinja());
@@ -959,7 +989,7 @@ void CMakeBuildSettingsWidget::runCMake()
     CMakeOpenProjectWizard copw(Core::ICore::mainWindow(),
                                 project->projectManager(),
                                 CMakeOpenProjectWizard::WantToUpdate, &info);
-    // Omnia Creator Automate /////////////////////////////////////////////////
+    // Omnia Creator Code Change //////////////////////////////////////////////
     CMakeRunPage *page = q_check_ptr<CMakeRunPage>
     (qobject_cast<CMakeRunPage *>(copw.page(copw.pageIds().last())));
     if(page->m_haveCbpFile) // if (copw.exec() == QDialog::Accepted)

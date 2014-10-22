@@ -30,7 +30,9 @@
 #ifndef MAKESTEP_H
 #define MAKESTEP_H
 
+// Omnia Creator Code Change //////////////////////////////////////////////////
 #include "cmakeprojectmanager_global.h"
+///////////////////////////////////////////////////////////////////////////////
 
 #include <projectexplorer/abstractprocessstep.h>
 
@@ -48,7 +50,9 @@ namespace Internal {
 class CMakeBuildConfiguration;
 class MakeStepFactory;
 
-class CMAKEPROJECTMANAGER_EXPORT MakeStep : public ProjectExplorer::AbstractProcessStep
+// Omnia Creator Code Change //////////////////////////////////////////////////
+class CMAKEPROJECTMANAGER_EXPORT MakeStep : public ProjectExplorer::AbstractProcessStep // class MakeStep : public ProjectExplorer::AbstractProcessStep
+///////////////////////////////////////////////////////////////////////////////
 {
     Q_OBJECT
     friend class MakeStepFactory;

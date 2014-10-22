@@ -70,7 +70,7 @@ void CMakeParser::stdError(const QString &line)
     if (m_commonError.indexIn(trimmedLine) != -1) {
         Utils::FileName filename = Utils::FileName::fromUserInput(m_commonError.cap(1));
 
-        // Omnia Creator Warning Supression ///////////////////////////////////
+        // Omnia Creator Code Change //////////////////////////////////////////
         foreach(const QString &wno_path,
         QString::fromUtf8(qgetenv("WNO_PATH")).split(QChar::fromLatin1(','),
         QString::SkipEmptyParts)) { if(filename.isChildOf(
@@ -83,7 +83,7 @@ void CMakeParser::stdError(const QString &line)
     } else if (m_nextSubError.indexIn(trimmedLine) != -1) {
         Utils::FileName filename = Utils::FileName::fromUserInput(m_nextSubError.cap(1));
 
-        // Omnia Creator Warning Supression ///////////////////////////////////
+        // Omnia Creator Code Change //////////////////////////////////////////
         foreach(const QString &wno_path,
         QString::fromUtf8(qgetenv("WNO_PATH")).split(QChar::fromLatin1(','),
         QString::SkipEmptyParts)) { if(filename.isChildOf(

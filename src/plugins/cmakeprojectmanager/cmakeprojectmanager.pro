@@ -18,7 +18,7 @@ HEADERS = cmakebuildinfo.h \
     cmakefilecompletionassist.h \
     cmakevalidator.h \
     cmakeparser.h \
-    cmakeprojectmanager_global.h
+    cmakeprojectmanager_global.h # Omnia Creator Code Change ##################
 
 SOURCES = cmakeproject.cpp \
     cmakeprojectplugin.cpp \
@@ -39,4 +39,6 @@ SOURCES = cmakeproject.cpp \
 
 RESOURCES += cmakeproject.qrc
 
+# Omnia Creator Code Change ###################################################
 DEFINES += CMAKEPROJECTMANAGER_LIBRARY
+###############################################################################

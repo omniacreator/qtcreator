@@ -1,4 +1,4 @@
-<plugin name=\"Beautifier\" version=\"$$QTCREATOR_VERSION\" compatVersion=\"$$QTCREATOR_VERSION\">
+<plugin name=\"Beautifier\" version=\"$$QTCREATOR_VERSION\" compatVersion=\"$$QTCREATOR_VERSION\" <!--//Omnia Creator Code Change//experimental=\"true\"-->>
     <vendor>Lorenz Haas</vendor>
     <copyright>(C) 2014 Lorenz Haas</copyright>
     <license>

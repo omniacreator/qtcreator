@@ -13,9 +13,8 @@
 # @n v1.0 - Original release - 5/22/2014
 ################################################################################
 
-cmake_minimum_required(VERSION 2.8)
-
-cmake_policy(VERSION 2.8)
+cmake_minimum_required(VERSION "2.8")
+cmake_policy(VERSION "2.8")
 
 # Test Args ####################################################################
 

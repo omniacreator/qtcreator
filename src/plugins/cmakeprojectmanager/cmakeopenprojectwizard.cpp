@@ -238,7 +238,7 @@ CMakeOpenProjectWizard::CMakeOpenProjectWizard(QWidget *parent, CMakeManager *cm
         addPage(new InSourceBuildPage(this));
     } else {
         // Omnia Creator Code Change //////////////////////////////////////////
-        m_buildDirectory = QDir::cleanPath(m_sourceDirectory + QLatin1String("/../build")); // m_buildDirectory = m_sourceDirectory + QLatin1String("-build");
+        m_buildDirectory = QDir::fromNativeSeparators(QDir::cleanPath(m_sourceDirectory + QLatin1String("/../build"))); // m_buildDirectory = m_sourceDirectory + QLatin1String("-build");
         ///////////////////////////////////////////////////////////////////////
         addPage(new ShadowBuildPage(this));
     }
@@ -557,9 +557,6 @@ CMakeRunPage::CMakeRunPage(CMakeOpenProjectWizard *cmakeWizard, Mode mode, const
 
     // Omnia Creator Code Change //////////////////////////////////////////////
 
-    initializePage();
-    runCMake();
-
     QProgressDialog dialog(Core::ICore::mainWindow(),
     Qt::MSWindowsFixedSizeDialogHint | Qt::WindowTitleHint |
     Qt::WindowSystemMenuHint);
@@ -571,6 +568,10 @@ CMakeRunPage::CMakeRunPage(CMakeOpenProjectWizard *cmakeWizard, Mode mode, const
     dialog.setRange(0, 0);
 
     connect(this, SIGNAL(completeChanged()), &dialog, SLOT(close()));
+
+    initializePage();
+
+    runCMake();
 
     dialog.exec();
 
@@ -600,10 +601,16 @@ CMakeRunPage::CMakeRunPage(CMakeOpenProjectWizard *cmakeWizard, Mode mode, const
 
         messageBox.setInformativeText(text);
 
-        QSpacerItem *spacer =
-        new QSpacerItem(640, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
-        QGridLayout *layout = static_cast<QGridLayout *>(messageBox.layout());
-        layout->addItem(spacer,layout->rowCount(),0,1,layout->columnCount());
+        // Start Dirty Hack ///////////////////////////////////////////////////
+        QSpacerItem *spacer = new QSpacerItem(640, 0,
+        QSizePolicy::Minimum, QSizePolicy::MinimumExpanding);
+
+        QGridLayout *layout = q_check_ptr<QGridLayout>
+        (qobject_cast<QGridLayout *>(messageBox.layout()));
+
+        layout->addItem(spacer,
+        layout->rowCount(), 0, 1, layout->columnCount());
+        // End Dirty Hack /////////////////////////////////////////////////////
 
         messageBox.exec();
     }
