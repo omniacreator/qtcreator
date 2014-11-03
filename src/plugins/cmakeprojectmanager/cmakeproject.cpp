@@ -282,8 +282,7 @@ bool CMakeProject::parseCMakeLists()
                 || temp.endsWith(QLatin1String(".pde")) // For Arduino
                 || temp.endsWith(QLatin1String(".s"))
                 || temp.endsWith(QLatin1String(".sx"))
-                || temp.endsWith(QLatin1String(".spin")) // For Propeller
-                || temp.endsWith(QLatin1String(".spin2"))) // For Propeller
+                || temp.endsWith(QLatin1String(".spin"))) // For Propeller
                 {
                     ft = ProjectExplorer::SourceType;
                 }
@@ -296,12 +295,7 @@ bool CMakeProject::parseCMakeLists()
                 {
                     ft = ProjectExplorer::HeaderType;
                 }
-                else if((temp == QLatin1String("CMakeLists.txt"))
-                || temp.endsWith(QLatin1String(".cmake"))
-                || (temp == QLatin1String("keywords.txt")) // For Arduino
-                || temp.endsWith(QLatin1String(".side")) // For Propeller
-                || temp.endsWith(QLatin1String(".doxyfile"))
-                || temp.endsWith(QLatin1String(".txt")))
+                else if(temp.endsWith(QLatin1String(".side"))) // For Propeller
                 {
                     ft = ProjectExplorer::ProjectFileType;
                 }

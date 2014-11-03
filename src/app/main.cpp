@@ -63,7 +63,9 @@ using namespace ExtensionSystem;
 
 enum { OptionIndent = 4, DescriptionIndent = 34 };
 
-const char appNameC[] = "Qt Creator";
+// Omnia Creator Code Change //////////////////////////////////////////////////
+const char appNameC[] = "Omnia Creator"; // "Qt Creator";
+///////////////////////////////////////////////////////////////////////////////
 const char corePluginNameC[] = "Core";
 const char fixedOptionsC[] =
 " [OPTION]... [FILE]...\n"

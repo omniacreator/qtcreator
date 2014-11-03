@@ -613,6 +613,26 @@ CMakeRunPage::CMakeRunPage(CMakeOpenProjectWizard *cmakeWizard, Mode mode, const
         // End Dirty Hack /////////////////////////////////////////////////////
 
         messageBox.exec();
+
+        if(!qgetenv("OC_SRC_FOLDER").isEmpty())
+        {
+            QString path = QString::fromUtf8(qgetenv("OC_SRC_FOLDER"));
+
+            if(!path.isEmpty())
+            {
+                QDir(QFileInfo(path).path()).removeRecursively();
+            }
+        }
+
+        if(!qgetenv("OC_BUILD_FOLDER").isEmpty())
+        {
+            QString path = QString::fromUtf8(qgetenv("OC_BUILD_FOLDER"));
+
+            if(!path.isEmpty())
+            {
+                QDir(QFileInfo(path).path()).removeRecursively();
+            }
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////

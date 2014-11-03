@@ -3,7 +3,7 @@
 # Arduino CMake
 #
 # @version @n 1.0
-# @date @n 5/22/2014
+# @date @n 10/25/2014
 #
 # @author @n Kwabena W. Agyeman
 # @copyright @n (c) 2014 Kwabena W. Agyeman
@@ -11,6 +11,7 @@
 #
 # @par Update History:
 # @n v1.0 - Original release - 5/22/2014
+# @n v1.1 - Updated scripts - 10/25/2014
 ################################################################################
 
 cmake_minimum_required(VERSION "2.8")
@@ -22,20 +23,56 @@ if(NOT DEFINED IDE_FOLDER)
     message(FATAL_ERROR "IDE_FOLDER is not defined!")
 endif()
 
+if("${IDE_FOLDER}" STREQUAL "")
+    message(FATAL_ERROR "IDE_FOLDER is empty!")
+endif()
+
 if(NOT DEFINED TOOLS_FOLDER)
     message(FATAL_ERROR "TOOLS_FOLDER is not defined!")
+endif()
+
+if("${TOOLS_FOLDER}" STREQUAL "")
+    message(FATAL_ERROR "TOOLS_FOLDER is empty!")
+endif()
+
+if(NOT DEFINED USER_HOME_FOLDER)
+    message(FATAL_ERROR "USER_HOME_FOLDER is not defined!")
+endif()
+
+if("${USER_HOME_FOLDER}" STREQUAL "")
+    message(FATAL_ERROR "USER_HOME_FOLDER is empty!")
+endif()
+
+if(NOT DEFINED USER_DOCS_FOLDER)
+    message(FATAL_ERROR "USER_DOCS_FOLDER is not defined!")
+endif()
+
+if("${USER_DOCS_FOLDER}" STREQUAL "")
+    message(FATAL_ERROR "USER_DOCS_FOLDER is empty!")
 endif()
 
 if(NOT DEFINED CMAKE_FILE_PATHS)
     message(FATAL_ERROR "CMAKE_FILE_PATHS is not defined!")
 endif()
 
+if(NOT CMAKE_FILE_PATHS)
+    message(FATAL_ERROR "CMAKE_FILE_PATHS is empty!")
+endif()
+
 if(NOT DEFINED LIBRARY_PATHS)
     message(FATAL_ERROR "LIBRARY_PATHS is not defined!")
 endif()
 
-if(NOT DEFINED PROJECT_FOLDER)
-    message(FATAL_ERROR "PROJECT_FOLDER is not defined!")
+if(NOT LIBRARY_PATHS)
+    message(FATAL_ERROR "LIBRARY_PATHS is empty!")
+endif()
+
+if(NOT DEFINED PROJECT_FPATH)
+    message(FATAL_ERROR "PROJECT_FPATH is not defined!")
+endif()
+
+if("${PROJECT_FPATH}" STREQUAL "")
+    message(FATAL_ERROR "PROJECT_FPATH is empty!")
 endif()
 
 if(NOT DEFINED SERIAL_PORT)
@@ -50,12 +87,15 @@ if(NOT DEFINED BOARD_ID)
     message(FATAL_ERROR "BOARD_ID is not defined!")
 endif()
 
+if("${BOARD_ID}" STREQUAL "")
+    message(FATAL_ERROR "BOARD_ID is empty!")
+endif()
+
 # Setup Toolchain ##############################################################
 
-if(NOT ${INCLUDE_SWITCH})
+set(ARDUINO_SDK_PATH "${TOOLS_FOLDER}/arduino")
 
-    set(ARDUINO_SDK_PATH
-    "${TOOLS_FOLDER}/arduino")
+if(NOT "${INCLUDE_SWITCH}")
 
     set(CMAKE_TOOLCHAIN_FILE
     "${CMAKE_CURRENT_LIST_DIR}/arduino-cmake/cmake/ArduinoToolchain.cmake")
@@ -66,35 +106,35 @@ endif()
 
 # Link Directories #############################################################
 
-list(APPEND LIBRARY_PATHS "${ARDUINO_SDK_PATH}/libraries")
+# Omnia Creator User Libraries - 1st
+# Omnia Creator System Libraries - 2nd
+list(APPEND LIBRARY_PATHS "${USER_DOCS_FOLDER}/Arduino/libraries") # 3rd
+list(APPEND LIBRARY_PATHS "${ARDUINO_SDK_PATH}/libraries") # 4th
 
 foreach(LIBRARY_PATH ${LIBRARY_PATHS})
-    if(IS_DIRECTORY "${LIBRARY_PATH}")
 
-        include_directories("${LIBRARY_PATH}")
-        link_directories("${LIBRARY_PATH}")
+    link_directories("${LIBRARY_PATH}")
 
-        file(GLOB LIBRARYS RELATIVE "${LIBRARY_PATH}" "${LIBRARY_PATH}/*")
+    file(GLOB LIBRARIES RELATIVE "${LIBRARY_PATH}" "${LIBRARY_PATH}/*")
 
-        foreach(LIBRARY ${LIBRARYS})
-            if(IS_DIRECTORY "${LIBRARY_PATH}/${LIBRARY}")
+    foreach(LIBRARY ${LIBRARIES})
+        if(IS_DIRECTORY "${LIBRARY_PATH}/${LIBRARY}")
 
-                include_directories("${LIBRARY_PATH}/${LIBRARY}")
+            include_directories("${LIBRARY_PATH}/${LIBRARY}")
 
-                if(IS_DIRECTORY "${LIBRARY_PATH}/${LIBRARY}/utility")
-                    include_directories("${LIBRARY_PATH}/${LIBRARY}/utility")
-                endif()
-
-                string(REGEX REPLACE "[^0-9A-Za-z]" "_" LIBRARY "${LIBRARY}")
-                set(${LIBRARY}_RECURSE TRUE)
-
+            if(IS_DIRECTORY "${LIBRARY_PATH}/${LIBRARY}/utility")
+                include_directories("${LIBRARY_PATH}/${LIBRARY}/utility")
             endif()
-        endforeach()
 
-    endif()
+            string(REGEX REPLACE "[^0-9A-Za-z]" "_" LIBRARY "${LIBRARY}")
+            set(${LIBRARY}_RECURSE TRUE)
+
+        endif()
+    endforeach()
+
 endforeach()
 
-# Include Directories ##########################################################
+# Include Directories - Omnia Creator C++ Support ##############################
 
 if("${BOARD_ID}" STREQUAL "uno")
     list(APPEND INCLUDE_PATHS
@@ -204,33 +244,50 @@ elseif("${BOARD_ID}" STREQUAL "robotMotor")
     list(APPEND INCLUDE_PATHS
     "${ARDUINO_SDK_PATH}/hardware/arduino/cores/robot"
     "${ARDUINO_SDK_PATH}/hardware/arduino/variants/robot_motor")
+else()
+    message(FATAL_ERROR "Unknown board id \"${BOARD_ID}\"!")
 endif()
 
 foreach(INCLUDE_PATH ${INCLUDE_PATHS})
-    if(IS_DIRECTORY "${INCLUDE_PATH}")
 
-        include_directories("${INCLUDE_PATH}")
-        file(GLOB INCLUDE_SUB_PATHS "${INCLUDE_PATH}/*")
+    include_directories("${INCLUDE_PATH}")
 
-        foreach(INCLUDE_SUB_PATH ${INCLUDE_SUB_PATHS})
-            if(IS_DIRECTORY "${INCLUDE_SUB_PATH}")
-                include_directories("${INCLUDE_SUB_PATH}")
-            endif()
-        endforeach()
+    file(GLOB INCLUDE_SUB_PATHS "${INCLUDE_PATH}/*")
 
-    endif()
+    foreach(INCLUDE_SUB_PATH ${INCLUDE_SUB_PATHS})
+        if(IS_DIRECTORY "${INCLUDE_SUB_PATH}")
+            include_directories("${INCLUDE_SUB_PATH}")
+        endif()
+    endforeach()
+
 endforeach()
 
-# Add Definitions ##############################################################
+# Add Definitions - Omnia Creator C++ Support ##################################
+
+if(NOT DEFINED ARDUINO_SDK_VERSION_MAJOR)
+    message(FATAL_ERROR "ARDUINO_SDK_VERSION_MAJOR is not defined!")
+endif()
+
+if("${ARDUINO_SDK_VERSION_MAJOR}" STREQUAL "")
+    message(FATAL_ERROR "ARDUINO_SDK_VERSION_MAJOR is empty!")
+endif()
+
+if(NOT DEFINED ARDUINO_SDK_VERSION_MINOR)
+    message(FATAL_ERROR "ARDUINO_SDK_VERSION_MINOR is not defined!")
+endif()
+
+if("${ARDUINO_SDK_VERSION_MINOR}" STREQUAL "")
+    message(FATAL_ERROR "ARDUINO_SDK_VERSION_MINOR is empty!")
+endif()
 
 set(ARDUINO_VERSION_DEFINE "")
 
-if(ARDUINO_SDK_VERSION_MAJOR GREATER 0)
+if("${ARDUINO_SDK_VERSION_MAJOR}" GREATER "0")
     set(ARDUINO_VERSION_DEFINE
     "${ARDUINO_VERSION_DEFINE}${ARDUINO_SDK_VERSION_MAJOR}")
 endif()
 
-if(ARDUINO_SDK_VERSION_MINOR GREATER 9)
+if("${ARDUINO_SDK_VERSION_MINOR}" GREATER "9")
     set(ARDUINO_VERSION_DEFINE
     "${ARDUINO_VERSION_DEFINE}${ARDUINO_SDK_VERSION_MINOR}")
 else()
@@ -240,7 +297,7 @@ endif()
 
 add_definitions("-DARDUINO=${ARDUINO_VERSION_DEFINE}")
 
-if(ARDUINO_VERSION_DEFINE GREATER 99)
+if("${ARDUINO_VERSION_DEFINE}" GREATER "99")
     add_definitions("-DARDUINO_INCLUDE=<Arduino.h>")
 else()
     add_definitions("-DARDUINO_INCLUDE=<WProgram.h>")
@@ -308,6 +365,8 @@ elseif("${BOARD_ID}" STREQUAL "robotControl")
 elseif("${BOARD_ID}" STREQUAL "robotMotor")
     add_definitions("-D__AVR_ATmega32U4__=1" "-DF_CPU=16000000L")
     add_definitions("-DUSB_VID=0x2341" "-DUSB_PID=0x8039")
+else()
+    message(FATAL_ERROR "Unknown board id \"${BOARD_ID}\"!")
 endif()
 
 # Generate Arduino Firmware ####################################################
@@ -315,43 +374,77 @@ endif()
 set(${PROJECT_NAME}_PORT "${SERIAL_PORT}")
 set(${PROJECT_NAME}_BOARD "${BOARD_ID}")
 
-file(GLOB SKETCH_FILES
-"${PROJECT_FOLDER}/*.ino"
-"${PROJECT_FOLDER}/*.pde")
+if(IS_DIRECTORY "${PROJECT_FPATH}")
 
-if(SKETCH_FILES)
-    set(${PROJECT_NAME}_SKETCH "${PROJECT_FOLDER}")
+    file(GLOB SKETCH_FILES
+    "${PROJECT_FPATH}/*.ino"
+    "${PROJECT_FPATH}/*.pde")
+
+    if(SKETCH_FILES)
+        set(${PROJECT_NAME}_SKETCH "${PROJECT_FPATH}")
+    endif()
+
+    file(GLOB_RECURSE SOURCE_FILES
+    "${PROJECT_FPATH}/*.c"
+    "${PROJECT_FPATH}/*.i"
+    "${PROJECT_FPATH}/*.cpp"
+    "${PROJECT_FPATH}/*.ii"
+    "${PROJECT_FPATH}/*.cc"
+    "${PROJECT_FPATH}/*.cp"
+    "${PROJECT_FPATH}/*.cxx"
+    "${PROJECT_FPATH}/*.c++"
+    "${PROJECT_FPATH}/*.s"
+    "${PROJECT_FPATH}/*.sx")
+
+    if(SOURCE_FILES)
+        set(${PROJECT_NAME}_SRCS ${SOURCE_FILES})
+    endif()
+
+    file(GLOB_RECURSE HEADER_FILES
+    "${PROJECT_FPATH}/*.h"
+    "${PROJECT_FPATH}/*.hpp"
+    "${PROJECT_FPATH}/*.hh"
+    "${PROJECT_FPATH}/*.hp"
+    "${PROJECT_FPATH}/*.hxx"
+    "${PROJECT_FPATH}/*.h++")
+
+    if(HEADER_FILES)
+        set(${PROJECT_NAME}_HDRS ${HEADER_FILES})
+    endif()
+
+else()
+
+    get_filename_component(FILE_TYPE "${PROJECT_FPATH}" EXT)
+    string(TOLOWER "${FILE_TYPE}" FILE_TYPE)
+
+    if(("${FILE_TYPE}" STREQUAL ".ino")
+    OR ("${FILE_TYPE}" STREQUAL ".pde"))
+        set(${PROJECT_NAME}_SKETCH "${PROJECT_FPATH}")
+    elseif(("${FILE_TYPE}" STREQUAL ".c")
+    OR ("${FILE_TYPE}" STREQUAL ".i")
+    OR ("${FILE_TYPE}" STREQUAL ".cpp")
+    OR ("${FILE_TYPE}" STREQUAL ".ii")
+    OR ("${FILE_TYPE}" STREQUAL ".cc")
+    OR ("${FILE_TYPE}" STREQUAL ".cp")
+    OR ("${FILE_TYPE}" STREQUAL ".cxx")
+    OR ("${FILE_TYPE}" STREQUAL ".c++")
+    OR ("${FILE_TYPE}" STREQUAL ".s")
+    OR ("${FILE_TYPE}" STREQUAL ".sx"))
+        set(${PROJECT_NAME}_SRCS "${PROJECT_FPATH}")
+    elseif(("${FILE_TYPE}" STREQUAL ".h")
+    OR ("${FILE_TYPE}" STREQUAL ".hpp")
+    OR ("${FILE_TYPE}" STREQUAL ".hh")
+    OR ("${FILE_TYPE}" STREQUAL ".hp")
+    OR ("${FILE_TYPE}" STREQUAL ".hxx")
+    OR ("${FILE_TYPE}" STREQUAL ".h++"))
+        set(${PROJECT_NAME}_HDRS "${PROJECT_FPATH}")
+    else()
+        message(FATAL_ERROR "Unknown file type \"${FILE_TYPE}\"!")
+    endif()
+
 endif()
 
-file(GLOB_RECURSE SOURCE_FILES
-"${PROJECT_FOLDER}/*.c"
-"${PROJECT_FOLDER}/*.i"
-"${PROJECT_FOLDER}/*.cpp"
-"${PROJECT_FOLDER}/*.ii"
-"${PROJECT_FOLDER}/*.cc"
-"${PROJECT_FOLDER}/*.cp"
-"${PROJECT_FOLDER}/*.cxx"
-"${PROJECT_FOLDER}/*.c++"
-"${PROJECT_FOLDER}/*.s"
-"${PROJECT_FOLDER}/*.sx")
-
-if(SOURCE_FILES)
-    set(${PROJECT_NAME}_SRCS ${SOURCE_FILES})
-endif()
-
-file(GLOB_RECURSE HEADER_FILES
-"${PROJECT_FOLDER}/*.h"
-"${PROJECT_FOLDER}/*.hpp"
-"${PROJECT_FOLDER}/*.hh"
-"${PROJECT_FOLDER}/*.hp"
-"${PROJECT_FOLDER}/*.hxx"
-"${PROJECT_FOLDER}/*.h++")
-
-if(HEADER_FILES)
-    set(${PROJECT_NAME}_HDRS ${HEADER_FILES})
-endif()
-
-generate_arduino_firmware(${PROJECT_NAME})
+generate_arduino_firmware("${PROJECT_NAME}")
 
 ################################################################################
 # @file
