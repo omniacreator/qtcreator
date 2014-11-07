@@ -620,7 +620,12 @@ CMakeRunPage::CMakeRunPage(CMakeOpenProjectWizard *cmakeWizard, Mode mode, const
 
             if(!path.isEmpty())
             {
-                QDir(QFileInfo(path).path()).removeRecursively();
+                path = QFileInfo(path).path();
+
+                if(path.isEmpty())
+                {
+                    QDir(path).removeRecursively();
+                }
             }
         }
 
@@ -630,7 +635,12 @@ CMakeRunPage::CMakeRunPage(CMakeOpenProjectWizard *cmakeWizard, Mode mode, const
 
             if(!path.isEmpty())
             {
-                QDir(QFileInfo(path).path()).removeRecursively();
+                path = QFileInfo(path).path();
+
+                if(path.isEmpty())
+                {
+                    QDir(path).removeRecursively();
+                }
             }
         }
     }

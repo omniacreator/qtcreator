@@ -93,6 +93,10 @@ endif()
 
 # Setup Toolchain ##############################################################
 
+if(WIN32)
+    set(CMAKE_COMPILER_IS_MINGW "1") # Response File Bug Fix
+endif()
+
 set(ARDUINO_SDK_PATH "${TOOLS_FOLDER}/arduino")
 
 if(NOT "${INCLUDE_SWITCH}")

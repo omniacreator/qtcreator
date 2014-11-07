@@ -117,6 +117,10 @@ endif()
 
 # Setup Toolchain ##############################################################
 
+if(WIN32)
+    set(CMAKE_COMPILER_IS_MINGW "1") # Response File Bug Fix
+endif()
+
 set(PROPELLER_SDK_PATH "${TOOLS_FOLDER}/propeller")
 
 if(NOT "${INCLUDE_SWITCH}")
@@ -139,154 +143,16 @@ list(APPEND LIBRARY_PATHS
 list(APPEND LIBRARY_PATHS
 "${PROPELLER_SDK_PATH}/Workspace/Learn/Simple Libraries") # 4th
 
-foreach(LIBRARY_PATH ${LIBRARY_PATHS})
-
-    link_directories("${LIBRARY_PATH}")
-
-    get_filename_component(FOLDER_NAME "${LIBRARY_PATH}" NAME)
-
-    if("${FOLDER_NAME}" STREQUAL "libraries")
-
-        file(GLOB LIBRARIES RELATIVE "${LIBRARY_PATH}" "${LIBRARY_PATH}/*")
-
-        foreach(LIBRARY ${LIBRARIES})
-            if(IS_DIRECTORY "${LIBRARY_PATH}/${LIBRARY}")
-
-                # include_directories("${LIBRARY_PATH}/${LIBRARY}")
-
-                # if(IS_DIRECTORY "${LIBRARY_PATH}/${LIBRARY}/utility")
-                #     include_directories("${LIBRARY_PATH}/${LIBRARY}/utility")
-                # endif()
-
-                # string(REGEX REPLACE "[^0-9A-Za-z]" "_" LIBRARY "${LIBRARY}")
-                # set(${LIBRARY}_RECURSE TRUE)
-
-            endif()
-        endforeach()
-
-    elseif("${FOLDER_NAME}" STREQUAL "Simple Libraries")
-
-        file(GLOB LIBRARIES "${LIBRARY_PATH}/*")
-
-        foreach(LIBRARY ${LIBRARIES})
-            if(IS_DIRECTORY "${LIBRARY}")
-
-                file(GLOB LIBS RELATIVE "${LIBRARY}" "${LIBRARY}/*")
-
-                foreach(LIB ${LIBS})
-                    if(IS_DIRECTORY "${LIBRARY}/${LIB}"
-                    AND (NOT "${LIB}" STREQUAL "html") # HACK!!!
-                    AND (NOT "${LIB}" STREQUAL "ActivityBot")) # HACK!!!
-
-                        # include_directories("${LIBRARY}/${LIB}")
-
-                        # if(IS_DIRECTORY "${LIBRARY}/${LIB}/source")
-                        #     include_directories("${LIBRARY}/${LIB}/source")
-                        # endif()
-
-                        # string(REGEX REPLACE "[^0-9A-Za-z]" "_" LIB "${LIB}")
-                        # set(${LIB}_RECURSE TRUE)
-
-                    endif()
-                endforeach()
-
-            endif()
-        endforeach()
-
-    else()
-        message(FATAL_ERROR "Unknown libs type \"${FOLDER_NAME}\"!")
-    endif()
-
-endforeach()
+link_directories(${LIBRARY_PATHS})
 
 # Generate Propeller Firmware ##################################################
 
-set(${PROJECT_NAME}_PORT "${SERIAL_PORT}")
-set(${PROJECT_NAME}_BOARD "${BOARD_ID}")
+set(${PROJECT_NAME}_FPATH "${PROJECT_FPATH}")
 set(${PROJECT_NAME}_MM "${MEMORY_MODEL}")
+set(${PROJECT_NAME}_BOARD "${BOARD_ID}")
+set(${PROJECT_NAME}_PORT "${SERIAL_PORT}")
 set(${PROJECT_NAME}_CF "${CLOCK_FREQ}")
 set(${PROJECT_NAME}_CM "${CLOCK_MODE}")
-
-if(IS_DIRECTORY "${PROJECT_FPATH}")
-
-    file(GLOB SIDE_FILES
-    "${PROJECT_FPATH}/*.side")
-
-    if(SIDE_FILES)
-        set(${PROJECT_NAME}_SIDE "${PROJECT_FPATH}")
-    endif()
-
-    file(GLOB_RECURSE SPIN_FILES
-    "${PROJECT_FPATH}/*.spin")
-
-    if(SPIN_FILES)
-        set(${PROJECT_NAME}_SPIN ${SPIN_FILES})
-    endif()
-
-    file(GLOB_RECURSE SOURCE_FILES
-    "${PROJECT_FPATH}/*.c"
-    "${PROJECT_FPATH}/*.i"
-    "${PROJECT_FPATH}/*.cpp"
-    "${PROJECT_FPATH}/*.ii"
-    "${PROJECT_FPATH}/*.cc"
-    "${PROJECT_FPATH}/*.cp"
-    "${PROJECT_FPATH}/*.cxx"
-    "${PROJECT_FPATH}/*.c++"
-    "${PROJECT_FPATH}/*.s"
-    "${PROJECT_FPATH}/*.sx"
-    "${PROJECT_FPATH}/*.cogc"
-    "${PROJECT_FPATH}/*.cogcpp")
-
-    if(SOURCE_FILES)
-        set(${PROJECT_NAME}_SRCS ${SOURCE_FILES})
-    endif()
-
-    file(GLOB_RECURSE HEADER_FILES
-    "${PROJECT_FPATH}/*.h"
-    "${PROJECT_FPATH}/*.hpp"
-    "${PROJECT_FPATH}/*.hh"
-    "${PROJECT_FPATH}/*.hp"
-    "${PROJECT_FPATH}/*.hxx"
-    "${PROJECT_FPATH}/*.h++")
-
-    if(HEADER_FILES)
-        set(${PROJECT_NAME}_HDRS ${HEADER_FILES})
-    endif()
-
-else()
-
-    get_filename_component(FILE_TYPE "${PROJECT_FPATH}" EXT)
-    string(TOLOWER "${FILE_TYPE}" FILE_TYPE)
-
-    if("${FILE_TYPE}" STREQUAL ".side")
-        set(${PROJECT_NAME}_SIDE "${PROJECT_FPATH}")
-    elseif("${FILE_TYPE}" STREQUAL ".spin")
-        set(${PROJECT_NAME}_SPIN "${PROJECT_FPATH}")
-    elseif(("${FILE_TYPE}" STREQUAL ".c")
-    OR ("${FILE_TYPE}" STREQUAL ".i")
-    OR ("${FILE_TYPE}" STREQUAL ".cpp")
-    OR ("${FILE_TYPE}" STREQUAL ".ii")
-    OR ("${FILE_TYPE}" STREQUAL ".cc")
-    OR ("${FILE_TYPE}" STREQUAL ".cp")
-    OR ("${FILE_TYPE}" STREQUAL ".cxx")
-    OR ("${FILE_TYPE}" STREQUAL ".c++")
-    OR ("${FILE_TYPE}" STREQUAL ".s")
-    OR ("${FILE_TYPE}" STREQUAL ".sx")
-    OR ("${FILE_TYPE}" STREQUAL ".cogc")
-    OR ("${FILE_TYPE}" STREQUAL ".cogcpp"))
-        set(${PROJECT_NAME}_SRCS "${PROJECT_FPATH}")
-    elseif(("${FILE_TYPE}" STREQUAL ".h")
-    OR ("${FILE_TYPE}" STREQUAL ".hpp")
-    OR ("${FILE_TYPE}" STREQUAL ".hh")
-    OR ("${FILE_TYPE}" STREQUAL ".hp")
-    OR ("${FILE_TYPE}" STREQUAL ".hxx")
-    OR ("${FILE_TYPE}" STREQUAL ".h++"))
-        set(${PROJECT_NAME}_HDRS "${PROJECT_FPATH}")
-    else()
-        message(FATAL_ERROR "Unknown file type \"${FILE_TYPE}\"!")
-    endif()
-
-endif()
 
 generate_propeller_firmware("${PROJECT_NAME}")
 
