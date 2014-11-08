@@ -584,17 +584,17 @@ CMakeRunPage::CMakeRunPage(CMakeOpenProjectWizard *cmakeWizard, Mode mode, const
         messageBox.setDefaultButton(QMessageBox::Ok);
         messageBox.setDetailedText(m_output->toPlainText().trimmed());
 
-        QRegularExpression re(QLatin1String("CMake Error at(.*?)Call Stack"));
-        re.setPatternOptions(QRegularExpression::DotMatchesEverythingOption);
+        QRegularExpression re(QLatin1String("CMake(.*?)\n(.*?)\n"));
 
         QRegularExpressionMatchIterator i =
         re.globalMatch(messageBox.detailedText());
 
         QString text;
 
-        while(i.hasNext())
+        for(int j = 0; i.hasNext() && (j < 2); j++)
         {
-            text.append(i.next().captured(1).trimmed()+QLatin1String("\n\n"));
+            text.append(i.next().captured(1).trimmed() +
+            QLatin1String("\n\n"));
         }
 
         text.chop(2);
@@ -614,32 +614,52 @@ CMakeRunPage::CMakeRunPage(CMakeOpenProjectWizard *cmakeWizard, Mode mode, const
 
         messageBox.exec();
 
+        // Being super careful here...
+
         if(!qgetenv("OC_SRC_FOLDER").isEmpty())
         {
+            QString tempLocation = QDir::fromNativeSeparators(QDir::cleanPath(
+            QStandardPaths::writableLocation(QStandardPaths::TempLocation) +
+            QDir::separator() + QApplication::applicationName() +
+            QDir::separator() + QLatin1String("CMake")));
+
             QString path = QString::fromUtf8(qgetenv("OC_SRC_FOLDER"));
 
             if(!path.isEmpty())
             {
-                path = QFileInfo(path).path();
+                path = QDir::fromNativeSeparators(QDir::cleanPath(
+                QFileInfo(path).path()));
 
-                if(path.isEmpty())
+                if(Utils::FileName(QFileInfo(path)).
+                isChildOf(Utils::FileName(QFileInfo(tempLocation))))
                 {
-                    QDir(path).removeRecursively();
+                    QDir(path).removeRecursively(); // Dangerous...
                 }
             }
         }
 
+        // Being super careful here...
+
         if(!qgetenv("OC_BUILD_FOLDER").isEmpty())
         {
+            QString tempLocation = QDir::fromNativeSeparators(QDir::cleanPath(
+            QStandardPaths::writableLocation(QStandardPaths::TempLocation) +
+            QDir::separator() + QApplication::applicationName() +
+            QDir::separator() + QLatin1String("CMake")));
+
             QString path = QString::fromUtf8(qgetenv("OC_BUILD_FOLDER"));
 
             if(!path.isEmpty())
             {
                 path = QFileInfo(path).path();
 
-                if(path.isEmpty())
+                path = QDir::fromNativeSeparators(QDir::cleanPath(
+                QFileInfo(path).path()));
+
+                if(Utils::FileName(QFileInfo(path)).
+                isChildOf(Utils::FileName(QFileInfo(tempLocation))))
                 {
-                    QDir(path).removeRecursively();
+                    QDir(path).removeRecursively(); // Dangerous...
                 }
             }
         }

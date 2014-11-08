@@ -1490,6 +1490,52 @@ Core::Id EditorManager::getOpenWithEditorId(const QString &fileName,
 IEditor *EditorManager::openEditor(const QString &fileName, const Id &editorId,
                                    OpenEditorFlags flags, bool *newEditor)
 {
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    if(fileName.endsWith(QLatin1String(".side")))
+    {
+        QFile file(fileName);
+
+        if(file.open(QIODevice::ReadOnly))
+        {
+            QStringList list;
+
+            QRegularExpression re0(QLatin1String("^[^>].*$"));
+            QRegularExpression re1(QLatin1String("^.+ -> (.+)$"));
+
+            QTextStream stream(&file);
+
+            while(!stream.atEnd())
+            {
+                QString line = stream.readLine();
+
+                QRegularExpressionMatch reM0 = re0.match(line);
+
+                if(reM0.hasMatch())
+                {
+                    QRegularExpressionMatch reM1 = re1.match(line);
+
+                    if(reM1.hasMatch())
+                    {
+                        line = reM1.captured(1);
+                    }
+
+                    list.prepend(QDir::fromNativeSeparators(QDir::cleanPath(
+                    QFileInfo(fileName).path() + QDir::separator() + line)));
+                }
+            }
+
+            IEditor *editor = NULL;
+
+            foreach(const QString &string, list)
+            {
+                editor = openEditor(string);
+            }
+
+            return editor;
+        }
+    }
+    ///////////////////////////////////////////////////////////////////////////
+
     if (flags & EditorManager::OpenInOtherSplit) {
         if (flags & EditorManager::NoNewSplits)
             m_instance->gotoNextSplit();

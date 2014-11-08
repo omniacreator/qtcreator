@@ -36,6 +36,9 @@
 #include <utils/environment.h>
 #include <utils/wizard.h>
 #include <utils/qtcprocess.h>
+// Omnia Creator Code Change //////////////////////////////////////////////////
+#include <utils/fileutils.h>
+///////////////////////////////////////////////////////////////////////////////
 #include <projectexplorer/target.h>
 #include <projectexplorer/project.h>
 
@@ -47,6 +50,7 @@
 // Omnia Creator Code Change //////////////////////////////////////////////////
 #include <QMessageBox>
 #include <QProgressDialog>
+#include <QStandardPaths>
 ///////////////////////////////////////////////////////////////////////////////
 
 namespace Utils {
