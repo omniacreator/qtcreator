@@ -143,7 +143,7 @@ list(APPEND LIBRARY_PATHS
 list(APPEND LIBRARY_PATHS
 "${PROPELLER_SDK_PATH}/Workspace/Learn/Simple Libraries") # 4th
 
-link_directories(${LIBRARY_PATHS})
+set(${PROJECT_NAME}_LIBS ${LIBRARY_PATHS})
 
 # Generate Propeller Firmware ##################################################
 
