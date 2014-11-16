@@ -570,7 +570,6 @@ CMakeRunPage::CMakeRunPage(CMakeOpenProjectWizard *cmakeWizard, Mode mode, const
     connect(this, SIGNAL(completeChanged()), &dialog, SLOT(close()));
 
     initializePage();
-
     runCMake();
 
     dialog.exec();
@@ -584,7 +583,7 @@ CMakeRunPage::CMakeRunPage(CMakeOpenProjectWizard *cmakeWizard, Mode mode, const
         messageBox.setDefaultButton(QMessageBox::Ok);
         messageBox.setDetailedText(m_output->toPlainText().trimmed());
 
-        QRegularExpression re(QLatin1String("CMake(.*?)\n(.*?)\n"));
+        QRegularExpression re(QLatin1String("CMake (.*?)\n(.*?)\n"));
 
         QRegularExpressionMatchIterator i =
         re.globalMatch(messageBox.detailedText());
@@ -593,13 +592,18 @@ CMakeRunPage::CMakeRunPage(CMakeOpenProjectWizard *cmakeWizard, Mode mode, const
 
         for(int j = 0; i.hasNext() && (j < 2); j++)
         {
-            text.append(i.next().captured(1).trimmed() +
-            QLatin1String("\n\n"));
+            if(j)
+            {
+                text.append(QLatin1String("---\n\n"));
+            }
+
+            QRegularExpressionMatch next = i.next();
+
+            text.append(next.captured(1).trimmed() + QLatin1String("\n\n") +
+                        next.captured(2).trimmed() + QLatin1String("\n\n"));
         }
 
-        text.chop(2);
-
-        messageBox.setInformativeText(text);
+        messageBox.setInformativeText(text.trimmed());
 
         // Start Dirty Hack ///////////////////////////////////////////////////
         QSpacerItem *spacer = new QSpacerItem(640, 0,
