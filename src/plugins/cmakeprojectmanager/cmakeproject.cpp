@@ -305,6 +305,47 @@ bool CMakeProject::parseCMakeLists()
                 projectFiles.insert(temp);
             }
         }
+        else
+        {
+            ProjectExplorer::FileType ft =
+            ProjectExplorer::UnknownFileType;
+
+            if(path.endsWith(QLatin1String(".c"))
+            || path.endsWith(QLatin1String(".i"))
+            || path.endsWith(QLatin1String(".cogc")) // For Propeller
+            || path.endsWith(QLatin1String(".cpp"))
+            || path.endsWith(QLatin1String(".ii"))
+            || path.endsWith(QLatin1String(".cc"))
+            || path.endsWith(QLatin1String(".cp"))
+            || path.endsWith(QLatin1String(".cxx"))
+            || path.endsWith(QLatin1String(".c++"))
+            || path.endsWith(QLatin1String(".cogcpp")) // For Propeller
+            || path.endsWith(QLatin1String(".ino")) // For Arduino
+            || path.endsWith(QLatin1String(".pde")) // For Arduino
+            || path.endsWith(QLatin1String(".s"))
+            || path.endsWith(QLatin1String(".sx"))
+            || path.endsWith(QLatin1String(".spin"))) // For Propeller
+            {
+                ft = ProjectExplorer::SourceType;
+            }
+            else if(path.endsWith(QLatin1String(".h"))
+            || path.endsWith(QLatin1String(".hpp"))
+            || path.endsWith(QLatin1String(".hh"))
+            || path.endsWith(QLatin1String(".hp"))
+            || path.endsWith(QLatin1String(".hxx"))
+            || path.endsWith(QLatin1String(".h++")))
+            {
+                ft = ProjectExplorer::HeaderType;
+            }
+            else if(path.endsWith(QLatin1String(".side"))) // For Propeller
+            {
+                ft = ProjectExplorer::ProjectFileType;
+            }
+
+            fileList.append(new ProjectExplorer::FileNode(path,ft,false));
+
+            projectFiles.insert(path);
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -462,6 +503,13 @@ bool CMakeProject::parseCMakeLists()
                         adder.maybeAdd(temp);
                     }
                 }
+            }
+            else
+            {
+                part->includePaths+=QDir::fromNativeSeparators(QDir::cleanPath(
+                QFileInfo(path).path()));
+
+                adder.maybeAdd(path);
             }
         }
 

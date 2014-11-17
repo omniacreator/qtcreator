@@ -60,8 +60,10 @@ CMakeEditorFactory::CMakeEditorFactory(CMakeManager *manager)
     Command *cmd;
     Context cmakeEditorContext = Context(Constants::C_CMAKEEDITOR);
 
-    cmd = Core::ActionManager::command(TextEditor::Constants::JUMP_TO_FILE_UNDER_CURSOR);
-    contextMenu->addAction(cmd);
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    // cmd = Core::ActionManager::command(TextEditor::Constants::JUMP_TO_FILE_UNDER_CURSOR);
+    // contextMenu->addAction(cmd);
+    ///////////////////////////////////////////////////////////////////////////
 
     contextMenu->addSeparator(cmakeEditorContext);
 

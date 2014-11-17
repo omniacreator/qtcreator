@@ -62,7 +62,9 @@ CMakeEditor::CMakeEditor(CMakeEditorWidget *editor)
     setId(CMakeProjectManager::Constants::CMAKE_EDITOR_ID);
     setContext(Core::Context(CMakeProjectManager::Constants::C_CMAKEEDITOR,
               TextEditor::Constants::C_TEXTEDITOR));
-    connect(document(), SIGNAL(changed()), this, SLOT(markAsChanged()));
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    // connect(document(), SIGNAL(changed()), this, SLOT(markAsChanged()));
+    ///////////////////////////////////////////////////////////////////////////
 }
 
 Core::IEditor *CMakeEditor::duplicate()

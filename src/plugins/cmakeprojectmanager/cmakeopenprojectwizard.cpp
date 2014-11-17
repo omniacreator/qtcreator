@@ -577,7 +577,7 @@ CMakeRunPage::CMakeRunPage(CMakeOpenProjectWizard *cmakeWizard, Mode mode, const
     if(!m_haveCbpFile)
     {
         QMessageBox messageBox(QMessageBox::Critical,
-        tr("Configuration Failed"), tr("Please fix the error(s):"),
+        tr("Configuration Failed"), tr("Please fix the issue(s):"),
         QMessageBox::Ok, Core::ICore::mainWindow());
 
         messageBox.setDefaultButton(QMessageBox::Ok);
