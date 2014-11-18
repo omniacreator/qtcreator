@@ -264,10 +264,24 @@ void MakeStep::stdOutput(const QString &line)
             }
         }
     }
+    // Omnia Creator Code Change //////////////////////////////////////////////
     if (m_useNinja)
-        AbstractProcessStep::stdError(line);
+    {
+        if((m_percentProgress.indexIn(line) != -1)
+        || (m_ninjaProgress.indexIn(line) != -1))
+        {
+            AbstractProcessStep::stdOutput(line);
+        }
+        else
+        {
+            AbstractProcessStep::stdError(line);
+        }
+    }
     else
+    {
         AbstractProcessStep::stdOutput(line);
+    }
+    ///////////////////////////////////////////////////////////////////////////
 }
 
 QStringList MakeStep::buildTargets() const
