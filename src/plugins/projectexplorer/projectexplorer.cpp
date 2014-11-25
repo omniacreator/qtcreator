@@ -1799,17 +1799,17 @@ void ProjectExplorerPlugin::updateExternalFileWarning()
     Utils::FileName fileName = Utils::FileName::fromString(document->filePath());
     Utils::FileName projectDir = Utils::FileName::fromString(d->m_currentProject->projectDirectory());
     // Omnia Creator Code Change //////////////////////////////////////////////
-
-    QString path = QString::fromUtf8(qgetenv("OC_PROJECT_FPATH"));
-
-    if(QFileInfo(path).isFile())
+    foreach(const QString &file,
+    d->m_currentProject->files(ProjectExplorer::Project::AllFiles))
     {
-        path = QFileInfo(path).canonicalPath();
+        if(Utils::FileName(QFileInfo(file)) == Utils::FileName(fileName))
+        {
+            return;
+        }
     }
-
-    if (Utils::FileName::fromString(path).isEmpty() || fileName.isChildOf(Utils::FileName::fromString(path))) // (projectDir.isEmpty() || fileName.isChildOf(projectDir))
+    // if (projectDir.isEmpty() || fileName.isChildOf(projectDir))
+       // return;
     ///////////////////////////////////////////////////////////////////////////
-        return;
     // External file. Test if it under the same VCS
     QString topLevel;
     if (VcsManager::findVersionControlForDirectory(projectDir.toString(), &topLevel)
@@ -1817,7 +1817,9 @@ void ProjectExplorerPlugin::updateExternalFileWarning()
         return;
     }
     infoBar->addInfo(InfoBarEntry(externalFileId,
-                             tr("<b>Warning:</b> This file is outside the project directory."),
+                             // Omnia Creator Code Change /////////////////////
+                             tr("<b>Warning:</b> This file is outside the project."), // directory."),
+                             //////////////////////////////////////////////////
                                         InfoBarEntry::GlobalSuppressionEnabled));
 }
 

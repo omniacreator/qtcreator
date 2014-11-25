@@ -590,7 +590,7 @@ CMakeRunPage::CMakeRunPage(CMakeOpenProjectWizard *cmakeWizard, Mode mode, const
 
         QString text;
 
-        for(int j = 0; i.hasNext() && (j < 2); j++)
+        for(int j = 0; i.hasNext() && (j < 3); j++)
         {
             if(j)
             {
