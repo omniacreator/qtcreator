@@ -1500,13 +1500,13 @@ IEditor *EditorManager::openEditor(const QString &fileName, const Id &editorId,
             QStringList list;
 
             QRegularExpression re0(QLatin1String("^[^>].*$"));
-            QRegularExpression re1(QLatin1String("^.+ -> (.+)$"));
+            QRegularExpression re1(QLatin1String(".+\\s+->\\s+(.+)"));
 
             QTextStream stream(&file);
 
             while(!stream.atEnd())
             {
-                QString line = stream.readLine();
+                QString line = stream.readLine().trimmed();
 
                 QRegularExpressionMatch reM0 = re0.match(line);
 
