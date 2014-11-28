@@ -122,6 +122,8 @@ void LdParser::stdError(const QString &line)
         QString::fromUtf8(qgetenv("WNO_PATH")).split(QChar::fromLatin1(','),
         QString::SkipEmptyParts)) { if(filename.isChildOf(
         Utils::FileName::fromUserInput(wno_path))) { return; } }
+        // Ignore Windows 8.3 Short Path Names For Now
+        if(filename.toString().contains(QRegExp(QLatin1String("~\\d")))) { return ; }
         ///////////////////////////////////////////////////////////////////////
 
         Task task(type, description, filename, lineno, Constants::TASK_CATEGORY_COMPILE);

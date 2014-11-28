@@ -62,9 +62,11 @@ Core::IEditor *PlainTextEditorFactory::createEditor()
 {
     PlainTextEditorWidget *rc = new PlainTextEditorWidget();
     TextEditorSettings::initializeEditor(rc);
-    connect(rc, SIGNAL(configured(Core::IEditor*)),
-            this, SLOT(updateEditorInfoBar(Core::IEditor*)));
-    updateEditorInfoBar(rc->editor());
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    // connect(rc, SIGNAL(configured(Core::IEditor*)),
+    //         this, SLOT(updateEditorInfoBar(Core::IEditor*)));
+    // updateEditorInfoBar(rc->editor());
+    ///////////////////////////////////////////////////////////////////////////
     return rc->editor();
 }
 
