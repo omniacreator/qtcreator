@@ -264,87 +264,118 @@ bool CMakeProject::parseCMakeLists()
             while(it.hasNext())
             {
                 QString temp = it.next();
+                QString test = temp.toLower();
 
                 ProjectExplorer::FileType ft =
                 ProjectExplorer::UnknownFileType;
 
-                if(temp.endsWith(QLatin1String(".c"))
-                || temp.endsWith(QLatin1String(".i"))
-                || temp.endsWith(QLatin1String(".cogc")) // For Propeller
-                || temp.endsWith(QLatin1String(".cpp"))
-                || temp.endsWith(QLatin1String(".ii"))
-                || temp.endsWith(QLatin1String(".cc"))
-                || temp.endsWith(QLatin1String(".cp"))
-                || temp.endsWith(QLatin1String(".cxx"))
-                || temp.endsWith(QLatin1String(".c++"))
-                || temp.endsWith(QLatin1String(".cogcpp")) // For Propeller
-                || temp.endsWith(QLatin1String(".ino")) // For Arduino
-                || temp.endsWith(QLatin1String(".pde")) // For Arduino
-                || temp.endsWith(QLatin1String(".s"))
-                || temp.endsWith(QLatin1String(".sx"))
-                || temp.endsWith(QLatin1String(".spin"))) // For Propeller
+                if(test.endsWith(QLatin1String(".c"))
+                || test.endsWith(QLatin1String(".i"))
+                || test.endsWith(QLatin1String(".cogc")) // For Propeller
+                || test.endsWith(QLatin1String(".cpp"))
+                || test.endsWith(QLatin1String(".ii"))
+                || test.endsWith(QLatin1String(".cc"))
+                || test.endsWith(QLatin1String(".cp"))
+                || test.endsWith(QLatin1String(".cxx"))
+                || test.endsWith(QLatin1String(".c++"))
+                || test.endsWith(QLatin1String(".cogcpp")) // For Propeller
+                || test.endsWith(QLatin1String(".ino")) // For Arduino
+                || test.endsWith(QLatin1String(".pde")) // For Arduino
+                || test.endsWith(QLatin1String(".s"))
+                || test.endsWith(QLatin1String(".sx"))
+                || test.endsWith(QLatin1String(".spin"))) // For Propeller
                 {
                     ft = ProjectExplorer::SourceType;
                 }
-                else if(temp.endsWith(QLatin1String(".h"))
-                || temp.endsWith(QLatin1String(".hpp"))
-                || temp.endsWith(QLatin1String(".hh"))
-                || temp.endsWith(QLatin1String(".hp"))
-                || temp.endsWith(QLatin1String(".hxx"))
-                || temp.endsWith(QLatin1String(".h++")))
+                else if(test.endsWith(QLatin1String(".h"))
+                || test.endsWith(QLatin1String(".hpp"))
+                || test.endsWith(QLatin1String(".hh"))
+                || test.endsWith(QLatin1String(".hp"))
+                || test.endsWith(QLatin1String(".hxx"))
+                || test.endsWith(QLatin1String(".h++")))
                 {
                     ft = ProjectExplorer::HeaderType;
                 }
-                else if(temp.endsWith(QLatin1String(".side"))) // For Propeller
+                else if(test.endsWith(QLatin1String(".side"))) // For Propeller
                 {
                     ft = ProjectExplorer::ProjectFileType;
                 }
 
-                fileList.append(new ProjectExplorer::FileNode(temp,ft,false));
+                bool notFound = true;
 
-                projectFiles.insert(temp);
+                foreach(ProjectExplorer::FileNode *node, fileList)
+                {
+                    if(Utils::FileName::fromUserInput(node->path())
+                    == Utils::FileName::fromUserInput(temp))
+                    {
+                        notFound = false; break;
+                    }
+                }
+
+                if(notFound)
+                {
+                    fileList.append(new
+                    ProjectExplorer::FileNode(temp,ft,false));
+                    projectFiles.insert(temp);
+                }
             }
         }
         else
         {
+            QString test = path.toLower();
+
             ProjectExplorer::FileType ft =
             ProjectExplorer::UnknownFileType;
 
-            if(path.endsWith(QLatin1String(".c"))
-            || path.endsWith(QLatin1String(".i"))
-            || path.endsWith(QLatin1String(".cogc")) // For Propeller
-            || path.endsWith(QLatin1String(".cpp"))
-            || path.endsWith(QLatin1String(".ii"))
-            || path.endsWith(QLatin1String(".cc"))
-            || path.endsWith(QLatin1String(".cp"))
-            || path.endsWith(QLatin1String(".cxx"))
-            || path.endsWith(QLatin1String(".c++"))
-            || path.endsWith(QLatin1String(".cogcpp")) // For Propeller
-            || path.endsWith(QLatin1String(".ino")) // For Arduino
-            || path.endsWith(QLatin1String(".pde")) // For Arduino
-            || path.endsWith(QLatin1String(".s"))
-            || path.endsWith(QLatin1String(".sx"))
-            || path.endsWith(QLatin1String(".spin"))) // For Propeller
+            if(test.endsWith(QLatin1String(".c"))
+            || test.endsWith(QLatin1String(".i"))
+            || test.endsWith(QLatin1String(".cogc")) // For Propeller
+            || test.endsWith(QLatin1String(".cpp"))
+            || test.endsWith(QLatin1String(".ii"))
+            || test.endsWith(QLatin1String(".cc"))
+            || test.endsWith(QLatin1String(".cp"))
+            || test.endsWith(QLatin1String(".cxx"))
+            || test.endsWith(QLatin1String(".c++"))
+            || test.endsWith(QLatin1String(".cogcpp")) // For Propeller
+            || test.endsWith(QLatin1String(".ino")) // For Arduino
+            || test.endsWith(QLatin1String(".pde")) // For Arduino
+            || test.endsWith(QLatin1String(".s"))
+            || test.endsWith(QLatin1String(".sx"))
+            || test.endsWith(QLatin1String(".spin"))) // For Propeller
             {
                 ft = ProjectExplorer::SourceType;
             }
-            else if(path.endsWith(QLatin1String(".h"))
-            || path.endsWith(QLatin1String(".hpp"))
-            || path.endsWith(QLatin1String(".hh"))
-            || path.endsWith(QLatin1String(".hp"))
-            || path.endsWith(QLatin1String(".hxx"))
-            || path.endsWith(QLatin1String(".h++")))
+            else if(test.endsWith(QLatin1String(".h"))
+            || test.endsWith(QLatin1String(".hpp"))
+            || test.endsWith(QLatin1String(".hh"))
+            || test.endsWith(QLatin1String(".hp"))
+            || test.endsWith(QLatin1String(".hxx"))
+            || test.endsWith(QLatin1String(".h++")))
             {
                 ft = ProjectExplorer::HeaderType;
             }
-            else if(path.endsWith(QLatin1String(".side"))) // For Propeller
+            else if(test.endsWith(QLatin1String(".side"))) // For Propeller
             {
                 ft = ProjectExplorer::ProjectFileType;
             }
 
-            fileList.append(new ProjectExplorer::FileNode(path,ft,false));
+            bool notFound = true;
 
-            projectFiles.insert(path);
+            foreach(ProjectExplorer::FileNode *node, fileList)
+            {
+                if(Utils::FileName::fromUserInput(node->path())
+                == Utils::FileName::fromUserInput(path))
+                {
+                    notFound = false; break;
+                }
+            }
+
+            if(notFound)
+            {
+                fileList.append(new
+                ProjectExplorer::FileNode(path,ft,false));
+                projectFiles.insert(path);
+            }
         }
     }
 
@@ -506,11 +537,14 @@ bool CMakeProject::parseCMakeLists()
             }
             else
             {
-                part->includePaths+=QDir::fromNativeSeparators(QDir::cleanPath(
+                part->includePaths +=
+                QDir::fromNativeSeparators(QDir::cleanPath(
                 QFileInfo(path).path()));
 
                 adder.maybeAdd(path);
             }
+
+            part->includePaths.removeDuplicates();
         }
 
         ///////////////////////////////////////////////////////////////////////

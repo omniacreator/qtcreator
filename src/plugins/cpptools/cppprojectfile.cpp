@@ -118,6 +118,17 @@ ProjectFileAdder::~ProjectFileAdder()
 
 bool ProjectFileAdder::maybeAdd(const QString &path)
 {
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    foreach(const ProjectFile &projectFile, m_files)
+    {
+        if(Utils::FileName::fromUserInput(projectFile.path)
+        == Utils::FileName::fromUserInput(path))
+        {
+            return false;
+        }
+    }
+    ///////////////////////////////////////////////////////////////////////////
+
     m_fileInfo.setFile(path);
     foreach (const Pair &pair, m_mapping)
         if (pair.first.matchesFile(path)) {

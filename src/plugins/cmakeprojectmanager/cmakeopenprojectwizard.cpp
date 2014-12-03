@@ -634,8 +634,8 @@ CMakeRunPage::CMakeRunPage(CMakeOpenProjectWizard *cmakeWizard, Mode mode, const
                 path = QDir::fromNativeSeparators(QDir::cleanPath(
                 QFileInfo(path).path()));
 
-                if(Utils::FileName(QFileInfo(path)).
-                isChildOf(Utils::FileName(QFileInfo(tempLocation))))
+                if(Utils::FileName::fromUserInput(path).
+                isChildOf(Utils::FileName::fromUserInput(tempLocation)))
                 {
                     QDir(path).removeRecursively(); // Dangerous...
                 }
@@ -655,13 +655,11 @@ CMakeRunPage::CMakeRunPage(CMakeOpenProjectWizard *cmakeWizard, Mode mode, const
 
             if(!path.isEmpty())
             {
-                path = QFileInfo(path).path();
-
                 path = QDir::fromNativeSeparators(QDir::cleanPath(
                 QFileInfo(path).path()));
 
-                if(Utils::FileName(QFileInfo(path)).
-                isChildOf(Utils::FileName(QFileInfo(tempLocation))))
+                if(Utils::FileName::fromUserInput(path).
+                isChildOf(Utils::FileName::fromUserInput(tempLocation)))
                 {
                     QDir(path).removeRecursively(); // Dangerous...
                 }
