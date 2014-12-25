@@ -117,13 +117,13 @@ endif()
 
 # Setup Toolchain ##############################################################
 
-if(WIN32)
-    set(CMAKE_COMPILER_IS_MINGW "1") # Response File Bug Fix
-endif()
-
-set(PROPELLER_SDK_PATH "${TOOLS_FOLDER}/propeller")
-
 if(NOT "${INCLUDE_SWITCH}")
+
+    if(WIN32)
+        set(CMAKE_COMPILER_IS_MINGW "1" CACHE INTERNAL "" FORCE)
+    endif()
+
+    set(PROPELLER_SDK_PATH "${TOOLS_FOLDER}/propeller" CACHE INTERNAL "" FORCE)
 
     set(CMAKE_TOOLCHAIN_FILE
     "${CMAKE_CURRENT_LIST_DIR}/propeller-cmake/cmake/PropellerToolchain.cmake")

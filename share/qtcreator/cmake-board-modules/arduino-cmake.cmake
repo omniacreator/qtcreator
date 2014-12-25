@@ -93,13 +93,13 @@ endif()
 
 # Setup Toolchain ##############################################################
 
-if(WIN32)
-    set(CMAKE_COMPILER_IS_MINGW "1") # Response File Bug Fix
-endif()
-
-set(ARDUINO_SDK_PATH "${TOOLS_FOLDER}/arduino")
-
 if(NOT "${INCLUDE_SWITCH}")
+
+    if(WIN32)
+        set(CMAKE_COMPILER_IS_MINGW "1" CACHE INTERNAL "" FORCE)
+    endif()
+
+    set(ARDUINO_SDK_PATH "${TOOLS_FOLDER}/arduino" CACHE INTERNAL "" FORCE)
 
     set(CMAKE_TOOLCHAIN_FILE
     "${CMAKE_CURRENT_LIST_DIR}/arduino-cmake/cmake/ArduinoToolchain.cmake")
@@ -245,7 +245,7 @@ elseif("${BOARD_ID}" STREQUAL "robotControl")
     "${ARDUINO_SDK_PATH}/hardware/arduino/cores/robot"
     "${ARDUINO_SDK_PATH}/hardware/arduino/variants/robot_control")
 elseif("${BOARD_ID}" STREQUAL "robotMotor")
-    set(INCLUDE_PATHS
+    list(INCLUDE_PATHS
     "${ARDUINO_SDK_PATH}/hardware/arduino/cores/robot"
     "${ARDUINO_SDK_PATH}/hardware/arduino/variants/robot_motor")
 else()
