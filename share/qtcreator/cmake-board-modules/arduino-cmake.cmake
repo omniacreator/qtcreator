@@ -245,7 +245,7 @@ elseif("${BOARD_ID}" STREQUAL "robotControl")
     "${ARDUINO_SDK_PATH}/hardware/arduino/cores/robot"
     "${ARDUINO_SDK_PATH}/hardware/arduino/variants/robot_control")
 elseif("${BOARD_ID}" STREQUAL "robotMotor")
-    list(INCLUDE_PATHS
+    set(INCLUDE_PATHS
     "${ARDUINO_SDK_PATH}/hardware/arduino/cores/robot"
     "${ARDUINO_SDK_PATH}/hardware/arduino/variants/robot_motor")
 else()
