@@ -235,7 +235,7 @@
         <key>NSHumanReadableCopyright</key>
         <string>(C) 2014 Digia Plc</string>
 	<key>CFBundleIconFile</key>
-	<string>$$ICON</string>
+        <string>icon.icns</string><!-- $$ICON -->
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleSignature</key>

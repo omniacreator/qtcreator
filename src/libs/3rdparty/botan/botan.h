@@ -2882,7 +2882,7 @@ class BOTAN_DLL Power_Mod
       virtual ~Power_Mod();
    private:
       mutable Modular_Exponentiator* core;
-      Usage_Hints hints;
+      __attribute__((unused)) Usage_Hints hints;
    };
 
 /**

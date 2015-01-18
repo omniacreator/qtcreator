@@ -37,10 +37,10 @@
 
 using namespace TextEditor;
 
-const char NOMANGLER_ID[] = "TextEditor::NoMangler";
-const char UCMANGLER_ID[] = "TextEditor::UppercaseMangler";
-const char LCMANGLER_ID[] = "TextEditor::LowercaseMangler";
-const char TCMANGLER_ID[] = "TextEditor::TitlecaseMangler";
+__attribute__((unused)) const char NOMANGLER_ID[] = "TextEditor::NoMangler";
+__attribute__((unused)) const char UCMANGLER_ID[] = "TextEditor::UppercaseMangler";
+__attribute__((unused)) const char LCMANGLER_ID[] = "TextEditor::LowercaseMangler";
+__attribute__((unused)) const char TCMANGLER_ID[] = "TextEditor::TitlecaseMangler";
 
 Q_DECLARE_METATYPE(QList<int>)
 
