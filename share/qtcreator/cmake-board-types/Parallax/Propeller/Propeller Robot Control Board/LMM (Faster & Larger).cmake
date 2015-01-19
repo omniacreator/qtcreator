@@ -1,6 +1,6 @@
 ################################################################################
 # @file
-# Propeller Project Board USB LMM Board File
+# Propeller Robot Control Board LMM Board File
 #
 # @version @n 1.0
 # @date @n 5/24/2014

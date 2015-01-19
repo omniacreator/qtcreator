@@ -1,6 +1,6 @@
 ################################################################################
 # @file
-# Propeller Project Board USB LMM Board File
+# Propeller BOE SPIN Board File
 #
 # @version @n 1.0
 # @date @n 5/24/2014
@@ -16,9 +16,9 @@
 cmake_minimum_required(VERSION "2.8")
 cmake_policy(VERSION "2.8")
 
-set(BOARD_ID "eeprom")
+set(BOARD_ID "propboe")
 
-set(MEMORY_MODEL "lmm")
+set(MEMORY_MODEL "spin")
 
 set(MODULE_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../../cmake-board-modules")
 get_filename_component(MODULE_DIR "${MODULE_DIR}" ABSOLUTE)

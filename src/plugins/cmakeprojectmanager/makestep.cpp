@@ -319,7 +319,7 @@ void MakeStep::clearBuildTargets()
 
 QString MakeStep::additionalArguments() const
 {
-    return m_additionalArguments;
+    return m_additionalArguments + QLatin1String(" -v");
 }
 
 void MakeStep::setAdditionalArguments(const QString &list)

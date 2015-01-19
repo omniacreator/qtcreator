@@ -795,9 +795,11 @@ void SessionManagerPrivate::askUserAboutFailedProjects()
         box->addButton(keepButton, QMessageBox::AcceptRole);
         box->addButton(removeButton, QMessageBox::DestructiveRole);
 
-        box->exec();
-
-        if (box->clickedButton() == removeButton)
+        // Omnia Creator Code Change //////////////////////////////////////////
+        // box->exec();
+        //
+        // if (box->clickedButton() == removeButton)
+        ///////////////////////////////////////////////////////////////////////
             m_failedProjects.clear();
     }
 }
@@ -841,8 +843,10 @@ void SessionManagerPrivate::restoreProjects(const QStringList &fileList)
     if (!fileList.isEmpty()) {
         QString errors;
         QList<Project *> projects = ProjectExplorerPlugin::instance()->openProjects(fileList, &errors);
-        if (!errors.isEmpty())
-            QMessageBox::critical(Core::ICore::mainWindow(), SessionManager::tr("Failed to open project"), errors);
+        // Omnia Creator Code Change //////////////////////////////////////////
+        // if (!errors.isEmpty())
+        //     QMessageBox::critical(Core::ICore::mainWindow(), SessionManager::tr("Failed to open project"), errors);
+        ///////////////////////////////////////////////////////////////////////
         foreach (Project *p, projects)
             m_failedProjects.removeAll(p->projectFilePath());
     }

@@ -266,7 +266,9 @@ ProgressManagerPrivate::ProgressManagerPrivate()
   : m_applicationTask(0),
     m_currentStatusDetailsWidget(0),
     m_opacityEffect(new QGraphicsOpacityEffect(this)),
-    m_progressViewPinned(false),
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    m_progressViewPinned(true), // m_progressViewPinned(false),
+    ///////////////////////////////////////////////////////////////////////////
     m_hovered(false)
 {
     m_progressView = new ProgressView;
@@ -288,7 +290,9 @@ void ProgressManagerPrivate::readSettings()
 {
     QSettings *settings = ICore::settings();
     settings->beginGroup(QLatin1String(kSettingsGroup));
-    m_progressViewPinned = settings->value(QLatin1String(kDetailsPinned), true).toBool();
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    m_progressViewPinned = settings->value(QLatin1String(kDetailsPinned), false).toBool(); // true).toBool();
+    ///////////////////////////////////////////////////////////////////////////
     settings->endGroup();
 }
 
@@ -317,6 +321,9 @@ void ProgressManagerPrivate::init()
     m_summaryProgressLayout->addWidget(m_summaryProgressBar);
     layout->addWidget(m_summaryProgressWidget);
     ToggleButton *toggleButton = new ToggleButton(m_statusBarWidget);
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    toggleButton->hide();
+    ///////////////////////////////////////////////////////////////////////////
     layout->addWidget(toggleButton);
     m_statusBarWidgetContainer->setWidget(m_statusBarWidget);
     m_statusBarWidgetContainer->setPosition(Core::StatusBarWidget::RightCorner);
@@ -330,14 +337,16 @@ void ProgressManagerPrivate::init()
     QPixmap p(1, 1);
     p.fill(Qt::transparent);
     toggleProgressView->setIcon(QIcon(p));
-    Command *cmd = ActionManager::registerAction(toggleProgressView,
-                                                 "QtCreator.ToggleProgressDetails",
-                                                 Context(Constants::C_GLOBAL));
-    cmd->setDefaultKeySequence(QKeySequence(Utils::HostOsInfo::isMacHost()
-                                               ? tr("Ctrl+Shift+0")
-                                               : tr("Alt+Shift+0")));
-    connect(toggleProgressView, SIGNAL(toggled(bool)), this, SLOT(progressDetailsToggled(bool)));
-    toggleButton->setDefaultAction(cmd->action());
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    // Command *cmd = ActionManager::registerAction(toggleProgressView,
+    //                                              "QtCreator.ToggleProgressDetails",
+    //                                              Context(Constants::C_GLOBAL));
+    // cmd->setDefaultKeySequence(QKeySequence(Utils::HostOsInfo::isMacHost()
+    //                                            ? tr("Ctrl+Shift+0")
+    //                                            : tr("Alt+Shift+0")));
+    // connect(toggleProgressView, SIGNAL(toggled(bool)), this, SLOT(progressDetailsToggled(bool)));
+    // toggleButton->setDefaultAction(cmd->action());
+    ///////////////////////////////////////////////////////////////////////////
 
     m_progressView->setVisible(m_progressViewPinned);
 
@@ -370,12 +379,16 @@ void ProgressManagerPrivate::doCancelTasks(Id type)
 bool ProgressManagerPrivate::eventFilter(QObject *obj, QEvent *event)
 {
     if (obj == m_statusBarWidget && event->type() == QEvent::Enter) {
-        m_hovered = true;
-        updateVisibility();
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    //     m_hovered = true;
+    //     updateVisibility();
+    ///////////////////////////////////////////////////////////////////////////
     } else if (obj == m_statusBarWidget && event->type() == QEvent::Leave) {
-        m_hovered = false;
-        // give the progress view the chance to get the mouse enter event
-        updateVisibilityWithDelay();
+    // Omnia Creator Code Change //////////////////////////////////////////////
+    //     m_hovered = false;
+    //     // give the progress view the chance to get the mouse enter event
+    //     updateVisibilityWithDelay();
+    ///////////////////////////////////////////////////////////////////////////
     } else if (obj == m_statusBarWidget && event->type() == QEvent::MouseButtonPress
                && !m_taskList.isEmpty()) {
         QMouseEvent *me = static_cast<QMouseEvent *>(event);
